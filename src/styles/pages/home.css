@@ -1,0 +1,247 @@
+.home-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr 280px;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    align-items: start;
+}
+
+/* SIDEBAR IZQUIERDO */
+.profile-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
+
+.profile-card-banner {
+    height: 70px;
+    background: linear-gradient(135deg, #6c63ff, #a78bfa);
+}
+
+.profile-card-avatar {
+    font-size: 4rem;
+    color: #6c63ff;
+    margin-top: -2rem;
+    padding-left: 1rem;
+    line-height: 1;
+}
+
+.profile-card-info {
+    padding: 0.5rem 1rem 1rem;
+}
+
+.profile-card-info h3 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.profile-card-info p {
+    font-size: 0.82rem;
+    color: #555;
+}
+
+.profile-card-info span {
+    font-size: 0.78rem;
+    color: #888;
+}
+
+.profile-card hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 0;
+}
+
+.profile-card-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.75rem 1rem;
+}
+
+.profile-card-stats div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.82rem;
+    color: #555;
+}
+
+.profile-card-stats strong {
+    font-size: 1.1rem;
+    color: #6c63ff;
+}
+
+/* FEED */
+.feed-create {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.feed-create-avatar {
+    font-size: 2.5rem;
+    color: #aaa;
+}
+
+.feed-create-btn {
+    flex: 1;
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 0.6rem 1rem;
+    text-align: left;
+    color: #666;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.15s;
+}
+
+.feed-create-btn:hover {
+    background: #f3f2ee;
+}
+
+.feed-loading {
+    text-align: center;
+    color: #888;
+    padding: 2rem;
+}
+
+.post-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.post-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.post-avatar {
+    font-size: 2.5rem;
+    color: #aaa;
+}
+
+.post-card-header strong {
+    font-size: 0.95rem;
+    display: block;
+}
+
+.post-card-header p {
+    font-size: 0.78rem;
+    color: #888;
+}
+
+.post-description {
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+}
+
+.tag {
+    background: #ede9fe;
+    color: #6c63ff;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+}
+
+.post-footer {
+    border-top: 1px solid #eee;
+    padding-top: 0.6rem;
+}
+
+.post-ver-mas {
+    font-size: 0.85rem;
+    color: #6c63ff;
+    font-weight: 600;
+}
+
+.post-ver-mas:hover {
+    text-decoration: underline;
+}
+
+/* SIDEBAR DERECHO */
+.suggestions-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.suggestions-card h4 {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+}
+
+.suggestion-item i {
+    font-size: 2rem;
+    color: #aaa;
+}
+
+.suggestion-item div {
+    flex: 1;
+}
+
+.suggestion-item strong {
+    font-size: 0.88rem;
+    display: block;
+}
+
+.suggestion-item p {
+    font-size: 0.78rem;
+    color: #888;
+}
+
+.suggestion-item button {
+    background: none;
+    border: 1px solid #6c63ff;
+    color: #6c63ff;
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.suggestion-item button:hover {
+    background: #6c63ff;
+    color: white;
+}
+
+.home-footer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #aaa;
+    padding: 0.5rem;
+}

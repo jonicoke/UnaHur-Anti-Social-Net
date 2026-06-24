@@ -1,9 +1,18 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from './components/NavBar'; 
+import Footer from './components/Footer';
+import Home from './pages/Home';
+
 function App() {
   return (
-    <div>
-      <h1>Proyecto iniciado</h1>
-    </div>
-  )
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+  );
 }
 
 export default App
