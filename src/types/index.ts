@@ -1,6 +1,7 @@
-export interface User {
-    id: number
-    nickName: string
+export interface Usuario {
+  id: number
+  nickName: string
+  email: string
 }
 
 export interface Tag {

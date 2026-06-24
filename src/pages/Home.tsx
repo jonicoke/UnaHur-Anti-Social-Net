@@ -1,14 +1,23 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getPosts } from '../services/api'
+import { useAuth } from '../context/authContext'
 import type { Post } from '../types'
 import '../styles/pages/home.css'
 
 function Home() {
     const [posts, setPosts] = useState<Post[]>([])
+    const { usuario, logout } = useAuth()
+    const navigate = useNavigate()
 
     useEffect(() => {
         getPosts().then(data => setPosts(data.slice(0,5)))
     }, [])
+
+    const handleLogout = () => {
+        logout()
+        navigate('/login')
+    }
 
     return (
         <div className="home-layout">
@@ -21,7 +30,7 @@ function Home() {
                         <i className="bi bi-person-circle"></i>
                     </div>
                     <div className="profile-card-info">
-                        <h3>Jonathan Giaco</h3>
+                        <h3>{usuario?.nickName}</h3>
                         <p>Desarrollador Frontend · UNAHUR</p>
                         <span>Buenos Aires, Argentina</span>
                     </div>
@@ -36,6 +45,10 @@ function Home() {
                             <strong>34</strong>
                         </div>
                     </div>
+                    <hr />
+                    <button className="logout-btn" onClick={handleLogout}>
+                        <i className="bi bi-box-arrow-right"></i> Cerrar sesión
+                    </button>
                 </div>
             </aside>
 

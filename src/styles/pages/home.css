@@ -245,3 +245,18 @@
     color: #aaa;
     padding: 0.5rem;
 }
+
+.logout-btn {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+}
