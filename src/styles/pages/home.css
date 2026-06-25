@@ -50,7 +50,9 @@
 
 /* PERFIL */
 .profile-card {
-    background: var(--color-surface);
+    /* background: var(--color-surface); */
+    background: var(--color-bg-cards);
+
     border-radius: 12px;
     border: 1px solid var(--color-border);
     overflow: hidden;
@@ -59,14 +61,6 @@
 
 .profile-card-banner{
     height:60px;
-
-    background:
-        linear-gradient(
-            rgba(0,132,61,.85),
-            rgba(0,132,61,.85)
-        ),
-        url("/campus.jpg");
-
     background-size:cover;
     background-position:center;
 }
@@ -136,7 +130,7 @@
     width: calc(100% - 1.5rem);
     margin: 0.75rem;
     padding: 0.5rem;
-    background: white;
+    background:var(--color-bg);
     color: #c0392b;
     border: 1.5px solid #c0392b;
     border-radius: 8px;
@@ -153,7 +147,7 @@
 
 /* FEED */
 .feed-create {
-    background: var(--color-surface);
+    background: var(--color-bg-cards);
     border: 1px solid var(--color-border);
     border-radius: 6px;
     padding: 1rem;
@@ -188,7 +182,7 @@
 }
 
 .post-card{
-    background:white;
+    background: var(--color-bg);
 
     border:none;
 
@@ -293,7 +287,7 @@
 .feed-loader-dot {
     width: 10px;
     height: 10px;
-    background: var(--color-primary);
+    background: var(--color-bg);
     border-radius: 50%;
     animation: pulse 1s infinite;
 }
@@ -311,7 +305,7 @@
 
 /* SIDEBAR DERECHO */
 .suggestions-card {
-    background: var(--color-surface);
+    background: var(--color-bg-cards);
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 1rem;
@@ -369,7 +363,7 @@
 }
 
 .suggestion-item button:hover {
-    background: var(--color-primary);
+    background: var(--color-bg);
     color: white;
 }
 
@@ -405,7 +399,7 @@
 
 /* TENDENCIAS */
 .trend-tag{
-    background:#e6f4ed;
+    background:var(--color-bg);
 
     color:#00843D;
 
@@ -471,25 +465,25 @@
 
 /* Posición 1 (Verde) */
 .trend-hashtag-box[data-index="0"] {
-    background-color: #e6f4ea;
+    background-color: #151615;
     color: #137333;
 }
 
 /* Posición 2 (Azul) */
 .trend-hashtag-box[data-index="1"] {
-    background-color: #e8f0fe;
+    background-color: #171718;
     color: #1a73e8;
 }
 
 /* Posición 3 (Rojo / Naranja) */
 .trend-hashtag-box[data-index="2"] {
-    background-color: #fce8e6;
+    background-color: #1a1918;
     color: #c5221f;
 }
 
 /* Posición 4 (Cian / Celeste) */
 .trend-hashtag-box[data-index="3"] {
-    background-color: #e4f7f6;
+    background-color: #151616;
     color: #007b83;
 }
 /* --- ACCESOS RÁPIDOS (Sidebar Izquierdo) --- */
@@ -573,7 +567,7 @@
 /* --- ACTUALIZACIÓN DE LAS TARJETAS DE PUBLICACIÓN --- */
 .post-card {
     position: relative;
-    background: white;
+    background: var(--color-bg-cards);
     border-radius: 16px;
     padding: 1.5rem;
     margin-bottom: 1.25rem;
@@ -655,7 +649,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #e6f4ed;
+    background-color: var(--color-bg-cards);
     border: 1px solid #00843D;
     padding: 0.75rem 1rem;
     border-radius: 8px;
@@ -690,7 +684,7 @@
 .trend-tag {
     display: flex;
     flex-direction: column;
-    background: #e6f4ed;
+    background: var(--color-bg);
     color: #00843D;
     padding: 0.5rem 0.75rem;
     border-radius: 8px;
@@ -699,7 +693,7 @@
 }
 
 .trend-tag:hover {
-    background: #d2ebd9;
+    background: var(--color-bg);
 }
 
 .trend-tag span {
@@ -712,3 +706,4 @@
     color: #555;
     margin-top: 0.1rem;
 }
+

@@ -4,30 +4,45 @@
     box-sizing: border-box;
 }
 
-:root{
-    --color-primary:#00843D;
-    --color-primary-dark:#006830;
+:root {
+    --color-primary: #00843D;
+    --color-primary-dark: #006830;
+    --color-accent: #FFD100;
 
-    --color-accent:#FFD100;
+    /* Tema claro */
+    --color-bg: #f7f8f8;
+    --color-bg-cards: #ffffff;
+    --color-surface: #ffffff;
 
-    --color-bg:#f7f8f8;
-    --color-surface:#ffffff;
+    --color-border: #e5e7eb;
 
-    --color-border:#dfe6e2;
+    --color-text: #28302b;
+    --color-text-secondary: #56635b;
+    --color-text-muted: #8d9c93;
 
-    --color-text:#28302b;
-    --color-text-secondary:#56635b;
-    --color-text-muted:#8d9c93;
+    --color-shadow: rgba(0, 0, 0, .04);
+}
 
-    --color-shadow:rgba(0,0,0,.04);
+body.tema-oscuro {
+    /* Tema oscuro */
+    --color-bg: #070707;
+    --color-bg-cards: #111111;
+    --color-surface: #181818;
+
+    --color-border: #282828;
+
+    --color-text: #ffffff;
+    --color-text-secondary: #c0c0c0;
+    --color-text-muted: #888888;
+
+    --color-shadow: rgba(0, 0, 0, .3);
 }
 
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background:
-        linear-gradient(
-            to bottom, #ffffff 0px,#ffffff 60px,#f7f8f8 60px,#f7f8f8 100%);
+    background: var(--color-bg);
     color: var(--color-text);
+    transition: background .3s ease, color .3s ease;
 }
 
 a {

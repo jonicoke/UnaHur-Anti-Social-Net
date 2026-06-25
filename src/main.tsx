@@ -4,9 +4,12 @@ import './index.css'
 import App from './App.tsx'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { AuthProvider } from "./context/authContext.tsx";
+import { TemaProvider } from "./context/TemaContext.tsx";
 
 createRoot(document.getElementById('root')!).render(
   <AuthProvider>
-    <App />
+    <TemaProvider>
+      <App />
+    </TemaProvider>
   </AuthProvider>
 )

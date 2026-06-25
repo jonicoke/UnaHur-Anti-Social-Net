@@ -1,10 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import "../styles/components/menuDesplegable.css";
+import { useTema } from "../context/TemaContext";
+import { BsSun, BsMoon } from "react-icons/bs";
 
 function MenuDesplegable() {
     const { usuario, logout } = useAuth();
     const navigate = useNavigate();
+  const { oscuro, setOscuro } = useTema();
 
     const handleLogout = () => {
         logout();
@@ -42,7 +45,9 @@ function MenuDesplegable() {
                     Mis publicaciones
                 </Link>
             </div>
-
+             <button className="icon-btn" onClick={() => setOscuro(!oscuro)} aria-label="Cambiar tema">
+            {oscuro ? <BsSun /> : <BsMoon />}
+          </button>
             <button
                 className="logout-btn-menu"
                 onClick={handleLogout}
