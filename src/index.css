@@ -4,9 +4,30 @@
     box-sizing: border-box;
 }
 
+:root{
+    --color-primary:#00843D;
+    --color-primary-dark:#006830;
+
+    --color-accent:#FFD100;
+
+    --color-bg:#f7f8f8;
+    --color-surface:#ffffff;
+
+    --color-border:#dfe6e2;
+
+    --color-text:#28302b;
+    --color-text-secondary:#56635b;
+    --color-text-muted:#8d9c93;
+
+    --color-shadow:rgba(0,0,0,.04);
+}
+
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f3f2ee;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background:
+        linear-gradient(
+            to bottom, #ffffff 0px,#ffffff 60px,#f7f8f8 60px,#f7f8f8 100%);
+    color: var(--color-text);
 }
 
 a {

@@ -1,4 +1,4 @@
-export interface Usuario {
+export interface User {
   id: number
   nickName: string
   email: string
@@ -12,6 +12,7 @@ export interface Tag {
 export interface Post {
     id: number
     description: string
-    userId: number
-    tags: Tag[]
+    UserId: number
+    User: User
+    Tags: Tag[]
 }
