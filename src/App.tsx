@@ -14,6 +14,7 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         {/* Rutas protegidas */}
+        
         <Route path="/" element={
           <RutaProtegida>
             <NavBar />

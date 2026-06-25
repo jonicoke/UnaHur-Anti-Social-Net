@@ -1,10 +1,21 @@
-import "../styles/components/NavBar.css";
+import "../styles/components/navbar/navbar.css";
 import logo from "../assets/logo.png";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import MenuDesplegable from "./MenuDesplegable";
 
 function NavBar() {
     const [menuAbierto, setMenuAbierto] = useState(false);
+    const navigate = useNavigate();
+    const [busqueda, setBusqueda] = useState("");
+
+    const buscar = () => {
+        const texto = busqueda.trim();
+
+        if (!texto) return;
+
+        navigate(`/search?q=${encodeURIComponent(texto)}`);
+    };
 
     return (
         <nav className="navbar">
@@ -20,6 +31,13 @@ function NavBar() {
                     className="navbar-search"
                     type="text"
                     placeholder="Buscar..."
+                    value={busqueda}
+                    onChange={(e) => setBusqueda(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            buscar();
+                        }
+                    }}
                 />
             </div>
 

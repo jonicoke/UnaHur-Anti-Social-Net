@@ -1,0 +1,64 @@
+
+/* SIDEBAR DERECHO */
+.suggestions-card {
+    background: var(--color-bg-cards);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 12px var(--color-shadow);
+}
+
+.suggestions-card h4 {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 700;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.85rem;
+}
+
+.suggestion-item i {
+    font-size: 1.9rem;
+    color: var(--color-text-muted);
+}
+
+.suggestion-item div {
+    flex: 1;
+}
+
+.suggestion-item strong {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text);
+    display: block;
+}
+
+.suggestion-item p {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.suggestion-item button {
+    background: none;
+    border: 1.5px solid var(--color-primary);
+    color: var(--color-primary);
+    border-radius: 6px;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.suggestion-item button:hover {
+    background: var(--color-bg);
+    color: var(--color-text-secondary);
+}

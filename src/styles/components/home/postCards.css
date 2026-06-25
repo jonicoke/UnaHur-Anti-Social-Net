@@ -1,0 +1,179 @@
+
+.post-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 132, 61, 0.12);
+}
+.post-card::before{
+    content:"";
+    display:block;
+    height:4px;
+    border-radius:6px;
+    margin:-1.5rem -1.5rem 1rem -1.5rem;
+}
+.post-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.post-avatar {
+    font-size: 2.4rem;
+    color: var(--color-text-muted);
+}
+
+.post-card-header strong {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--color-text);
+    display: block;
+}
+
+.post-card-header p {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.post-description {
+    font-size: 0.92rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+}
+
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+}
+
+.tag {
+    background: var(--color-tag-bg);
+    color: var(--color-tag-text);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+}
+
+.post-footer {
+    border-top: 1px solid var(--color-border);
+    padding-top: 0.6rem;
+}
+
+.post-ver-mas {
+    font-size: 0.83rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    
+}
+
+.post-ver-mas:hover {
+    text-decoration: underline;
+}
+
+.post-card {
+    position: relative;
+    background: var(--color-bg-cards);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,.06);
+    overflow: hidden;
+}
+
+/* Modificación dinámica del borde superior usando la variable CSS asignada */
+.post-card::before {
+    content: "";
+    display: block;
+    height: 5px;
+    background-color: var(--post-border-color);
+    margin: -1.5rem -1.5rem 1rem -1.5rem;
+}
+
+.post-header-user-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.post-user-institute-tag {
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+
+/* --- SECCIÓN DE ACCIONES EN EL PIE DE LOS POSTS --- */
+.post-footer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--color-border);
+    padding-top: 0.75rem;
+    margin-top: 1rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.action-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--color-primary);
+}
+
+.post-ver-mas-action {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.85rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.post-ver-mas-action:hover {
+    text-decoration: underline;
+}
+
+.post-images {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.post-img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Si hay 2 imágenes, las pone lado a lado */
+.post-images:has(img:nth-child(2)) .post-img {
+    width: calc(50% - 0.25rem);
+}
+.avatar-img {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+

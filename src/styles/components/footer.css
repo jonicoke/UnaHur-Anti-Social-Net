@@ -1,0 +1,30 @@
+
+.home-footer {
+    margin-top: 1.5rem;
+    padding: 1.5rem 1rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .9rem;
+
+    margin-bottom: 1rem;
+}
+
+.footer-links a {
+    color: var(--color-text-muted);
+    font-size: .75rem;
+    transition: .2s;
+}
+
+.footer-links a:hover {
+    color: var(--color-primary);
+}
+
+.home-footer p {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--color-text-muted);
+}

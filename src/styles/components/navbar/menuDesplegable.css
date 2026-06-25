@@ -2,20 +2,13 @@
     position: absolute;
     top: 70px;
     right: 16px;
-
     width: 320px;
-
-    background: white;
-
+    background: var(--color-bg-cards);
     border-radius: 16px;
-
-    border: 1px solid #e5ece7;
-
+    border: 1px solid var(--color-border);
     box-shadow:
         0 12px 40px rgba(0, 0, 0, .12);
-
     overflow: hidden;
-
     z-index: 1000;
 }
 
@@ -44,21 +37,13 @@
 
 .perfil-btn {
     display: block;
-
     margin: 0 1rem 1rem;
-
     padding: .75rem;
-
     border: 1.5px solid var(--color-primary);
-
     border-radius: 999px;
-
     text-align: center;
-
     color: var(--color-primary);
-
     font-weight: 600;
-
     transition: .2s;
 }
 
@@ -68,43 +53,31 @@
 }
 
 .menu-section {
-    border-top: 1px solid #eef2ef;
-
+    border-top: 1px solid var(--color-primary);
     padding: .8rem 0;
 }
 
 .menu-title {
     display: block;
-
     padding: 0 .9rem .5rem;
-
     font-size: .72rem;
-
     font-weight: 700;
-
     text-transform: uppercase;
-
     letter-spacing: .6px;
-
     color: var(--color-text-muted);
 }
 
 .menu-section a {
     display: flex;
-
     align-items: center;
-
     gap: .8rem;
-
     padding: .8rem 1rem;
-
     color: var(--color-text);
-
     transition: .15s;
 }
 
 .menu-section a:hover {
-    background: #f5faf7;
+    background: var(--color-bg);
 }
 
 .menu-section i {
@@ -114,30 +87,27 @@
 
 .logout-btn-menu {
     width: 100%;
-
     border: none;
-
-    background: white;
-
-    border-top: 1px solid #eef2ef;
-
+    background:var(--color-bg);
+    border-top: 1px solid var(--color-border);
     padding: 1rem;
 
     display: flex;
 
     align-items: center;
-
     gap: .7rem;
-
     color: #d64541;
-
     font-weight: 600;
-
     cursor: pointer;
-
     transition: .15s;
 }
 
 .logout-btn-menu:hover {
-    background: #fff4f4;
+    background: var(--color-bg-cards);
+}
+.avatar-img {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    object-fit: cover;
 }

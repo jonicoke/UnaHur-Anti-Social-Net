@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import "../styles/components/menuDesplegable.css";
+import "../styles/components/navbar/menuDesplegable.css";
 import { useTema } from "../context/TemaContext";
 import { BsSun, BsMoon } from "react-icons/bs";
 
@@ -18,11 +18,14 @@ function MenuDesplegable() {
         <div className="menu-desplegable">
 
             <div className="menu-header">
-                <i className="bi bi-person-circle"></i>
-
+                {usuario?.fotoPerfil ? (
+                    <img src={usuario.fotoPerfil} alt={usuario.nickName} className="avatar-img" />
+                ) : (
+                    <i className="bi bi-person-circle"></i>
+                )}
                 <div>
                     <h4>{usuario?.nickName}</h4>
-                    <p>Estudiante · UNAHUR</p>
+                    <p>{usuario?.instituto ?? 'Estudiante · UNAHUR'}</p>
                 </div>
             </div>
 
@@ -46,7 +49,7 @@ function MenuDesplegable() {
                 </Link>
             </div>
              <button className="icon-btn" onClick={() => setOscuro(!oscuro)} aria-label="Cambiar tema">
-            {oscuro ? <BsSun /> : <BsMoon />}
+            {oscuro ? <BsSun /> : <BsMoon />}Cambiar tema
           </button>
             <button
                 className="logout-btn-menu"

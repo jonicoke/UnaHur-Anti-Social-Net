@@ -1,0 +1,72 @@
+/* --- FILTRO POR INSTITUTOS (Sidebar Derecho) --- */
+.institutos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.inst-btn {
+    border: none;
+    padding: 0.6rem 0.4rem;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    text-align: center;
+    opacity: 0.85;
+}
+
+.inst-btn:hover {
+    opacity: 1;
+    transform: scale(1.02);
+}
+
+.inst-btn.active {
+    opacity: 1;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.2) inset, 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Clases específicas de color por instituto */
+.inst-btn.tec { background-color: #e67e22; }
+.inst-btn.bio { background-color: #0073bc; }
+.inst-btn.edu { background-color: #c0392b; }
+.inst-btn.salud { background-color: #00a69c; }
+
+.institutos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.inst-btn {
+    padding: 0.4rem 0.5rem;
+    border-radius: 8px;
+    border: 1.5px solid;
+    background: transparent;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+/* Tec. e Ingeniería */
+.inst-btn.inst-tec               { border-color: #e67e22; color: #e67e22; }
+.inst-btn.inst-tec:hover         { background: #e67e2220; }
+.inst-btn.inst-tec.active        { background: #e67e22;   color: white;   }
+
+/* Biotecnología */
+.inst-btn.inst-bio               { border-color: #0073bc; color: #0073bc; }
+.inst-btn.inst-bio:hover         { background: #0073bc20; }
+.inst-btn.inst-bio.active        { background: #0073bc;   color: white;   }
+
+/* Educación */
+.inst-btn.inst-edu               { border-color: #c0392b; color: #c0392b; }
+.inst-btn.inst-edu:hover         { background: #c0392b20; }
+.inst-btn.inst-edu.active        { background: #c0392b;   color: white;   }
+
+/* Salud Comunitaria */
+.inst-btn.inst-salud             { border-color: #00a69c; color: #00a69c; }
+.inst-btn.inst-salud:hover       { background: #00a69c20; }
+.inst-btn.inst-salud.active      { background: #00a69c;   color: white;   }

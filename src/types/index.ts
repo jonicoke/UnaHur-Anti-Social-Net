@@ -1,7 +1,10 @@
 export interface User {
-  id: number
-  nickName: string
-  email: string
+    id: number
+    nickName: string
+    email: string
+    fotoPerfil: string | null
+    instituto: string | null
+    descripcion: string | null
 }
 
 export interface Tag {
@@ -9,10 +12,16 @@ export interface Tag {
     name: string
 }
 
+export interface PostImage {
+    url: string
+}
+
 export interface Post {
     id: number
     description: string
+    createdAt: string
     UserId: number
     User: User
     Tags: Tag[]
+    PostImages: PostImage[]
 }

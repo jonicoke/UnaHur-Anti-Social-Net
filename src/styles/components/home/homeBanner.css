@@ -1,0 +1,34 @@
+.home-banner{
+    background:
+        linear-gradient(
+            rgba(1, 37, 18, 0.361),
+            rgba(0, 132, 62, 0.131)
+        ),
+        url("../../../assets/banner-home.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    border-radius: 6px;
+
+    min-height: 180px;
+
+    display:flex;
+    align-items:center;
+
+    padding:2rem;
+
+    color:white;
+
+    margin-bottom:1.5rem;
+}
+
+.home-banner h1{
+    font-size:2rem;
+    margin-bottom:.5rem;
+}
+
+.home-banner p{
+    max-width:500px;
+    line-height:1.6;
+}
