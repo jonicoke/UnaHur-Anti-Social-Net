@@ -1,7 +1,7 @@
 // useReveal.ts
 import { useEffect, useRef } from 'react'
 
-export function useReveal(deps: unknown[] = []) {   // ← acepta deps
+export function useReveal(deps: unknown[] = []) {   
     const containerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {

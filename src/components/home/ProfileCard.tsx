@@ -15,7 +15,7 @@ interface Props {
 
 function ProfileCard({ nickName, fotoPerfil, instituto, descripcion, stats }: Props) {
     return (
-        <div className="profile-card" data-reveal="left" data-reveal-delay="0">
+        <div className="profile-card" >
             <div className="profile-card-banner"></div>
             <div className="profile-card-avatar">
                 {fotoPerfil ? (

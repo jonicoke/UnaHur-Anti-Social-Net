@@ -2,7 +2,7 @@ import '../../styles/components/home/accesosRapidos.css'
 
 function AccesosRapidos() {
     return (
-        <div className="suggestions-card accesos-rapidos-card" data-reveal="left" data-reveal-delay="120">
+        <div className="suggestions-card accesos-rapidos-card">
             <h4>ACCESOS RÁPIDOS</h4>
             <a href="https://unahur.edu.ar/calendario-academico/" target="_blank" rel="noreferrer" className="acceso-item">
                 <span className="icon-box geo-green"><i className="bi bi-calendar3"></i></span>

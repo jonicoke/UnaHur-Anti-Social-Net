@@ -1,21 +1,32 @@
 .home-layout {
-    display: grid;
-    grid-template-columns: 280px minmax(650px, 1fr) 240px;
+    display: flex;
     gap: 2rem;
     max-width: 1500px;
     margin: 2rem auto;
     padding: 0 2rem;
-    
 }
 
+.home-sidebar-left {
+    width: 280px;
+    flex-shrink: 0;
+}
+
+.home-feed {
+    flex: 1;
+    min-width: 650px;
+}
+
+.home-sidebar-right {
+    width: 240px;
+    flex-shrink: 0;
+}
 
 /* STICKY */
 .sticky-sidebar {
     position: sticky;
-    top: 78px;
+    align-self: flex-start;
+    top:calc(var(--navbar-height) + 16px);
 }
-
-
 
 /* --- MENSAJE DE FILTRO ACTIVO --- */
 .filter-alert {
@@ -61,4 +72,8 @@
     .sticky-sidebar {
         position: static;
     }
+}
+.home-sidebar-left,
+.home-sidebar-right {
+    min-height: 1px;
 }

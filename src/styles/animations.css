@@ -23,6 +23,7 @@
 [data-reveal] {
     opacity: 0;
     will-change: opacity, transform;
+    backface-visibility: hidden;
 }
 
 /* Variantes de dirección */
@@ -43,23 +44,21 @@
     transition:
         opacity  0.55s cubic-bezier(0.22, 1, 0.36, 1),
         transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: auto;
 }
 
 /* Posts: duración un pelo más larga para que se sientan "pesados" y elegantes */
 .post-card[data-reveal].revealed {
+    opacity: 1;
+    transform: none;
+    contain: none;
     transition:
         opacity  0.6s cubic-bezier(0.22, 1, 0.36, 1),
         transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
-
-/* Sidebar cards: ligeramente más rápidas */
-.profile-card[data-reveal].revealed,
-.suggestions-card[data-reveal].revealed,
-.quick-links-card[data-reveal].revealed,
-.accesos-rapidos-card[data-reveal].revealed {
-    transition:
-        opacity  0.5s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+.post-card[data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
 }
 
 /* Banner: slide desde arriba, rápido e impactante */
@@ -114,146 +113,3 @@
 }
 
 
-/* ════════════════════════════════════════════════════════
-   4. ACCENT BAR animada en los post-cards
-      (la barra de color del instituto se expande de izq a der)
-   ════════════════════════════════════════════════════════ */
-
-.post-card .post-card-accent {
-    transform-origin: left center;
-    transform: scaleX(0);
-    transition: transform 0.5s 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.post-card.revealed .post-card-accent {
-    transform: scaleX(1);
-}
-
-
-/* ════════════════════════════════════════════════════════
-   5. TILES de institutos: pop escalonado
-   ════════════════════════════════════════════════════════ */
-
-.institutos-grid .inst-btn,
-.institutos-grid .instituto-tile {
-    opacity: 0;
-    transform: scale(0.88);
-    transition:
-        opacity  0.4s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Cuando el padre .suggestions-card está revealed, los hijos se animan */
-.suggestions-card.revealed .institutos-grid .inst-btn:nth-child(1),
-.suggestions-card.revealed .institutos-grid .instituto-tile:nth-child(1) {
-    opacity: 1; transform: scale(1); transition-delay: 0.05s;
-}
-.suggestions-card.revealed .institutos-grid .inst-btn:nth-child(2),
-.suggestions-card.revealed .institutos-grid .instituto-tile:nth-child(2) {
-    opacity: 1; transform: scale(1); transition-delay: 0.12s;
-}
-.suggestions-card.revealed .institutos-grid .inst-btn:nth-child(3),
-.suggestions-card.revealed .institutos-grid .instituto-tile:nth-child(3) {
-    opacity: 1; transform: scale(1); transition-delay: 0.19s;
-}
-.suggestions-card.revealed .institutos-grid .inst-btn:nth-child(4),
-.suggestions-card.revealed .institutos-grid .instituto-tile:nth-child(4) {
-    opacity: 1; transform: scale(1); transition-delay: 0.26s;
-}
-
-
-/* ════════════════════════════════════════════════════════
-   6. TENDENCIAS: cada fila entra escalonada
-   ════════════════════════════════════════════════════════ */
-
-.trend-tag-container .trend-item,
-.trend-tag-container .trend-tag {
-    opacity: 0;
-    transform: translateX(14px);
-    transition:
-        opacity  0.4s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.suggestions-card.revealed .trend-tag-container .trend-item:nth-child(1),
-.suggestions-card.revealed .trend-tag-container .trend-tag:nth-child(1) {
-    opacity: 1; transform: none; transition-delay: 0.05s;
-}
-.suggestions-card.revealed .trend-tag-container .trend-item:nth-child(2),
-.suggestions-card.revealed .trend-tag-container .trend-tag:nth-child(2) {
-    opacity: 1; transform: none; transition-delay: 0.12s;
-}
-.suggestions-card.revealed .trend-tag-container .trend-item:nth-child(3),
-.suggestions-card.revealed .trend-tag-container .trend-tag:nth-child(3) {
-    opacity: 1; transform: none; transition-delay: 0.19s;
-}
-.suggestions-card.revealed .trend-tag-container .trend-item:nth-child(4),
-.suggestions-card.revealed .trend-tag-container .trend-tag:nth-child(4) {
-    opacity: 1; transform: none; transition-delay: 0.26s;
-}
-
-
-/* ════════════════════════════════════════════════════════
-   7. ACCESOS RÁPIDOS: slide desde la izquierda escalonado
-   ════════════════════════════════════════════════════════ */
-
-.accesos-rapidos-card .acceso-item {
-    opacity: 0;
-    transform: translateX(-16px);
-    transition:
-        opacity  0.4s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.accesos-rapidos-card.revealed .acceso-item:nth-child(2) { opacity:1; transform:none; transition-delay:0.06s; }
-.accesos-rapidos-card.revealed .acceso-item:nth-child(3) { opacity:1; transform:none; transition-delay:0.13s; }
-.accesos-rapidos-card.revealed .acceso-item:nth-child(4) { opacity:1; transform:none; transition-delay:0.20s; }
-.accesos-rapidos-card.revealed .acceso-item:nth-child(5) { opacity:1; transform:none; transition-delay:0.27s; }
-
-
-/* ════════════════════════════════════════════════════════
-   8. SUGERENCIAS DE USUARIOS: fade + slide up escalonado
-   ════════════════════════════════════════════════════════ */
-
-.suggestions-card .suggestion-item {
-    opacity: 0;
-    transform: translateY(10px);
-    transition:
-        opacity  0.4s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.suggestions-card.revealed .suggestion-item:nth-child(2) { opacity:1; transform:none; transition-delay:0.05s; }
-.suggestions-card.revealed .suggestion-item:nth-child(3) { opacity:1; transform:none; transition-delay:0.12s; }
-.suggestions-card.revealed .suggestion-item:nth-child(4) { opacity:1; transform:none; transition-delay:0.19s; }
-.suggestions-card.revealed .suggestion-item:nth-child(5) { opacity:1; transform:none; transition-delay:0.26s; }
-
-
-/* ════════════════════════════════════════════════════════
-   9. STATS del perfil: counter pop
-   ════════════════════════════════════════════════════════ */
-
-.profile-card-stats strong {
-    display: inline-block;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.profile-card.revealed .profile-card-stats strong {
-    animation: stat-pop 0.5s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-@keyframes stat-pop {
-    0%   { transform: scale(0.6); opacity: 0; }
-    100% { transform: scale(1);   opacity: 1; }
-}
-
-
-/* ════════════════════════════════════════════════════════
-   10. FEED CREATE BOX: fade suave
-   ════════════════════════════════════════════════════════ */
-
-.feed-create[data-reveal].revealed {
-    transition:
-        opacity  0.5s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}

@@ -82,17 +82,15 @@ function Home() {
 
     // Scroll infinito
     const loadMore = useCallback(() => {
-        if (loading) return
-        setLoading(true)
-        setTimeout(() => {
-            const nextPage = page + 1
-            const next = filteredPosts.slice(0, nextPage * PAGE_SIZE)
-            setVisiblePosts(next)
-            setPage(nextPage)
-            setHasMore(next.length < filteredPosts.length)
-            setLoading(false)
-        }, 400)
-    }, [page, filteredPosts, loading])
+    if (loading) return;
+
+    const nextPage = page + 1;
+    const next = filteredPosts.slice(0, nextPage * PAGE_SIZE);
+
+    setVisiblePosts(next);
+    setPage(nextPage);
+    setHasMore(next.length < filteredPosts.length);
+}, [page, filteredPosts, loading]);
 
     useEffect(() => {
         if (filteredPosts.length === 0) return
@@ -120,8 +118,8 @@ function Home() {
         <div className="home-layout" ref={layoutRef}>
 
             {/* IZQUIERDA */}
-            <aside className="home-sidebar-left">
-                <section className="sticky-sidebar">
+            <aside className="home-sidebar-left sticky-sidebar">
+                <div className="">
                     <ProfileCard
                         nickName={usuario?.nickName ?? 'Invitado'}
                         fotoPerfil={usuario?.fotoPerfil ?? null}
@@ -130,7 +128,7 @@ function Home() {
                         stats={userStats}
                     />
                     <AccesosRapidos />
-                </section>
+                </div>
             </aside>
 
             {/* FEED */}

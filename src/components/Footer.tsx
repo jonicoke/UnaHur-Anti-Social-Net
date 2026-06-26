@@ -2,7 +2,7 @@ import '../styles/components/footer.css'
 
 function HomeFooter() {
     return (
-        <footer className="home-footer" data-reveal="fade" data-reveal-delay="300">
+        <footer className="home-footer" >
             <div className="footer-links">
                 <a href="#">Acerca de</a>
                 <a href="#">Centro de ayuda</a>

@@ -11,7 +11,7 @@ interface Props {
 
 function Tendencias({ trends }: Props) {
     return (
-        <div className="suggestions-card" data-reveal="right" data-reveal-delay="100">
+        <div className="suggestions-card">
             <h4>TENDENCIAS</h4>
             <div className="trend-tag-container">
                 {trends.length > 0 ? (

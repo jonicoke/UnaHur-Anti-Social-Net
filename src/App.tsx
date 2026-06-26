@@ -38,7 +38,6 @@ function App() {
                     <RutaProtegida>
                         <NavBar />
                         <Home />
-                        <Footer />
                         <MobileFooter />
                     </RutaProtegida>
                 } />

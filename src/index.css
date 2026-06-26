@@ -49,3 +49,9 @@ a {
     text-decoration: none;
     color: inherit;
 }
+/* Modificaciones para que no existan desfaces */
+
+:root{
+    --navbar-height:62px;
+}
+

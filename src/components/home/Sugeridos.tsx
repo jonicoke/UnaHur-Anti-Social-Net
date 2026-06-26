@@ -14,7 +14,7 @@ function Sugeridos() {
     }, [])
 
     return (
-        <div className="suggestions-card" data-reveal="right" data-reveal-delay="200">
+        <div className="suggestions-card">
             <h4>Quizás los conozcas</h4>
             {usuarios.map(user => (
                 <div className="suggestion-item" key={user.id}>
