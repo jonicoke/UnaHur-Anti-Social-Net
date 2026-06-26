@@ -46,6 +46,19 @@
     background-color: #00662f;
 }
 
+@media (max-width: 768px) {
+    .home-layout {
+        grid-template-columns: 1fr;
+        padding: 0 0.75rem;
+        margin: 1rem auto;
+    }
 
+    .home-sidebar-left,
+    .home-sidebar-right {
+        display: none;
+    }
 
-
+    .sticky-sidebar {
+        position: static;
+    }
+}
