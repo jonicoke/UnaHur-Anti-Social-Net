@@ -39,7 +39,7 @@ body.tema-oscuro {
 }
 
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     background: var(--color-bg);
     color: var(--color-text);
     transition: background .3s ease, color .3s ease;

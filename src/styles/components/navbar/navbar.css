@@ -19,12 +19,16 @@
 }
 
 .navbar-logo {
-    width: 60px;
-    height: 60px;
+    width :40px;
+    height: 40px;
     font-size: 1.6rem;
     color: var(--color-primary);
 }
-
+.titulo-logo {
+    font-family:  'IBM Plex Sans';
+    font-weight: 500;   
+    margin-right: 40px;
+}
 .navbar-search{
     background: var(--color-bg);
     border:1px solid var(--color-text-muted);
@@ -119,7 +123,12 @@
         padding: 0 1rem;
         height: 56px;
     }
-
+    .navbar-logo {
+        margin-right: 10px;
+    }
+    .titulo-logo {
+        display: none;
+    }
     .navbar-center {
         display: none;
     }
@@ -130,12 +139,11 @@
     }
 
     .navbar-search {
-        flex: 1;
-        width: 100%;
+        width: 70%;
     }
 
     .navbar-search:focus {
-        width: 100%;
+        width: 70%;
     }
 
     .navbar-logo {

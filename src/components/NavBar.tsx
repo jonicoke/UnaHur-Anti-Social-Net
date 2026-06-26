@@ -23,6 +23,7 @@ function NavBar() {
         <nav className={`navbar ${visible ? '' : 'navbar-hidden'}`}>
             <div className="navbar-left">
                 <img className="navbar-logo" src={logo} alt="logo unahur antisocial net" />
+                <p className="titulo-logo">UNAHUR Anti-Social Net</p>
                 <input
                     className="navbar-search"
                     type="text"
