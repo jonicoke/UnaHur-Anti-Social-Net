@@ -1,7 +1,7 @@
 import type { Post } from '../types'
 import type {User} from "../types"
 
-const BASE_URL = 'http://localhost:3001'
+export const BASE_URL = "http://localhost:3001";
 
 export async function getPosts(): Promise<Post[]> {
     const res = await fetch(`${BASE_URL}/posts`)
@@ -13,10 +13,10 @@ export async function getPostImages(postId: number) {
     return res.json()
 }
 export async function getPostsByUser(userId: number) {
-    const res = await fetch(`http://localhost:3000/posts?userId=${userId}`)
-    return res.json()
+  const res = await fetch(`${BASE_URL}/posts?userId=${userId}`);
+  return res.json();
 }
-// Usuarios
+
 export async function getUsers(): Promise<User[]> {
   const res = await fetch(`${BASE_URL}/users`)
   return res.json()
@@ -35,4 +35,43 @@ export async function createUser(data: { nickName: string; email: string; passwo
   }
 
   return res.json()
+}
+
+export async function getPostById(postId: number): Promise<Post> {
+  const res = await fetch(`${BASE_URL}/posts/${postId}`);
+
+  if (!res.ok) {
+    throw new Error("No se pudo cargar la publicación");
+  }
+
+  return res.json();
+}
+
+export async function getCommentsByPost(postId: number) {
+  const res = await fetch(`${BASE_URL}/comments/post/${postId}`);
+
+  if (!res.ok) {
+    throw new Error("No se pudieron cargar los comentarios");
+  }
+
+  return res.json();
+}
+
+export async function createComment(data: {
+  content: string;
+  userId: number;
+  postId: number;
+}) {
+  const res = await fetch(`${BASE_URL}/comments`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error || "No se pudo crear el comentario");
+  }
+
+  return res.json();
 }
