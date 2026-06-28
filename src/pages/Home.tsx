@@ -19,7 +19,6 @@ import FiltroInstituto, { INSTITUTOS_CONFIG } from '../components/home/FiltroIns
 
 const PAGE_SIZE = 2
 
-
 function Home() {
     const [allPosts,      setAllPosts]      = useState<Post[]>([])
     const [visiblePosts,  setVisiblePosts]  = useState<Post[]>([])
@@ -52,8 +51,8 @@ function Home() {
         })
     }, [usuario])
 
-    // Cargar posts con imágenes
-    useEffect(() => {
+    // Función reutilizable para cargar y actualizar los posts con imágenes
+    const actualizarFeed = () => {
         getPosts().then(async data => {
             const postsConImagenes = await Promise.all(
                 data.map(async post => {
@@ -63,6 +62,11 @@ function Home() {
             )
             setAllPosts(postsConImagenes)
         })
+    }
+
+    // Cargar posts con imágenes al iniciar el componente
+    useEffect(() => {
+        actualizarFeed()
     }, [])
 
     // Filtro por instituto
@@ -82,15 +86,15 @@ function Home() {
 
     // Scroll infinito
     const loadMore = useCallback(() => {
-    if (loading) return;
+        if (loading) return;
 
-    const nextPage = page + 1;
-    const next = filteredPosts.slice(0, nextPage * PAGE_SIZE);
+        const nextPage = page + 1;
+        const next = filteredPosts.slice(0, nextPage * PAGE_SIZE);
 
-    setVisiblePosts(next);
-    setPage(nextPage);
-    setHasMore(next.length < filteredPosts.length);
-}, [page, filteredPosts, loading]);
+        setVisiblePosts(next);
+        setPage(nextPage);
+        setHasMore(next.length < filteredPosts.length);
+    }, [page, filteredPosts, loading]);
 
     useEffect(() => {
         if (filteredPosts.length === 0) return
@@ -113,7 +117,6 @@ function Home() {
         return Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 4)
     })()
 
-
     return (
         <div className="home-layout" ref={layoutRef}>
 
@@ -131,7 +134,7 @@ function Home() {
                 </div>
             </aside>
 
-            {/* FEED */}
+            {/* FEED CENTRAL */}
             <main className="home-feed">
                 <HomeBanner />
 
@@ -142,7 +145,8 @@ function Home() {
                     </div>
                 )}
 
-                <FeedCreate />
+                
+                <FeedCreate onPostCreated={actualizarFeed} />
 
                 {visiblePosts.map((post, index) => (
                     <PostCard key={post.id} post={post} index={index} />

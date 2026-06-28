@@ -1,23 +1,26 @@
-
 .feed-create {
     background: var(--color-bg-cards);
     border: 1px solid var(--color-border);
     border-radius: 6px;
     padding: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    display: block;
     margin-bottom: 1rem;
     box-shadow: 0 2px 12px var(--color-shadow);
 }
 
-.feed-create-avatar {
-    font-size: 2.4rem;
-    color: var(--color-text-muted);
+.feed-create-header-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.feed-create-input-container {
+    flex: 1;
 }
 
 .feed-create-btn {
-    flex: 1;
+    width: 100%;
     background: none;
     border: 1.5px solid var(--color-border);
     border-radius: 6px;
@@ -30,32 +33,157 @@
 }
 
 .feed-create-btn:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    background-color: rgba(255, 255, 255, 0.03);
 }
 
-/* LOADER */
-.feed-loader {
-    display: flex;
-    justify-content: center;
-    padding: 1.5rem 0;
-}
 
-.feed-loader-dot {
-    width: 10px;
-    height: 10px;
-    background: var(--color-bg);
+.feed-create-avatar-circle {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    animation: pulse 1s infinite;
+    background-color: #242424;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.7); }
-}
-
-.feed-end {
-    font-size: 0.82rem;
+.feed-create-avatar-icon {
+    width: 22px;
+    height: 22px;
     color: var(--color-text-muted);
-    text-align: center;
+}
+
+/* --- Estilos del Formulario Desplegado --- */
+.feed-textarea-expandida {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: #ffffff;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    resize: none;
+}
+
+.feed-create-desplegable {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.feed-create-seccion {
+    background-color: #121212;
+    border: 1px solid var(--color-border);
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.feed-create-titulo-seccion {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.feed-create-input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.feed-create-input-url {
+    flex: 1;
+    background-color: var(--color-bg-cards);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 6px 10px;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+}
+
+.feed-create-btn-eliminar {
+    background: transparent;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0 4px;
+}
+
+.feed-create-btn-agregar {
+    background: transparent;
+    border: none;
+    color: #00ccff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0;
+    margin-top: 4px;
+}
+
+.feed-create-tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.feed-create-tag-chip {
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-cards);
+    color: var(--color-text-muted);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.feed-create-tag-chip.seleccionado {
+    background-color: #00c853;
+    border-color: #00c853;
+    color: #ffffff;
+}
+
+.feed-create-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.feed-create-btn-cancelar {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    border-radius: 6px;
+    padding: 6px 16px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.feed-create-btn-publicar {
+    background-color: #00c853;
+    border: none;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 6px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+.feed-create-btn-publicar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
