@@ -157,15 +157,15 @@
 
     .navbar-left {
         flex: 1;
-        gap: 0.5rem;
+        gap: 2.3rem;
     }
 
     .navbar-search {
-        width: 70%;
+        width: 250px;
     }
 
     .navbar-search:focus {
-        width: 70%;
+        width: 280px;
     }
 
     .navbar-logo {

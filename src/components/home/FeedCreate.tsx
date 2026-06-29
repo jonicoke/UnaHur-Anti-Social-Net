@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../../context/authContext'
 import '../../styles/components/home/feedCreate.css'
+import { useFeedCreate } from '../../context/FeedCreateContext';
 
 interface FeedCreateProps {
-    onPostCreated: () => void
-    fotoPerfil: string | null
+    onPostCreated: () => void;
+    fotoPerfil: string | null;
 }
 
-export default function FeedCreate({ onPostCreated, fotoPerfil }: FeedCreateProps) {
+export default function FeedCreate({ onPostCreated, fotoPerfil}: FeedCreateProps) {
     const { usuario } = useAuth()
     const userId = usuario?.id
 
@@ -15,8 +16,9 @@ export default function FeedCreate({ onPostCreated, fotoPerfil }: FeedCreateProp
     const [images, setImages] = useState<string[]>(['']) 
     const [tagsDisponibles, setTagsDisponibles] = useState<{ id: number; name: string }[]>([])
     const [selectedTags, setSelectedTags] = useState<number[]>([])
-    const [estaExpandido, setEstaExpandido] = useState(false)
-
+    // const [estaExpandido, setEstaExpandido] = useState(false)
+    const { abierto, abrirFeed, cerrarFeed } = useFeedCreate();
+   
     useEffect(() => {
         fetch('http://localhost:3001/tags')
             .then((res) => res.json())
@@ -82,7 +84,7 @@ export default function FeedCreate({ onPostCreated, fotoPerfil }: FeedCreateProp
             setDescription('')
             setImages([''])
             setSelectedTags([])
-            setEstaExpandido(false)
+            cerrarFeed()
 
             onPostCreated()
 
@@ -109,7 +111,7 @@ export default function FeedCreate({ onPostCreated, fotoPerfil }: FeedCreateProp
             <button
                 type="button"
                 className="feed-create-btn"
-                onClick={() => setEstaExpandido(true)}
+                onClick={() => abrirFeed()}
             >
                 ¿Qué estás pensando, {usuario?.nickName || "usuario"}?
             </button>
@@ -118,10 +120,10 @@ export default function FeedCreate({ onPostCreated, fotoPerfil }: FeedCreateProp
     </div>
 
     {/* Modal */}
-    {estaExpandido && (
+    {abierto && (
         <div
             className="feed-modal-overlay"
-            onClick={() => setEstaExpandido(false)}
+            onClick={() => abrirFeed()}
         >
             <div
                 className="feed-modal"
@@ -135,7 +137,7 @@ export default function FeedCreate({ onPostCreated, fotoPerfil }: FeedCreateProp
                         <button
                             type="button"
                             className="feed-modal-close"
-                            onClick={() => setEstaExpandido(false)}
+                            onClick={() => cerrarFeed()}
                         >
                             ✕
                         </button>
@@ -228,7 +230,7 @@ export default function FeedCreate({ onPostCreated, fotoPerfil }: FeedCreateProp
                             type="button"
                             className="feed-create-btn-cancelar"
                             onClick={() => {
-                                setEstaExpandido(false);
+                                cerrarFeed();
                                 setDescription("");
                             }}
                         >

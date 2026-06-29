@@ -26,13 +26,13 @@ function Home() {
     const [institutoFilter, setInstitutoFilter] = useState<string | null>(null)
     const [page,    setPage]    = useState(1)
     const [hasMore, setHasMore] = useState(true)
-    const [loading, setLoading] = useState(false)
+    const [loading] = useState(false)
     const [userStats, setUserStats] = useState({ posts: 0, comentarios: 0 })
     const loaderRef  = useRef<HTMLDivElement>(null)
     const layoutRef  = useReveal([visiblePosts])
-    const { usuario, logout } = useAuth()
-    const navigate = useNavigate()
-
+    const { usuario } = useAuth()
+    // Estado para comunicar el MobileFooter
+    const [abrirFeedCreate, setAbrirFeedCreate] = useState(false);
     // Stats del usuario
     useEffect(() => {
         if (!usuario?.id) return
@@ -146,11 +146,12 @@ function Home() {
                 )}
 
                 
-                <FeedCreate 
+                <FeedCreate
                     onPostCreated={actualizarFeed}
                     fotoPerfil={usuario?.fotoPerfil ?? null}
-
-                    />
+                    abrir={abrirFeedCreate}
+                    setAbrir={setAbrirFeedCreate}
+                />
 
                 {visiblePosts.map((post, index) => (
                     <PostCard key={post.id} post={post} index={index} />

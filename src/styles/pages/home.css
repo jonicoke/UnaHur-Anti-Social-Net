@@ -13,7 +13,7 @@
 
 .home-feed {
     flex: 1;
-    min-width: 650px;
+    min-width: 0;
 }
 
 .home-sidebar-right {
@@ -57,21 +57,29 @@
     background-color: #00662f;
 }
 
-@media (max-width: 768px) {
-    .home-layout {
-        grid-template-columns: 1fr;
-        padding: 0 0.75rem;
-        margin: 1rem auto;
+@media (max-width:768px){
+
+    .home-layout{
+        display: block;
+        width:100%;
+        margin:1rem auto;
+        padding:0 .75rem 5rem; /* espacio para el footer */
     }
 
     .home-sidebar-left,
-    .home-sidebar-right {
-        display: none;
+    .home-sidebar-right{
+        display:none;
     }
 
-    .sticky-sidebar {
-        position: static;
+    .home-feed{
+        width:100%;
+        min-width:0;
     }
+
+    .sticky-sidebar{
+        position:static;
+    }
+
 }
 .home-sidebar-left,
 .home-sidebar-right {

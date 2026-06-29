@@ -73,6 +73,8 @@
 }
 
 .post-card {
+    width: 100%;
+    box-sizing: border-box;
     position: relative;
     background: var(--color-bg-cards);
     border-radius: 6px;
@@ -93,7 +95,7 @@
 
 .post-header-user-row {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     gap: 0.6rem;
 }
 
@@ -177,3 +179,16 @@
     object-fit: cover;
 }
 
+@media (max-width:768px){
+
+    .post-footer-actions{
+        flex-wrap:wrap;
+        gap:.5rem;
+    }
+
+    .action-btn,
+    .post-ver-mas-action{
+        font-size:.8rem;
+    }
+
+}
