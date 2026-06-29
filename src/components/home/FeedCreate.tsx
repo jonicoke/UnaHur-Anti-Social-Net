@@ -4,9 +4,10 @@ import '../../styles/components/home/feedCreate.css'
 
 interface FeedCreateProps {
     onPostCreated: () => void
+    fotoPerfil: string | null
 }
 
-export default function FeedCreate({ onPostCreated }: FeedCreateProps) {
+export default function FeedCreate({ onPostCreated, fotoPerfil }: FeedCreateProps) {
     const { usuario } = useAuth()
     const userId = usuario?.id
 
@@ -92,116 +93,162 @@ export default function FeedCreate({ onPostCreated }: FeedCreateProps) {
     }
 
     return (
-        <div className="feed-create">
-            <form onSubmit={handleSubmitPost}>
-                
-                <div className="feed-create-header-row">
-                  
-                    <div className="feed-create-avatar-circle">
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="feed-create-avatar-icon">
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                        </svg>
-                    </div>
-                    
-                    <div className="feed-create-input-container">
-                        {!estaExpandido ? (
-                            <button
-                                type="button"
-                                className="feed-create-btn"
-                                onClick={() => setEstaExpandido(true)}
-                            >
-                                ¿Qué estás pensando, {usuario?.nickName || 'usuario'}?
-                            </button>
-                        ) : (
-                            <textarea
-                                className="feed-textarea-expandida"
-                                rows={3}
-                                placeholder={`¿Qué estás pensando, ${usuario?.nickName || 'usuario'}?`}
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                autoFocus
-                                required
-                            />
-                        )}
-                    </div>
-                </div>
+        <>
+    {/* Card pequeña */}
+    <div className="feed-create">
+        <div className="feed-create-header-row">
 
-                {estaExpandido && (
-                    <div className="feed-create-desplegable">
-                        
-                        <div className="feed-create-seccion">
-                            <label className="feed-create-titulo-seccion"> Imágenes (URLs)</label>
-                            {images.map((url, index) => (
-                                <div key={index} className="feed-create-input-group">
-                                    <input
-                                        type="text"
-                                        className="feed-create-input-url"
-                                        placeholder="https://ejemplo.com/imagen.jpg"
-                                        value={url}
-                                        onChange={(e) => handleImageChange(index, e.target.value)}
-                                    />
-                                    {images.length > 1 && (
-                                        <button
-                                            type="button"
-                                            className="feed-create-btn-eliminar"
-                                            onClick={() => eliminarCampoImagen(index)}
-                                        >
-                                            ✕
-                                        </button>
-                                    )}
-                                </div>
-                            ))}
-                            <button
-                                type="button"
-                                className="feed-create-btn-agregar"
-                                onClick={agregarCampoImagen}
-                            >
-                                + Añadir otro enlace de imagen
-                            </button>
-                        </div>
-
-                        <div className="feed-create-seccion">
-                            <label className="feed-create-titulo-seccion">Seleccionar Etiquetas</label>
-                            <div className="feed-create-tags-list">
-                                {tagsDisponibles.map((tag) => {
-                                    const estaSeleccionado = selectedTags.includes(tag.id)
-                                    return (
-                                        <button
-                                            key={tag.id}
-                                            type="button"
-                                            className={`feed-create-tag-chip ${estaSeleccionado ? 'seleccionado' : ''}`}
-                                            onClick={() => handleTagToggle(tag.id)}
-                                        >
-                                            #{tag.name}
-                                        </button>
-                                    )
-                                })}
-                            </div>
-                        </div>
-
-                        <div className="feed-create-actions">
-                            <button
-                                type="button"
-                                className="feed-create-btn-cancelar"
-                                onClick={() => {
-                                    setEstaExpandido(false)
-                                    setDescription('')
-                                }}
-                            >
-                                Cancelar
-                            </button>
-                            <button
-                                type="submit"
-                                className="feed-create-btn-publicar"
-                                disabled={!description.trim()}
-                            >
-                                Publicar
-                            </button>
-                        </div>
-
-                    </div>
+            <div className="feed-create-avatar-circle">
+                {fotoPerfil ? (
+                    <img src={fotoPerfil} alt={usuario?.nickName} className="profile-avatar-img" />
+                ) : (
+                    <i className="bi bi-person-circle"></i>
                 )}
-            </form>
+            </div>
+
+            <button
+                type="button"
+                className="feed-create-btn"
+                onClick={() => setEstaExpandido(true)}
+            >
+                ¿Qué estás pensando, {usuario?.nickName || "usuario"}?
+            </button>
+
         </div>
+    </div>
+
+    {/* Modal */}
+    {estaExpandido && (
+        <div
+            className="feed-modal-overlay"
+            onClick={() => setEstaExpandido(false)}
+        >
+            <div
+                className="feed-modal"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <form onSubmit={handleSubmitPost}>
+
+                    <div className="feed-modal-header">
+                        <h2>Nueva publicación</h2>
+
+                        <button
+                            type="button"
+                            className="feed-modal-close"
+                            onClick={() => setEstaExpandido(false)}
+                        >
+                            ✕
+                        </button>
+                    </div>
+
+                    <div className="feed-create-seccion">
+
+                        <textarea
+                            className="feed-textarea-expandida"
+                            rows={5}
+                            placeholder={`¿Qué estás pensando, ${usuario?.nickName || "usuario"}?`}
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            autoFocus
+                            required
+                        />
+
+                    </div>
+
+                    <div className="feed-create-seccion">
+                        <label className="feed-create-titulo-seccion">
+                            Imágenes (URLs)
+                        </label>
+
+                        {images.map((url, index) => (
+                            <div key={index} className="feed-create-input-group">
+
+                                <input
+                                    type="text"
+                                    className="feed-create-input-url"
+                                    placeholder="https://ejemplo.com/imagen.jpg"
+                                    value={url}
+                                    onChange={(e) =>
+                                        handleImageChange(index, e.target.value)
+                                    }
+                                />
+
+                                {images.length > 1 && (
+                                    <button
+                                        type="button"
+                                        className="feed-create-btn-eliminar"
+                                        onClick={() => eliminarCampoImagen(index)}
+                                    >
+                                        ✕
+                                    </button>
+                                )}
+
+                            </div>
+                        ))}
+
+                        <button
+                            type="button"
+                            className="feed-create-btn-agregar"
+                            onClick={agregarCampoImagen}
+                        >
+                            + Añadir otro enlace de imagen
+                        </button>
+                    </div>
+
+                    <div className="feed-create-seccion">
+
+                        <label className="feed-create-titulo-seccion">
+                            Seleccionar Etiquetas
+                        </label>
+
+                        <div className="feed-create-tags-list">
+
+                            {tagsDisponibles.map((tag) => {
+                                const estaSeleccionado = selectedTags.includes(tag.id);
+
+                                return (
+                                    <button
+                                        key={tag.id}
+                                        type="button"
+                                        className={`feed-create-tag-chip ${estaSeleccionado ? "seleccionado" : ""}`}
+                                        onClick={() => handleTagToggle(tag.id)}
+                                    >
+                                        #{tag.name}
+                                    </button>
+                                );
+                            })}
+
+                        </div>
+
+                    </div>
+
+                    <div className="feed-create-actions">
+
+                        <button
+                            type="button"
+                            className="feed-create-btn-cancelar"
+                            onClick={() => {
+                                setEstaExpandido(false);
+                                setDescription("");
+                            }}
+                        >
+                            Cancelar
+                        </button>
+
+                        <button
+                            type="submit"
+                            className="feed-create-btn-publicar"
+                            disabled={!description.trim()}
+                        >
+                            Publicar
+                        </button>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    )}
+</>
     )
 }
