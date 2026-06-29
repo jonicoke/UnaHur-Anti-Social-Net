@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/authContext'; // Ajustado con 'a' minúscula para resolver el conflicto
+import { useAuth } from '../context/authContext'; 
 import '../styles/components/home/profileCard.css'; 
 import '../styles/pages/perfil.css';
 

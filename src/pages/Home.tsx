@@ -60,7 +60,7 @@ function Home() {
                     return { ...post, PostImages: images }
                 })
             )
-            setAllPosts(postsConImagenes)
+            setAllPosts(postsConImagenes.reverse())
         })
     }
 
@@ -146,7 +146,11 @@ function Home() {
                 )}
 
                 
-                <FeedCreate onPostCreated={actualizarFeed} />
+                <FeedCreate 
+                    onPostCreated={actualizarFeed}
+                    fotoPerfil={usuario?.fotoPerfil ?? null}
+
+                    />
 
                 {visiblePosts.map((post, index) => (
                     <PostCard key={post.id} post={post} index={index} />

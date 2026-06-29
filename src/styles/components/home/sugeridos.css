@@ -62,3 +62,55 @@
     background: var(--color-bg);
     color: var(--color-text-secondary);
 }
+
+
+/* Estados del botón seguir */
+.seguir-btn {
+    background: none;
+    border: 1.5px solid var(--color-primary);
+    color: var(--color-primary);
+    border-radius: 6px;
+    padding: 0.2rem 0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.seguir-btn--idle:hover {
+    background: var(--color-bg);
+}
+
+.seguir-btn--cargando {
+    border-color: var(--color-text-muted);
+    cursor: default;
+    opacity: 0.7;
+}
+
+.seguir-btn--seguido {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+    cursor: default;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.72rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.seguir-spinner {
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--color-text-muted);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 0.7s linear infinite;
+}

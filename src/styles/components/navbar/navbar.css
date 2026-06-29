@@ -25,31 +25,53 @@
     color: var(--color-primary);
 }
 .titulo-logo {
-    font-family:  'IBM Plex Sans';
-    font-weight: 500;   
-    margin-right: 40px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: .85rem;
+    letter-spacing: -.2px;
+    color: var(--color-text);
+    margin-right: 24px;
+    white-space: nowrap;
 }
-.navbar-search{
-    background: var(--color-bg);
-    border:1px solid var(--color-text-muted);
-    border-radius:4px;
-    padding:.45rem 1rem;
-    font-size:.9rem;
-    outline:none;
 
-    width:220px;
-    color:var(--color-text);
-
+.navbar-search {
+    background: var(--color-bg-cards);  /* fondo levemente diferente al navbar */
+    border: 1px solid var(--color-border);
+    border-radius: 20px;               /* pill shape, más moderno */
+    padding: .4rem 1rem .4rem 2.1rem;  /* espacio para el ícono */
+    font-size: .85rem;
+    outline: none;
+    width: 200px;
+    color: var(--color-text);
     transition:
         width .28s ease,
         border-color .2s ease,
         box-shadow .2s ease;
 }
 
-.navbar-search:focus{
-    width:360px;
-    border-color:var(--color-primary);
-    box-shadow:0 0 0 3px rgba(0,132,61,.12);
+.navbar-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-search-icon {
+    position: absolute;
+    left: .7rem;
+    color: var(--color-text-muted);
+    font-size: .9rem;
+    pointer-events: none;
+    transition: color .2s;
+}
+
+.navbar-search-wrap:focus-within .navbar-search-icon {
+    color: var(--color-primary);
+}
+
+.navbar-search:focus {
+    width: 320px;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 132, 61, .12);
 }
 
 .navbar-search::placeholder {
@@ -66,20 +88,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--color-text-secondary);
-    font-size:.8rem;
-    font-weight:700;
-    padding: 0 1.2rem;
+    color: var(--color-text-muted);
+    font-size: .68rem;
+    font-weight: 600;
+    padding: 0 .9rem;
     border-bottom: 3px solid transparent;
-    gap: 3px;
+    gap: 2px;
     cursor: pointer;
     transition: all 0.15s;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
+    letter-spacing: .4px;
 }
 
 .nav-item i {
-    font-size: 1.3rem;
+    font-size: 1.1rem; 
 }
 
 .nav-item:hover {
@@ -160,3 +182,4 @@
         transform: translateY(-100%);
     }
 }
+
