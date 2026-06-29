@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/authContext'; 
+import { useAuth } from '../context/authContext';
 import '../styles/components/home/profileCard.css'; 
 import '../styles/pages/perfil.css';
+import { getPostsByUser, getCommentsByPost } from '../services/api'; 
+import type { Post } from '../types';
 
-interface PostConComentarios {
-  id: number;
-  description: string;
+interface PostConComentarios extends Post {
   cantidadComentarios: number;
 }
 
@@ -19,39 +19,35 @@ export const Perfil: React.FC = () => {
   useEffect(() => {
     if (!usuario || !usuario.id) return;
 
-    const fetchPostsYComentarios = async () => {
+    const cargarPerfil = async () => {
       try {
-        const resPosts = await fetch(`http://localhost:3000/posts?userId=${usuario.id}`);
-        if (!resPosts.ok) throw new Error('Error al cargar las publicaciones');
-        const listaPosts = await resPosts.json();
+        const listaPosts = await getPostsByUser(usuario.id);
 
-        const postsCompletos = await Promise.all(
-          listaPosts.map(async (post: any) => {
-            try {
-              const resComments = await fetch(`http://localhost:3000/comments/post/${post.id}`);
-              if (resComments.ok) {
-                const comentarios = await resComments.json();
+        if (Array.isArray(listaPosts)) {
+          const postsCompletos = await Promise.all(
+            listaPosts.map(async (post: Post) => {
+              try {
+                const comentarios = await getCommentsByPost(post.id);
                 return {
                   ...post,
-                  cantidadComentarios: comentarios.length
+                  cantidadComentarios: Array.isArray(comentarios) ? comentarios.length : 0
                 };
+              } catch (err) {
+                console.error(`Error al traer comentarios del post ${post.id}`, err);
+                return { ...post, cantidadComentarios: 0 };
               }
-            } catch (err) {
-              console.error(`Error al traer comentarios del post ${post.id}`, err);
-            }
-            return { ...post, cantidadComentarios: 0 };
-          })
-        );
-
-        setPosts(postsCompletos);
+            })
+          );
+          setPosts(postsCompletos);
+        }
       } catch (error) {
-        console.error("Error al buscar los posts del usuario:", error);
+        console.error("Error al cargar las publicaciones del perfil:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPostsYComentarios();
+    cargarPerfil();
   }, [usuario]);
 
   const handleLogout = () => {
