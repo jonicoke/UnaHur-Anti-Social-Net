@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import RutaProtegida from "./components/RutaProtegida";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import Perfil from "./pages/Perfil";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import './styles/mobileFooter.css'
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/" element={
                     <RutaProtegida>
                         <NavBar />
+                        <Perfil />
                         <Home />
                         <MobileFooter />
                     </RutaProtegida>
