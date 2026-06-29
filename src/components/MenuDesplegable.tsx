@@ -7,7 +7,7 @@ import { BsSun, BsMoon } from "react-icons/bs";
 function MenuDesplegable() {
     const { usuario, logout } = useAuth();
     const navigate = useNavigate();
-  const { oscuro, setOscuro } = useTema();
+    const { oscuro, setOscuro } = useTema();
 
     const handleLogout = () => {
         logout();
@@ -17,46 +17,54 @@ function MenuDesplegable() {
     return (
         <div className="menu-desplegable">
 
+            {/* Header: foto + info + botón perfil */}
             <div className="menu-header">
-                {usuario?.fotoPerfil ? (
-                    <img src={usuario.fotoPerfil} alt={usuario.nickName} className="avatar-img" />
-                ) : (
-                    <i className="bi bi-person-circle"></i>
-                )}
-                <div>
-                    <h4>{usuario?.nickName}</h4>
-                    <p>{usuario?.instituto ?? 'Estudiante · UNAHUR'}</p>
+                <div className="menu-avatar-wrap">
+                    {usuario?.fotoPerfil ? (
+                        <img src={usuario.fotoPerfil} alt={usuario.nickName} className="avatar-img" />
+                    ) : (
+                        <div className="avatar-placeholder">
+                            <i className="bi bi-person-fill"></i>
+                        </div>
+                    )}
                 </div>
+                <div className="menu-user-info">
+                    <span className="menu-username">{usuario?.nickName}</span>
+                    <span className="menu-institute">{usuario?.instituto ?? 'Estudiante · UNAHUR'}</span>
+                </div>
+                <Link className="perfil-btn" to="/profile">
+                    Ver perfil
+                </Link>
             </div>
 
-            <Link className="perfil-btn" to="/profile">
-                Ver perfil completo
-            </Link>
+            <div className="menu-divider" />
 
+            {/* Links de cuenta */}
             <div className="menu-section">
-                <span className="menu-title">
-                    Cuenta
-                </span>
-
-                <Link to="/profile">
-                    <i className="bi bi-person"></i>
-                    Mi perfil
+                <Link to="/profile" className="menu-item">
+                    <span className="menu-item-icon"><i className="bi bi-person"></i></span>
+                    <span>Mi perfil</span>
                 </Link>
 
-                <Link to="/my-posts">
-                    <i className="bi bi-file-post"></i>
-                    Mis publicaciones
+                <Link to="/my-posts" className="menu-item">
+                    <span className="menu-item-icon"><i className="bi bi-file-post"></i></span>
+                    <span>Mis publicaciones</span>
                 </Link>
+
+                <button className="menu-item menu-item-btn" onClick={() => setOscuro(!oscuro)} aria-label="Cambiar tema">
+                    <span className="menu-item-icon">
+                        {oscuro ? <BsSun /> : <BsMoon />}
+                    </span>
+                    <span>Cambiar tema</span>
+                </button>
             </div>
-             <button className="icon-btn" onClick={() => setOscuro(!oscuro)} aria-label="Cambiar tema">
-            {oscuro ? <BsSun /> : <BsMoon />}Cambiar tema
-          </button>
-            <button
-                className="logout-btn-menu"
-                onClick={handleLogout}
-            >
-                <i className="bi bi-box-arrow-right"></i>
-                Cerrar sesión
+
+            <div className="menu-divider" />
+
+            {/* Logout */}
+            <button className="menu-item menu-item-btn menu-item-danger" onClick={handleLogout}>
+                <span className="menu-item-icon"><i className="bi bi-box-arrow-right"></i></span>
+                <span>Cerrar sesión</span>
             </button>
 
         </div>

@@ -24,14 +24,18 @@ function NavBar() {
             <div className="navbar-left">
                 <img className="navbar-logo" src={logo} alt="logo unahur antisocial net" />
                 <p className="titulo-logo">UNAHUR Anti-Social Net</p>
-                <input
-                    className="navbar-search"
-                    type="text"
-                    placeholder="Buscar..."
-                    value={busqueda}
-                    onChange={(e) => setBusqueda(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === "Enter") buscar(); }}
-                />
+                
+                <div className="navbar-search-wrap">
+                    <i className="bi bi-search navbar-search-icon"></i>
+                    <input
+                        className="navbar-search"
+                        type="text"
+                        placeholder="Buscar..."
+                        value={busqueda}
+                        onChange={(e) => setBusqueda(e.target.value)}
+                        onKeyDown={(e) => { if (e.key === "Enter") buscar(); }}
+                    />
+                </div>
             </div>
 
             <div className="navbar-center">
