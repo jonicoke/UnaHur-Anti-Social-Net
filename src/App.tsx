@@ -28,7 +28,13 @@ function App() {
                         <MobileFooter />
                     </RutaProtegida>
                 } />
-                <Route path="/post/:id" element={<DetallePost />} />
+                <Route path="/post/:id" element={
+                    <RutaProtegida>
+                        <NavBar />
+                        <DetallePost />
+                        <MobileFooter />
+                    </RutaProtegida>
+}                 />
             </Routes>
             </FeedCreateProvider>
         </BrowserRouter>
