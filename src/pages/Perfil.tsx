@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
-import '../styles/pages/perfil.css'; // O la ruta del CSS que hayas elegido
-
-// Importamos las funciones necesarias (agregando deletePost)
+import '../styles/pages/perfil.css'; 
 import { getPostsByUser, getCommentsByPost, deletePost } from '../services/api'; 
 import type { Post } from '../types';
 
