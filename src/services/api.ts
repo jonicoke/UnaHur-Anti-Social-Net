@@ -56,6 +56,18 @@ export async function getCommentsByPost(postId: number) {
 
   return res.json();
 }
+export async function deletePost(postId: number): Promise<{ message: string }> {
+  const res = await fetch(`${BASE_URL}/posts/${postId}`, {
+    method: 'DELETE',
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.error || 'No se pudo eliminar la publicación');
+  }
+
+  return res.json();
+}
 
 export async function createComment(data: {
   content: string;

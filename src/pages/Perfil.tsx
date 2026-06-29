@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
-import '../styles/components/home/profileCard.css'; 
-import '../styles/pages/perfil.css';
-import { getPostsByUser, getCommentsByPost } from '../services/api'; 
+import '../styles/pages/perfil.css'; 
+import { getPostsByUser, getCommentsByPost, deletePost } from '../services/api'; 
 import type { Post } from '../types';
 
 interface PostConComentarios extends Post {
@@ -50,11 +49,26 @@ export const Perfil: React.FC = () => {
     cargarPerfil();
   }, [usuario]);
 
+  const handleDelete = async (postId: number) => {
+    const confirmar = window.confirm("¿Estás seguro de que querés eliminar esta publicación?");
+    if (!confirmar) return;
+
+    try {
+      await deletePost(postId);
+      setPosts(prevPosts => prevPosts.filter(post => post.id !== postId));
+      alert("Publicación eliminada correctamente.");
+    } catch (error) {
+      console.error("Error al eliminar el post:", error);
+      alert("No se pudo eliminar la publicación. Intentalo de nuevo.");
+    }
+  };
+
   const handleLogout = () => {
     logout(); 
     navigate('/login'); 
   };
 
+  
   if (!usuario) return <div>Cargando datos de usuario...</div>;
 
   return (
@@ -83,9 +97,22 @@ export const Perfil: React.FC = () => {
                   <span className="comments-count">
                     Comentarios visibles: {post.cantidadComentarios}
                   </span>
-                  <Link to={`/post/${post.id}`} className="btn-ver-mas">
-                    Ver más
-                  </Link>
+                  
+                  <div className="post-actions">
+                    <Link to={`/post/${post.id}`} className="btn-ver-mas">
+                      Ver más
+                    </Link>
+                    
+                    {/* BOTÓN DE ELIMINAR */}
+                    <button 
+                      onClick={() => handleDelete(post.id)} 
+                      className="btn-eliminar"
+                      title="Eliminar publicación"
+                    >
+                      <i className="bi bi-trash"></i> Eliminar
+                    </button>
+                  </div>
+
                 </div>
               </div>
             ))}
