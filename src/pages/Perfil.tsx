@@ -70,6 +70,7 @@ export const Perfil: React.FC = () => {
     navigate('/login'); 
   };
 
+  
   if (!usuario) return <div>Cargando datos de usuario...</div>;
 
   return (
