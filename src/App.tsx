@@ -16,8 +16,14 @@ function App() {
                 <Route path="/" element={
                     <RutaProtegida>
                         <NavBar />
-                        <Perfil />
                         <Home />
+                        <MobileFooter />
+                    </RutaProtegida>
+                } />
+                <Route path="/profile" element={
+                    <RutaProtegida>
+                        <NavBar />
+                        <Perfil />
                         <MobileFooter />
                     </RutaProtegida>
                 } />

@@ -1,0 +1,79 @@
+/* Ejemplo de estilos para centrar y darle forma a tu perfil */
+.perfil-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.perfil-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #eaeaea;
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+}
+
+.nickname-highlight {
+  color: #4a90e2; /* Un color destacado para tu nombre */
+}
+
+.btn-logout {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-logout:hover {
+  background-color: #e04343;
+}
+
+.perfil-posts-section h3 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.no-posts-msg {
+  color: #666;
+  font-style: italic;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px dashed #ccc;
+  text-align: center;
+}
+
+.post-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-eliminar {
+  background-color: transparent;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: #dc3545;
+  color: white;
+}
