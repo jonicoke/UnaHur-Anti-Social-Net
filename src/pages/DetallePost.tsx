@@ -10,12 +10,12 @@ type Tag = {
 type Post = {
   id: number;
   description: string;
-  tags: Tag[];
+  Tags: Tag[];
 };
 
 type Comment = {
   id: number;
-  description: string;
+  content: string;
 };
 
 type PostImage = {
@@ -87,9 +87,10 @@ function DetallePost() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          description: newComment,
-          postId: Number(id),
-        }),
+        content: newComment,
+        postId: Number(id),
+        userId: 1,
+}),
       });
 
       if (!response.ok) {
@@ -118,8 +119,8 @@ function DetallePost() {
         <p>{post.description}</p>
 
         <h2>Etiquetas</h2>
-        {post.tags?.length > 0 ? (
-          post.tags.map((tag) => <span key={tag.id}>#{tag.name} </span>)
+        {post.Tags?.length > 0 ? (
+          post.Tags.map((tag) => <span key={tag.id}>#{tag.name} </span>)
         ) : (
           <p>Sin etiquetas.</p>
         )}
@@ -140,7 +141,7 @@ function DetallePost() {
         {comments.length > 0 ? (
           comments.map((comment) => (
             <article key={comment.id}>
-              <p>{comment.description}</p>
+              <p>{comment.content}</p>
             </article>
           ))
         ) : (

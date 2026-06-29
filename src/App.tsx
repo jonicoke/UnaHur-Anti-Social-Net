@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import './styles/mobileFooter.css'
 import MobileFooter from "./components/MobileFooter"
 import { FeedCreateProvider } from "./context/FeedCreateContext";
+import DetallePost from "./pages/DetallePost";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                         <MobileFooter />
                     </RutaProtegida>
                 } />
+                <Route path="/post/:id" element={<DetallePost />} />
             </Routes>
             </FeedCreateProvider>
         </BrowserRouter>
