@@ -60,7 +60,7 @@ function Home() {
                     return { ...post, PostImages: images }
                 })
             )
-            setAllPosts(postsConImagenes)
+            setAllPosts(postsConImagenes.reverse())
         })
     }
 

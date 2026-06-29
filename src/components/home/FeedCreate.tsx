@@ -17,7 +17,7 @@ export default function FeedCreate({ onPostCreated }: FeedCreateProps) {
     const [estaExpandido, setEstaExpandido] = useState(false)
 
     useEffect(() => {
-        fetch('http://localhost:3000/tags')
+        fetch('http://localhost:3001/tags')
             .then((res) => res.json())
             .then((data) => setTagsDisponibles(data))
             .catch((err) => console.error('Error al cargar etiquetas:', err))
@@ -50,13 +50,13 @@ export default function FeedCreate({ onPostCreated }: FeedCreateProps) {
         if (!description.trim() || !userId) return
 
         try {
-            const responsePost = await fetch('http://localhost:3000/posts', {
+            const responsePost = await fetch('http://localhost:3001/posts', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     description, 
                     userId, 
-                    tags: selectedTags 
+                    tagIds: selectedTags 
                 }),
             })
 
@@ -67,7 +67,7 @@ export default function FeedCreate({ onPostCreated }: FeedCreateProps) {
             const urlsValidas = images.filter((url) => url.trim() !== '')
             if (urlsValidas.length > 0) {
                 const promesasImagenes = urlsValidas.map((url) =>
-                    fetch('http://localhost:3000/postimages', {
+                    fetch('http://localhost:3001/postimages', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ url, postId }),
