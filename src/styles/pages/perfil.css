@@ -1,4 +1,4 @@
-/* Ejemplo de estilos para centrar y darle forma a tu perfil */
+
 .perfil-container {
   max-width: 800px;
   margin: 40px auto;
@@ -16,7 +16,7 @@
 }
 
 .nickname-highlight {
-  color: #4a90e2; /* Un color destacado para tu nombre */
+  color: #4a90e2; 
 }
 
 .btn-logout {
@@ -50,21 +50,20 @@
 
 .post-footer {
   display: flex;
-  justify-content: space-between; /* Empuja un grupo a la izq y el otro a la der */
+  justify-content: space-between; 
   align-items: center;
   margin-top: 15px;
   padding-top: 12px;
   border-top: 1px solid #f0f0f0;
-  width: 100%; /* Asegura que ocupe todo el ancho de la tarjeta */
+  width: 100%; 
 }
 
 .post-footer-left {
   display: flex;
   align-items: center;
-  gap: 20px; /* Espacio entre el globito de chat y el botón Ver más */
+  gap: 20px; 
 }
 
-/* Contenedor derecho (por si a futuro agregás más iconos ahí) */
 .post-footer-right {
   display: flex;
   align-items: center;
@@ -122,7 +121,7 @@
   font-size: 0.95rem;
 }
 
-/* Fondo opaco del modal */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -180,7 +179,6 @@
   font-weight: bold;
 }
 
-/* Botones de acción del modal */
 .btn-modal-action-danger {
   background-color: #fff1f1;
   color: #dc3545;
@@ -208,12 +206,10 @@
   background-color: #e0e0e0;
 }
 
-/* =========================================
-   DISEÑO DEL BOTÓN DE SEGUIR EN EL PERFIL
-   ========================================= */
+
 .btn-perfil-follow {
   padding: 6px 18px;
-  border-radius: 20px; /* Estilo pastilla */
+  border-radius: 20px; 
   font-weight: bold;
   font-size: 0.9rem;
   cursor: pointer;
@@ -222,9 +218,9 @@
   outline: none;
 }
 
-/* Estado: Cuando NO lo seguís */
+
 .btn-perfil-follow.btn-seguir {
-  background-color: #007bff; /* Azul clásico de red social */
+  background-color: #007bff; 
   color: white;
 }
 
@@ -232,14 +228,14 @@
   background-color: #0056b3;
 }
 
-/* Estado: Cuando YA lo seguís */
+
 .btn-perfil-follow.btn-siguiendo {
   background-color: transparent;
   color: #333;
   border: 1px solid #ccc;
 }
 
-/* Detalle pro: Al pasar el mouse por "Siguiendo" se pone rojito avisando que podés dejar de seguir */
+
 .btn-perfil-follow.btn-siguiendo:hover {
   border-color: #dc3545;
   color: #dc3545;
@@ -251,25 +247,19 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
-
-
-/* =========================================
-   BOTÓN "VER MÁS"
-   ========================================= */
 .btn-ver-mas {
   display: inline-block;
   padding: 6px 16px;
-  background-color: #e4e6eb; /* Un gris clarito muy moderno */
-  color: #050505; /* Texto casi negro */
+  background-color: #e4e6eb; 
+  color: #050505; 
   text-decoration: none;
-  border-radius: 20px; /* Bordes bien redondeados tipo pastilla */
+  border-radius: 20px; 
   font-size: 0.85rem;
   font-weight: 600;
   transition: all 0.2s ease;
-  border: border 1px solid transparent; /* Evita saltos visuales */
-}
+  border: border 1px solid transparent; 
 
 .btn-ver-mas:hover {
-  background-color: #d8dadf; /* Se oscurece un poquito al pasar el mouse */
+  background-color: #d8dadf; 
   color: #050505;
-}
+}}

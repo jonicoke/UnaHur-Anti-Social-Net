@@ -26,11 +26,11 @@ export const Perfil: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [perfilActual, setPerfilActual] = useState<any>(null);
   
-  // Guardamos las listas completas de usuarios para renderizarlas en los modals
+  // se guardan las  listas completas de usuarios para renderizarlas en los modals
   const [seguidoresList, setSeguidoresList] = useState<User[]>([]);
   const [siguiendoList, setSiguiendoList] = useState<User[]>([]);
   
-  // Estado para controlar qué modal está a la vista ('seguidores' | 'siguiendo' | null)
+  // Estado para controlar que modal está a la vista 
   const [modalAbierto, setModalAbierto] = useState<'seguidores' | 'siguiendo' | null>(null);
 
   const [loSiguo, setLoSiguo] = useState<boolean>(false);
@@ -45,7 +45,6 @@ export const Perfil: React.FC = () => {
       const userData = await getUserById(perfilId);
       setPerfilActual(userData);
       
-      // Llenamos las listas con los datos que nos trae el include de Sequelize
       setSeguidoresList(userData.Seguidores || []);
       setSiguiendoList(userData.Siguiendo || []);
 
@@ -102,7 +101,7 @@ export const Perfil: React.FC = () => {
     }
   };
 
-  // ACCIÓN: Dejar de seguir a alguien desde mi lista de "Siguiendo"
+  //Dejar de seguir a alguien desde lista de Siguiendo
   const handleDejarDeSeguirDesdeLista = async (targetId: number, name: string) => {
     if (!usuario?.id) return;
     if (!window.confirm(`¿Estás seguro de dejar de seguir a ${name}?`)) return;
@@ -115,7 +114,6 @@ export const Perfil: React.FC = () => {
     }
   };
 
-  // ACCIÓN: Eliminar un seguidor para que deje de seguirme
   const handleEliminarSeguidor = async (targetId: number, name: string) => {
     if (!usuario?.id) return;
     if (!window.confirm(`¿Estás seguro de eliminar a ${name} de tus seguidores?`)) return;
@@ -160,7 +158,6 @@ export const Perfil: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <h2>Perfil de: <span className="nickname-highlight">{perfilActual.nickName}</span></h2>
             
-            {/* BOTÓN ESTILIZADO CON CLASES PURAS */}
             {!esMiPerfil && (
               <button
                 onClick={handlePerfilFollowToggle}
@@ -172,7 +169,6 @@ export const Perfil: React.FC = () => {
             )}
           </div>
           
-          {/* AGREGAMOS EL CONTADOR DE PUBLICACIONES A LA IZQUIERDA */}
           <div className="perfil-stats" style={{ marginTop: '10px', display: 'flex', gap: '20px' }}>
             
             <div className="stat-item">
@@ -206,7 +202,7 @@ export const Perfil: React.FC = () => {
                 <p className="post-description">{post.description}</p>
                <div className="post-footer">
                   
-                  {/* GRUPO IZQUIERDO: Comentarios y Ver más */}
+                  {/* Comentarios y Ver más */}
                   <div className="post-footer-left">
                     <div className="comments-count" title="Comentarios">
                       <i className="bi bi-chat"></i>
@@ -218,7 +214,7 @@ export const Perfil: React.FC = () => {
                     </Link>
                   </div>
                   
-                  {/* GRUPO DERECHO: Tachito de eliminar */}
+                  {/*  Tachito de eliminar */}
                   {esMiPerfil && (
                     <div className="post-footer-right">
                       <button 
@@ -237,10 +233,6 @@ export const Perfil: React.FC = () => {
           </div>
         )}
       </section>
-
-      {/* ========================================== */}
-      {/* RENDERIZADO DEL MODAL (VENTANA EMERGENTE)  */}
-      {/* ========================================== */}
       {modalAbierto && (
         <div className="modal-overlay" onClick={() => setModalAbierto(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
