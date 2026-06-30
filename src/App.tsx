@@ -28,6 +28,14 @@ function App() {
                         <MobileFooter />
                     </RutaProtegida>
                 } />
+                {}
+                <Route path="/profile/:id" element={
+                    <RutaProtegida>
+                        <NavBar />
+                        <Perfil />
+                        <MobileFooter />
+                    </RutaProtegida>
+                } />
                 <Route
                     path="/post/:id"
                     element={

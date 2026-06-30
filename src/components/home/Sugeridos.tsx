@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import '../../styles/components/home/sugeridos.css'
 import type { User } from '../../types'
 import { useAuth } from '../../context/authContext';
+import { followUser } from '../../services/api'; 
 
 const BASE_URL = 'http://localhost:3001'
 
@@ -17,17 +18,20 @@ function Sugeridos() {
         fetch(`${BASE_URL}/users`)
             .then(r => r.json())
             .then(data => setUsuarios(data.filter((u: User) => u.nickName !== usuario?.nickName).slice(0, 4)))
-    }, [])
-
-    const handleSeguir = (id: number) => {
-        if (estados[id] === 'seguido') return
-
+    }, [usuario])
+    const handleSeguir = async (id: number) => {
+        if (estados[id] === 'seguido' || !usuario || !usuario.id) return
         setEstados(prev => ({ ...prev, [id]: 'cargando' }))
 
-        // Simulá tu llamada real a la API acá
-        setTimeout(() => {
+        try {
+            await followUser(id, usuario.id)
             setEstados(prev => ({ ...prev, [id]: 'seguido' }))
-        }, 1000)
+        } catch (error) {
+            console.error("Error al seguir al usuario en el servidor:", error)
+            alert("No se pudo procesar el seguimiento. Inténtalo de nuevo.")
+            
+            setEstados(prev => ({ ...prev, [id]: 'idle' }))
+        }
     }
 
     return (
@@ -54,7 +58,6 @@ function Sugeridos() {
                             {estado === 'idle' && '+ Seguir'}
                             {estado === 'cargando' && <span className="seguir-spinner" />}
                             {estado === 'seguido' && '✓ Seguido'}
-
                         </button>
                     </div>
                 )

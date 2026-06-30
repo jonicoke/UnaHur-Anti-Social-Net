@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Post } from '../../types'
 import '../../styles/components/home/postCards.css'
+import { useAuth } from '../../context/authContext'
+import { followUser, unfollowUser } from '../../services/api'
 
 const INSTITUTOS_CONFIG: Record<string, { color: string; name: string }> = {
     'Tec. e Ingenieria':  { color: '#e67e22', name: 'Tec. e Ingeniería' },
@@ -26,29 +29,88 @@ interface Props {
 }
 
 function PostCard({ post, index }: Props) {
+    const { usuario } = useAuth()
     const instKey = post.User?.instituto || (post.id % 2 === 0 ? 'Tec. e Ingenieria' : 'Biotecnologia')
     const config  = INSTITUTOS_CONFIG[instKey] || { color: '#00843D', name: 'Salud' }
     const delay   = Math.min(index * 80, 400)
+
+    const perfilUrl = post.User?.id ? `/profile/${post.User.id}` : '#';
+    const esMiPost = usuario?.id === post.User?.id;
+
+    // Estado local para alternar el botón de seguir en este post específico
+    const [siguiendo, setSiguiendo] = useState<boolean>(
+        post.User?.Seguidores?.some((s: any) => s.id === usuario?.id) ?? false
+    );
+    const [cargando, setCargando] = useState(false);
+
+    const handleSeguirToggle = async () => {
+        if (!usuario || !usuario.id || !post.User?.id) return;
+        setCargando(true);
+
+        try {
+            if (siguiendo) {
+                const confirmar = window.confirm(`¿Estás seguro de que querés dejar de seguir a ${post.User.nickName}?`);
+                if (confirmar) {
+                    await unfollowUser(post.User.id, usuario.id);
+                    setSiguiendo(false);
+                }
+            } else {
+                await followUser(post.User.id, usuario.id);
+                setSiguiendo(true);
+            }
+        } catch (error) {
+            console.error("Error al cambiar seguimiento desde el feed:", error);
+        } finally {
+            setCargando(false);
+        }
+    };
 
     return (
         <div className="post-card" data-reveal="up" data-reveal-delay={String(delay)}>
             <div className="post-card-header">
                 <div className="post-avatar">
-                    {post.User?.fotoPerfil ? (
-                        <img src={post.User.fotoPerfil} alt={post.User.nickName} className="avatar-img" />
-                    ) : (
-                        <i className="bi bi-person-circle"></i>
-                    )}
+                    <Link to={perfilUrl}>
+                        {post.User?.fotoPerfil ? (
+                            <img src={post.User.fotoPerfil} alt={post.User.nickName} className="avatar-img" />
+                        ) : (
+                            <i className="bi bi-person-circle" style={{ color: 'inherit' }}></i>
+                        )}
+                    </Link>
                 </div>
-                <div>
-                <div className="post-header-user-row">
-                    <strong>{post.User?.nickName ?? 'Usuario desconocido'}</strong>
-                    <span className="post-user-institute-tag" style={{ backgroundColor: config.color }}>
-                        {config.name}
-                    </span>
+                <div style={{ flex: 1 }}>
+                    <div className="post-header-user-row" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Link to={perfilUrl} style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <strong>{post.User?.nickName ?? 'Usuario desconocido'}</strong>
+                        </Link>
+                        
+                        {/* BOTÓN SEGUIR / DEJAR DE SEGUIR EN EL FEED */}
+                        {!esMiPost && post.User?.id && (
+                            <button 
+                                onClick={handleSeguirToggle}
+                                disabled={cargando}
+                                className={`feed-seguir-btn ${siguiendo ? 'siguiendo' : 'seguir'}`}
+                                style={{
+                                    padding: '2px 8px',
+                                    fontSize: '0.75rem',
+                                    borderRadius: '12px',
+                                    border: '1px solid',
+                                    cursor: 'pointer',
+                                    marginLeft: '6px',
+                                    backgroundColor: siguiendo ? '#e0e0e0' : 'transparent',
+                                    color: siguiendo ? '#555' : '#28a745',
+                                    borderColor: siguiendo ? '#ccc' : '#28a745'
+                                }}
+                            >
+                                {cargando ? '...' : (siguiendo ? 'Dejar de seguir' : 'Seguir')}
+                            </button>
+                        )}
+
+                        <span className="post-user-institute-tag" style={{ backgroundColor: config.color, marginLeft: 'auto' }}>
+                            {config.name}
+                        </span>
+                    </div>
+                    <p>{timeAgo(post.createdAt)}</p>
                 </div>
-                <p>{timeAgo(post.createdAt)}</p>
-            </div>
             </div>
 
             <p className="post-description">{post.description}</p>

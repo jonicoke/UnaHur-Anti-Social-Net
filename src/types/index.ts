@@ -5,6 +5,8 @@ export interface User {
     fotoPerfil: string | null
     instituto: string | null
     descripcion: string | null
+    Seguidores?: User[]; 
+    Siguiendo?: User[];
 }
 
 export interface Tag {

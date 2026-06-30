@@ -50,9 +50,24 @@
 
 .post-footer {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: space-between; /* Empuja un grupo a la izq y el otro a la der */
+  align-items: center;
   margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+  width: 100%; /* Asegura que ocupe todo el ancho de la tarjeta */
+}
+
+.post-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espacio entre el globito de chat y el botón Ver más */
+}
+
+/* Contenedor derecho (por si a futuro agregás más iconos ahí) */
+.post-footer-right {
+  display: flex;
+  align-items: center;
 }
 
 .post-actions {
@@ -76,4 +91,185 @@
 .btn-eliminar:hover {
   background-color: #dc3545;
   color: white;
+}
+
+
+.perfil-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.perfil-stats {
+  display: flex;
+  gap: 20px;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.stat-item {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.stat-number {
+  font-weight: bold;
+  color: #111;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+}
+
+/* Fondo opaco del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Caja blanca contenedora */
+.modal-content {
+  background-color: white;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.btn-close-modal {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Fila de cada usuario */
+.modal-user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.modal-user-item span {
+  font-weight: bold;
+}
+
+/* Botones de acción del modal */
+.btn-modal-action-danger {
+  background-color: #fff1f1;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-modal-action-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-modal-action {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-modal-action:hover {
+  background-color: #e0e0e0;
+}
+
+/* =========================================
+   DISEÑO DEL BOTÓN DE SEGUIR EN EL PERFIL
+   ========================================= */
+.btn-perfil-follow {
+  padding: 6px 18px;
+  border-radius: 20px; /* Estilo pastilla */
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid transparent;
+  outline: none;
+}
+
+/* Estado: Cuando NO lo seguís */
+.btn-perfil-follow.btn-seguir {
+  background-color: #007bff; /* Azul clásico de red social */
+  color: white;
+}
+
+.btn-perfil-follow.btn-seguir:hover {
+  background-color: #0056b3;
+}
+
+/* Estado: Cuando YA lo seguís */
+.btn-perfil-follow.btn-siguiendo {
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+/* Detalle pro: Al pasar el mouse por "Siguiendo" se pone rojito avisando que podés dejar de seguir */
+.btn-perfil-follow.btn-siguiendo:hover {
+  border-color: #dc3545;
+  color: #dc3545;
+  background-color: #fff8f8;
+}
+
+/* Para deshabilitar mientras carga */
+.btn-perfil-follow:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   BOTÓN "VER MÁS"
+   ========================================= */
+.btn-ver-mas {
+  display: inline-block;
+  padding: 6px 16px;
+  background-color: #e4e6eb; /* Un gris clarito muy moderno */
+  color: #050505; /* Texto casi negro */
+  text-decoration: none;
+  border-radius: 20px; /* Bordes bien redondeados tipo pastilla */
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: border 1px solid transparent; /* Evita saltos visuales */
+}
+
+.btn-ver-mas:hover {
+  background-color: #d8dadf; /* Se oscurece un poquito al pasar el mouse */
+  color: #050505;
 }

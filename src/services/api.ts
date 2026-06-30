@@ -22,6 +22,14 @@ export async function getUsers(): Promise<User[]> {
   return res.json()
 }
 
+export async function getUserById(userId: number) {
+  const res = await fetch(`${BASE_URL}/users/${userId}`);
+  if (!res.ok) {
+    throw new Error("No se pudo cargar el perfil del usuario");
+  }
+  return res.json();
+}
+
 export async function createUser(data: { nickName: string; email: string; password: string }): Promise<User>{
   const res = await fetch(`${BASE_URL}/users`, {
     method: 'POST',
@@ -85,5 +93,44 @@ export async function createComment(data: {
     throw new Error(error.error || "No se pudo crear el comentario");
   }
 
+  return res.json();
+}
+
+export async function followUser(usuarioASeguirId: number, miUsuarioId: number) {
+  const res = await fetch(`${BASE_URL}/users/${usuarioASeguirId}/follow`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: miUsuarioId }) 
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al seguir al usuario');
+  }
+  return res.json();
+}
+
+export async function unfollowUser(usuarioDejarDeSeguirId: number, miUsuarioId: number) {
+  const res = await fetch(`${BASE_URL}/users/${usuarioDejarDeSeguirId}/follow`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: miUsuarioId })
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al dejar de seguir');
+  }
+  return res.json();
+}
+
+export async function removeFollower(followerId: number, miUsuarioId: number) {
+  const res = await fetch(`${BASE_URL}/users/${followerId}/follower`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: miUsuarioId })
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al eliminar seguidor');
+  }
   return res.json();
 }
