@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../services/api";
-import "../styles/pages/detallePost.css";
+import "../styles/components/detallePost.css";
+import "../styles/components/home/postCards.css"
+import MainLayout from "./layout/MainLayout";
 
 type Tag = {
   id: number;
@@ -113,14 +115,14 @@ function DetallePost() {
   if (!post) return <p>No se encontró la publicación.</p>;
 
   return (
-  <main className="detalle-post-page">
-    <article className="detalle-post-card">
-      <h1>Detalle de publicación</h1>
+  <MainLayout>
+    <article className="post-card detalle-post-card">
+      <h1 className="detalle-post-title">Detalle de publicación</h1>
 
-      <p className="detalle-post-description">{post.description}</p>
+      <p className="post-description">{post.description}</p>
 
       {post.Tags?.length > 0 && (
-        <div className="post-tags detalle-post-tags">
+        <div className="post-tags">
           {post.Tags.map((tag) => (
             <span className="tag" key={tag.id}>#{tag.name}</span>
           ))}
@@ -128,7 +130,7 @@ function DetallePost() {
       )}
 
       {images.length > 0 ? (
-        <div className="post-images detalle-post-images">
+        <div className="post-images">
           {images.map((image) => (
             <img
               className="post-img"
@@ -143,8 +145,8 @@ function DetallePost() {
       )}
     </article>
 
-    <section className="detalle-post-card">
-      <h2>Comentarios</h2>
+    <section className="post-card">
+      <h2 className="detalle-post-title">Comentarios</h2>
 
       {comments.length > 0 ? (
         <div className="detalle-comments-list">
@@ -174,7 +176,7 @@ function DetallePost() {
         </button>
       </form>
     </section>
-  </main>
+  </MainLayout>
 )
 }
 
