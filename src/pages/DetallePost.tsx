@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../services/api";
+import "../styles/pages/detallePost.css";
 
 type Tag = {
   id: number;
@@ -112,56 +113,69 @@ function DetallePost() {
   if (!post) return <p>No se encontró la publicación.</p>;
 
   return (
-    <main>
+  <main className="detalle-post-page">
+    <article className="detalle-post-card">
       <h1>Detalle de publicación</h1>
 
-      <section>
-        <p>{post.description}</p>
+      <p className="detalle-post-description">{post.description}</p>
 
-        <h2>Etiquetas</h2>
-        {post.Tags?.length > 0 ? (
-          post.Tags.map((tag) => <span key={tag.id}>#{tag.name} </span>)
-        ) : (
-          <p>Sin etiquetas.</p>
-        )}
+      {post.Tags?.length > 0 && (
+        <div className="post-tags detalle-post-tags">
+          {post.Tags.map((tag) => (
+            <span className="tag" key={tag.id}>#{tag.name}</span>
+          ))}
+        </div>
+      )}
 
-        <h2>Imágenes</h2>
-        {images.length > 0 ? (
-          images.map((image) => (
-            <img key={image.id} src={image.url} alt="Imagen del post" />
-          ))
-        ) : (
-          <p>Este post no tiene imágenes.</p>
-        )}
-      </section>
+      {images.length > 0 ? (
+        <div className="post-images detalle-post-images">
+          {images.map((image) => (
+            <img
+              className="post-img"
+              key={image.id}
+              src={image.url}
+              alt="Imagen del post"
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="detalle-empty">Este post no tiene imágenes.</p>
+      )}
+    </article>
 
-      <section>
-        <h2>Comentarios</h2>
+    <section className="detalle-post-card">
+      <h2>Comentarios</h2>
 
-        {comments.length > 0 ? (
-          comments.map((comment) => (
-            <article key={comment.id}>
+      {comments.length > 0 ? (
+        <div className="detalle-comments-list">
+          {comments.map((comment) => (
+            <article className="detalle-comment" key={comment.id}>
+              <i className="bi bi-person-circle"></i>
               <p>{comment.content}</p>
             </article>
-          ))
-        ) : (
-          <p>No hay comentarios visibles.</p>
-        )}
+          ))}
+        </div>
+      ) : (
+        <p className="detalle-empty">No hay comentarios visibles.</p>
+      )}
 
-        <form onSubmit={handleSubmit}>
-          <textarea
-            value={newComment}
-            onChange={(event) => setNewComment(event.target.value)}
-            placeholder="Escribí un comentario..."
-          />
+      <form className="detalle-comment-form" onSubmit={handleSubmit}>
+        <textarea
+          value={newComment}
+          onChange={(event) => setNewComment(event.target.value)}
+          placeholder="Escribí un comentario..."
+        />
 
-          {commentError && <p>{commentError}</p>}
+        {commentError && <p className="detalle-error">{commentError}</p>}
 
-          <button type="submit">Comentar</button>
-        </form>
-      </section>
-    </main>
-  );
+        <button type="submit">
+          Comentar
+          <i className="bi bi-send"></i>
+        </button>
+      </form>
+    </section>
+  </main>
+)
 }
 
 export default DetallePost;

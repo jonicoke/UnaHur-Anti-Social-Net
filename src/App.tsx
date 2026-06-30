@@ -28,16 +28,17 @@ function App() {
                         <MobileFooter />
                     </RutaProtegida>
                 } />
-                <Route path="/post/:id" element={
-                    <RutaProtegida>
-                        <NavBar />
-                        <DetallePost />
-                        <MobileFooter />
-                    </RutaProtegida>
-}                 />
+                <Route
+                    path="/post/:id"
+                    element={
+                        <RutaProtegida>
+                            <DetallePost />
+                        </RutaProtegida>
+                    }
+                />
             </Routes>
             </FeedCreateProvider>
-        </BrowserRouter>
+            </BrowserRouter>
     );
 }
 
