@@ -192,3 +192,47 @@
     }
 
 }
+
+/* Boton de seguir */
+.feed-seguir-btn {
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    border-radius: 12px;
+    border: 1px solid;
+    cursor: pointer;
+    margin-left: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+}
+
+.feed-seguir-btn.seguir {
+    background-color: transparent;
+    color: #28a745;
+    border-color: #28a745;
+}
+
+.feed-seguir-btn.siguiendo {
+    background-color: #e0e0e0;
+    color: #555;
+    border-color: #ccc;
+}
+
+.feed-seguir-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.feed-seguir-spinner {
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: feed-spin 0.6s linear infinite;
+}
+
+@keyframes feed-spin {
+    to { transform: rotate(360deg); }
+}
