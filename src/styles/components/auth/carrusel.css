@@ -16,8 +16,16 @@
   bottom: 0;
   left: 0;
   right: 0;
+
   height: 220px;
-  background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0));
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,.72),
+      rgba(0,0,0,0)
+    );
+
   z-index: 2;
   pointer-events: none;
 }
@@ -32,9 +40,14 @@
 .carrusel-titulo {
   font-size: 3.5rem;
   font-weight: 900;
+
   color: white;
+
   margin-bottom: 10px;
-  text-shadow: 0 2px 16px rgba(0,0,0,0.8);
+
+  text-shadow:
+    0 2px 16px rgba(0,0,0,.8);
+
   display: flex;
   align-items: center;
   gap: 16px;
@@ -42,16 +55,23 @@
 
 .carrusel-barra {
   display: inline-block;
+
   width: 6px;
   height: 50px;
-  background-color: #4caf50;
+
+  background-color: var(--color-primary);
+
   border-radius: 3px;
 }
 
 .carrusel-eslogan {
   font-size: 1.1rem;
-  color: #e0e0e0;
+
+  color: rgba(255,255,255,.88);
+
   max-width: 380px;
   line-height: 1.5;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+
+  text-shadow:
+    0 1px 8px rgba(0,0,0,.8);
 }

@@ -19,7 +19,7 @@ import foto8 from '../assets/carrusel/foto8.jpg'
 import foto9 from '../assets/carrusel/foto9.jpg'
 
 const slides = [
-  { img: foto1, eslogan: "Donde el conocimiento se construye entre todos." },
+  { img: foto1, eslogan: "Donde el conocimiento se construye por todos." },
   { img: foto2, eslogan: "Aprender juntos, crecer sin límites." },
   { img: foto3, eslogan: "Tu futuro empieza en estos pasillos." },
   { img: foto4, eslogan: "Una comunidad que te impulsa." },
