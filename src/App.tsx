@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import RutaProtegida from "./components/RutaProtegida";
 import NavBar from "./components/NavBar";
 import Perfil from "./pages/Perfil";
@@ -44,6 +44,7 @@ function App() {
                         </RutaProtegida>
                     }
                 />
+                <Route path="*" element={<Navigate to="/login" replace />} />
             </Routes>
             </FeedCreateProvider>
             </BrowserRouter>

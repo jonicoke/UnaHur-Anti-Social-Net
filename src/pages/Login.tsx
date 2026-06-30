@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { getUsers, createUser } from "../services/api";
-import unahurImg from '../assets/unahur.jpg'
 import '../styles/components/auth/base.css'
 
 import AuthTopbar from "../components/auth/AuthTopbar";
@@ -91,7 +90,7 @@ function Login() {
   };
 
   return (
-    <div className="auth-wrapper" style={{ backgroundImage: `url(${unahurImg})` }}>
+    <div className="auth-wrapper">
       <AuthTopbar
         nickName={nickName}
         setNickName={setNickName}

@@ -16,18 +16,8 @@
   color: white;
   display: flex;
   flex-direction: column;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-color: #0f0f0f;
   position: relative;
-}
-
-.auth-wrapper::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 0;
 }
 
 .auth-topbar,

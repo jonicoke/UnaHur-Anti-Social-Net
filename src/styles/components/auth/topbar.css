@@ -29,7 +29,7 @@
 .auth-topbar-logo {
   font-size: 2.3rem;
   font-weight: 900;
-  color: #2196c4;
+  color: #1a7a3c;
   line-height: 1;
   display: flex;
   align-items: center;
@@ -64,16 +64,17 @@
   padding: 10px 14px;
   border-radius: 6px;
   border: 1px solid #cccccc;
-  background-color: #f5f5f5;
+  background-color: #f0f0f0;
   color: #333333;
   font-size: 0.95rem;
   width: 220px;
+  transition: border-color 0.2s, background-color 0.2s;
 }
 
 .auth-topbar-field input:focus {
   outline: none;
-  border-color: #2196c4;
-  background-color: white;
+  border-color: #1a7a3c;
+  background-color: #f0f0f0;
 }
 
 .auth-topbar-field input.input-error {
@@ -109,8 +110,8 @@
 .auth-topbar-form button {
   padding: 10px 24px;
   border-radius: 6px;
-  border: 2px solid #2196c4;
-  background-color: #2196c4;
+  border: 2px solid #1a7a3c;
+  background-color: #1a7a3c;
   color: white;
   font-weight: 700;
   cursor: pointer;
@@ -126,6 +127,6 @@
 }
 
 .auth-topbar-form button:hover {
-  background-color: #1a7aaa;
-  border-color: #1a7aaa;
+  background-color: #145c2e;
+  border-color: #145c2e;
 }
