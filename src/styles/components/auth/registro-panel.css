@@ -1,0 +1,82 @@
+.auth-panel {
+  flex: 0 0 35%;
+  background-color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+}
+
+.auth-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  animation: slideUp 0.6s ease both;
+}
+
+.auth-card h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.auth-subtitle {
+  color: #666666;
+  font-size: 1.05rem;
+  margin-top: -10px;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.auth-field label {
+  font-size: 0.9rem;
+  color: #444444;
+}
+
+.auth-field input {
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  background-color: #f5f5f5;
+  color: #333333;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.auth-field input:focus {
+  outline: none;
+  border-color: #2196c4;
+  background-color: white;
+}
+
+.btn-registro {
+  padding: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2196c4;
+  color: white;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.btn-registro:hover { background-color: #1a7aaa; }
+
+.auth-error {
+  color: #ffe0b2;
+  font-size: 0.85rem;
+}
