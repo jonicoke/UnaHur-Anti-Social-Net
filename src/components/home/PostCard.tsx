@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Post } from '../../types'
 import '../../styles/components/home/postCards.css'
@@ -26,37 +26,41 @@ function timeAgo(dateStr: string) {
 interface Props {
     post: Post
     index: number
+    siguiendoIds: number[]
+    onToggleSeguir: (userId: number, nuevoEstado: boolean) => void
 }
 
-function PostCard({ post, index }: Props) {
+function PostCard({ post, index, siguiendoIds, onToggleSeguir }: Props) {
     const { usuario } = useAuth()
     const instKey = post.User?.instituto || (post.id % 2 === 0 ? 'Tec. e Ingenieria' : 'Biotecnologia')
     const config  = INSTITUTOS_CONFIG[instKey] || { color: '#00843D', name: 'Salud' }
     const delay   = Math.min(index * 80, 400)
-
     const perfilUrl = post.User?.id ? `/profile/${post.User.id}` : '#';
     const esMiPost = usuario?.id === post.User?.id;
 
     // Estado local para alternar el botón de seguir en este post específico
+    const [cargando, setCargando] = useState(false);
     const [siguiendo, setSiguiendo] = useState<boolean>(
         post.User?.Seguidores?.some((s: any) => s.id === usuario?.id) ?? false
     );
-    const [cargando, setCargando] = useState(false);
 
-    const handleSeguirToggle = async () => {
+    useEffect(() => {
+        if (post.User?.id) {
+            setSiguiendo(siguiendoIds.includes(post.User.id));
+        }
+    }, [siguiendoIds, post.User?.id]);
+
+     const handleSeguirToggle = async () => {
         if (!usuario || !usuario.id || !post.User?.id) return;
         setCargando(true);
 
         try {
             if (siguiendo) {
-                const confirmar = window.confirm(`¿Estás seguro de que querés dejar de seguir a ${post.User.nickName}?`);
-                if (confirmar) {
-                    await unfollowUser(post.User.id, usuario.id);
-                    setSiguiendo(false);
-                }
+                await unfollowUser(post.User.id, usuario.id);
+                onToggleSeguir(post.User.id, false);
             } else {
                 await followUser(post.User.id, usuario.id);
-                setSiguiendo(true);
+                onToggleSeguir(post.User.id, true);
             }
         } catch (error) {
             console.error("Error al cambiar seguimiento desde el feed:", error);
@@ -64,7 +68,7 @@ function PostCard({ post, index }: Props) {
             setCargando(false);
         }
     };
-
+    
     return (
         <div className="post-card" data-reveal="up" data-reveal-delay={String(delay)}>
             <div className="post-card-header">
@@ -89,19 +93,8 @@ function PostCard({ post, index }: Props) {
                                 onClick={handleSeguirToggle}
                                 disabled={cargando}
                                 className={`feed-seguir-btn ${siguiendo ? 'siguiendo' : 'seguir'}`}
-                                style={{
-                                    padding: '2px 8px',
-                                    fontSize: '0.75rem',
-                                    borderRadius: '12px',
-                                    border: '1px solid',
-                                    cursor: 'pointer',
-                                    marginLeft: '6px',
-                                    backgroundColor: siguiendo ? '#e0e0e0' : 'transparent',
-                                    color: siguiendo ? '#555' : '#28a745',
-                                    borderColor: siguiendo ? '#ccc' : '#28a745'
-                                }}
                             >
-                                {cargando ? '...' : (siguiendo ? 'Dejar de seguir' : 'Seguir')}
+                                {cargando ? <span className="feed-seguir-spinner" /> : (siguiendo ? 'Siguiendo' : 'Seguir')}
                             </button>
                         )}
 

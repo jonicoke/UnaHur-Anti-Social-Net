@@ -1,10 +1,10 @@
-import "../styles/components/navbar/navbar.css";
-import logo from "../assets/logo.png";
+import "../../styles/components/navbar/navbar.css";
+import logo from "../../assets/logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MenuDesplegable from "./MenuDesplegable";
-import { useAuth } from "../context/authContext";
-import { useScrollDirection } from '../hooks/useScrollDirection'
+import { useAuth } from "../../context/authContext";
+import { useScrollDirection } from '../../hooks/useScrollDirection'
 
 function NavBar() {
     const [menuAbierto, setMenuAbierto] = useState(false);

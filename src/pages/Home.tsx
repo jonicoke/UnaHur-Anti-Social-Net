@@ -10,12 +10,9 @@ import { useReveal } from '../hooks/useReveal'
 import HomeBanner     from '../components/home/HomeBanner'
 import FeedCreate     from '../components/home/FeedCreate'
 import PostCard       from '../components/home/PostCard'
-import ProfileCard    from '../components/home/ProfileCard'
-import AccesosRapidos from '../components/home/AccesosRapidos'
-import Tendencias     from '../components/home/Tendencias'
-import Sugeridos      from '../components/home/Sugeridos'
-import HomeFooter     from '../components/Footer'
-import FiltroInstituto, { INSTITUTOS_CONFIG } from '../components/home/FiltroInstituto'
+import MainLayout from '../components/layout/MainLayout';
+import FiltroInstituto, { INSTITUTOS_CONFIG } from '../components/home/FiltroInstituto';
+import { getUserById } from '../services/api'
 
 const PAGE_SIZE = 2
 
@@ -23,6 +20,8 @@ function Home() {
     const [allPosts,      setAllPosts]      = useState<Post[]>([])
     const [visiblePosts,  setVisiblePosts]  = useState<Post[]>([])
     const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
+    const [siguiendoIds, setSiguiendoIds] = useState<number[]>([])
+
     const [institutoFilter, setInstitutoFilter] = useState<string | null>(null)
     const [page,    setPage]    = useState(1)
     const [hasMore, setHasMore] = useState(true)
@@ -33,13 +32,22 @@ function Home() {
     const { usuario } = useAuth()
     // Estado para comunicar el MobileFooter
     const [abrirFeedCreate, setAbrirFeedCreate] = useState(false);
+
+    // a quién sigue
+    useEffect(() => {
+    if (!usuario?.id) return
+    getUserById(usuario.id).then(data => {
+        const ids = (data.Siguiendo ?? []).map((u: any) => u.id)
+        setSiguiendoIds(ids)
+    })
+}, [usuario])
     // Stats del usuario
     useEffect(() => {
         if (!usuario?.id) return
         getPostsByUser(usuario.id).then(async posts => {
             const comentariosTotales = await Promise.all(
                 posts.map((p: Post) =>
-                    fetch(`http://localhost:3000/comments/post/${p.id}`)
+                    fetch(`http://localhost:3001/comments/post/${p.id}`)
                         .then(r => r.json())
                         .then(c => c.length)
                 )
@@ -83,7 +91,14 @@ function Home() {
         setPage(1)
         setHasMore(result.length > PAGE_SIZE)
     }, [allPosts, institutoFilter])
-
+    // a quien sigue
+    const handleToggleSeguir = (userId: number, nuevoEstado: boolean) => {
+        setSiguiendoIds(prev =>
+            nuevoEstado
+                ? [...prev, userId]
+                : prev.filter(id => id !== userId)
+        )
+    }
     // Scroll infinito
     const loadMore = useCallback(() => {
         if (loading) return;
@@ -118,68 +133,48 @@ function Home() {
     })()
 
     return (
-        <div className="home-layout" ref={layoutRef}>
-
-            {/* IZQUIERDA */}
-            <aside className="home-sidebar-left sticky-sidebar">
-                <div className="">
-                    <ProfileCard
-                        nickName={usuario?.nickName ?? 'Invitado'}
-                        fotoPerfil={usuario?.fotoPerfil ?? null}
-                        instituto={usuario?.instituto ?? null}
-                        descripcion={usuario?.descripcion ?? null}
-                        stats={userStats}
-                    />
-                    <AccesosRapidos />
-                </div>
-            </aside>
-
-            {/* FEED CENTRAL */}
-            <main className="home-feed">
-                <HomeBanner />
-
-                {institutoFilter && (
-                    <div className="filter-alert">
-                        <span>Mostrando: <strong>{INSTITUTOS_CONFIG[institutoFilter]?.name}</strong></span>
-                        <button onClick={() => setInstitutoFilter(null)}>Quitar filtro</button>
-                    </div>
-                )}
-
-                
-                <FeedCreate
-                    onPostCreated={actualizarFeed}
-                    fotoPerfil={usuario?.fotoPerfil ?? null}
-                    abrir={abrirFeedCreate}
-                    setAbrir={setAbrirFeedCreate}
-                />
-
-                {visiblePosts.map((post, index) => (
-                    <PostCard key={post.id} post={post} index={index} />
-                ))}
-
-                <div ref={loaderRef} className="feed-loader">
-                    {loading && <span className="feed-loader-dot"></span>}
-                    {!hasMore && !loading && (
-                        <p className="feed-end">Ya viste todo. Andate a hacer algo productivo.</p>
-                    )}
-                </div>
-            </main>
-
-            {/* DERECHA */}
-            <aside className="home-sidebar-right">
+        <MainLayout
+            layoutRef={layoutRef}
+            sidebarRightExtra={
                 <FiltroInstituto
                     institutoFilter={institutoFilter}
-                    onFilterChange={setInstitutoFilter}/>
-
-                <Tendencias trends={topTrends} />
-
-                <div className="sticky-sidebar">
-                    <Sugeridos />
-                    <HomeFooter />
-                </div>
-            </aside>
-
-        </div>
+                    onFilterChange={setInstitutoFilter}
+                />
+            }
+        >
+            {({ siguiendoIds, onToggleSeguir }) => (
+                <>
+                    <HomeBanner />
+                    {institutoFilter && (
+                        <div className="filter-alert">
+                            <span>Mostrando: <strong>{INSTITUTOS_CONFIG[institutoFilter]?.name}</strong></span>
+                            <button onClick={() => setInstitutoFilter(null)}>Quitar filtro</button>
+                        </div>
+                    )}
+                    <FeedCreate
+                        onPostCreated={actualizarFeed}
+                        fotoPerfil={usuario?.fotoPerfil ?? null}
+                        abrir={abrirFeedCreate}
+                        setAbrir={setAbrirFeedCreate}
+                    />
+                    {visiblePosts.map((post, index) => (
+                        <PostCard
+                            key={post.id}
+                            post={post}
+                            index={index}
+                            siguiendoIds={siguiendoIds}
+                            onToggleSeguir={onToggleSeguir}
+                        />
+                    ))}
+                    <div ref={loaderRef} className="feed-loader">
+                        {loading && <span className="feed-loader-dot"></span>}
+                        {!hasMore && !loading && (
+                            <p className="feed-end">Ya viste todo. Andate a hacer algo productivo.</p>
+                        )}
+                    </div>
+                </>
+            )}
+        </MainLayout>
     )
 }
 

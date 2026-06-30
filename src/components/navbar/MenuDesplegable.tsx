@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/authContext";
-import "../styles/components/navbar/menuDesplegable.css";
-import { useTema } from "../context/TemaContext";
+import { useAuth } from "../../context/authContext";
+import "../../styles/components/navbar/menuDesplegable.css";
+import { useTema } from "../../context/TemaContext";
 import { BsSun, BsMoon } from "react-icons/bs";
 
 function MenuDesplegable() {

@@ -114,3 +114,17 @@
     display: inline-block;
     animation: spin 0.7s linear infinite;
 }
+.suggestion-item-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+    flex: 1;
+    min-width: 0; /* evita que el texto largo empuje el botón fuera */
+}
+.suggestion-item:hover {
+    background-color: var(--color-shadow);
+    border-radius: 5px;
+    transform: scale(1.02);
+}
