@@ -70,7 +70,7 @@
 
   background-color: #f0f0f0;
 
-  color: var(--color-text);
+  color: #333333;
 
   font-size: 1rem;
 
@@ -78,8 +78,7 @@
 
   transition:
     border-color .2s,
-    background-color .2s,
-    color .2s;
+    background-color .2s;
 }
 
 .auth-field input:focus {
@@ -88,6 +87,12 @@
   border-color: var(--color-primary);
 
   background-color: #f0f0f0;
+
+  color: #333333;
+}
+
+.auth-field input::placeholder {
+  color: #888888;
 }
 
 .btn-registro {

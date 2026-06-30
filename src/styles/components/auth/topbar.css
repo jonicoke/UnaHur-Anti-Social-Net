@@ -102,7 +102,7 @@
 
   background-color: #f0f0f0;
 
-  color: var(--color-text);
+  color: #333333;
 
   font-size: .95rem;
 
@@ -110,9 +110,9 @@
 
   transition:
     border-color .2s,
-    background-color .2s,
-    color .2s;
+    background-color .2s;
 }
+
 
 .auth-topbar-field input:focus {
   outline: none;
@@ -120,6 +120,12 @@
   border-color: var(--color-primary);
 
   background-color: #f0f0f0;
+
+  color: #333333;
+}
+
+.auth-topbar-field input::placeholder {
+  color: #888888;
 }
 
 .auth-topbar-field input.input-error {
