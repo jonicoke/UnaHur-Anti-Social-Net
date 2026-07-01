@@ -1,73 +1,99 @@
-# React + TypeScript + Vite
+# 🍎 Apple Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> [!IMPORTANT]
+> Trabajo Práctico de **Construcción de Interfaces de Usuario** desarrollado para la **Universidad Nacional de Hurlingham (UNAHUR)** utilizando **React + TypeScript + Vite**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📝 Descripción
 
-## React Compiler
+Apple Store es una aplicación web que simula una tienda online de productos Apple. El proyecto fue desarrollado aplicando conceptos de interfaces modernas, componentización, manejo de estado, navegación entre páginas y diseño responsive.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+> [!TIP]
+> La aplicación fue diseñada siguiendo una arquitectura basada en componentes reutilizables para facilitar el mantenimiento y la escalabilidad.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Funcionalidades
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- 🏠 Página principal con presentación de la tienda.
+- 📱 Catálogo dinámico de productos.
+- 🔎 Buscador por nombre.
+- 📂 Filtro por categorías.
+- 📄 Vista de detalle mediante rutas dinámicas.
+- 🛒 Carrito de compras.
+- ➕ Modificación de cantidades.
+- 📦 Control de stock.
+- 💳 Checkout con validaciones.
+- 📱 Diseño responsive.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🛠️ Tecnologías
+
+| Tecnología | Uso |
+|------------|-----|
+| React | Biblioteca principal |
+| TypeScript | Tipado estático |
+| Vite | Bundler |
+| React Router DOM | Navegación |
+| Bootstrap | Responsive Design |
+| CSS3 | Estilos |
+
+---
+
+## 📦 Instalación
+
+```bash
+git clone https://github.com/Brandonduce67/tienda-iphones-react.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd tienda-iphones-react
 ```
+
+```bash
+npm install
+```
+
+```bash
+npm run dev
+```
+
+> [!NOTE]
+> El proyecto se ejecutará normalmente en:
+>
+> **http://localhost:5173**
+
+---
+
+## 📂 Organización
+
+```
+src/
+│
+├── components/
+├── pages/
+├── services/
+├── context/
+├── styles/
+└── assets/
+```
+
+> [!TIP]
+> La separación en carpetas permite reutilizar componentes y mantener el código organizado.
+
+---
+
+## 👥 Integrantes
+
+- Brandon Duce
+- Alan Gonzalez
+- Agustin Olavarria
+- Damian Haberkorn
+- Jonathan Giacomini
+
+---
+
+> [!WARNING]
+> Este proyecto fue realizado con fines académicos para la materia **Construcción de Interfaces de Usuario** y no representa una tienda oficial de Apple.
