@@ -46,11 +46,6 @@ function MenuDesplegable() {
                     <span>Mi perfil</span>
                 </Link>
 
-                <Link to="/my-posts" className="menu-item">
-                    <span className="menu-item-icon"><i className="bi bi-file-post"></i></span>
-                    <span>Mis publicaciones</span>
-                </Link>
-
                 <button className="menu-item menu-item-btn" onClick={() => setOscuro(!oscuro)} aria-label="Cambiar tema">
                     <span className="menu-item-icon">
                         {oscuro ? <BsSun /> : <BsMoon />}

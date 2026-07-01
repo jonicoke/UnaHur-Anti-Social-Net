@@ -26,4 +26,15 @@ export interface Post {
     User: User
     Tags: Tag[]
     PostImages: PostImage[]
+    comentariosCount?: number
+}
+
+export interface Comment {
+    id: number
+    content: string
+    User?: {
+        id: number
+        nickName: string
+        fotoPerfil: string | null
+    }
 }

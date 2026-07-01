@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import MenuDesplegable from "./MenuDesplegable";
 import { useAuth } from "../../context/authContext";
 import { useScrollDirection } from '../../hooks/useScrollDirection'
+import { NavLink } from "react-router-dom";
 
 function NavBar() {
     const [menuAbierto, setMenuAbierto] = useState(false);
@@ -22,7 +23,10 @@ function NavBar() {
     return (
         <nav className={`navbar ${visible ? '' : 'navbar-hidden'}`}>
             <div className="navbar-left">
+                <NavLink to="/">
                 <img className="navbar-logo" src={logo} alt="logo unahur antisocial net" />
+                </NavLink>
+                
                 <p className="titulo-logo">UNAHUR Anti-Social Net</p>
                 
                 <div className="navbar-search-wrap">
@@ -39,24 +43,29 @@ function NavBar() {
             </div>
 
             <div className="navbar-center">
-                <a href="/" className="nav-item">
+                <NavLink
+                    to="/"
+                    className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+                >
                     <i className="bi bi-house-fill"></i>
                     <span>Inicio</span>
-                </a>
-                <a href="#" className="nav-item">
+                </NavLink>
+
+                <div className="nav-item nav-item-disabled">
                     <i className="bi bi-people-fill"></i>
                     <span>Amigos</span>
-                </a>
-                <a href="#" className="nav-item">
+                </div>
+
+                <div className="nav-item nav-item-disabled">
                     <i className="bi bi-chat-fill"></i>
                     <span>Mensajes</span>
-                </a>
-                <a href="#" className="nav-item">
+                </div>
+
+                <div className="nav-item nav-item-disabled">
                     <i className="bi bi-bell-fill"></i>
                     <span>Notificaciones</span>
-                </a>
+                </div>
             </div>
-
             <div className="navbar-right">
                 <button className="navbar-avatar" onClick={() => setMenuAbierto(!menuAbierto)}>
                     {usuario?.fotoPerfil ? (

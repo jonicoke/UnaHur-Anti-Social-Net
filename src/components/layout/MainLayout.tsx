@@ -25,7 +25,7 @@ function MainLayout({ children, sidebarRightExtra, layoutRef }: Props) {
     const { usuario } = useAuth()
     const [userStats, setUserStats] = useState({ posts: 0, comentarios: 0 })
     const [topTrends, setTopTrends] = useState<{ name: string; count: number }[]>([])
-    const [siguiendoIds, setSiguiendoIds] = useState<number[]>([])
+    const [siguiendoIds, setSiguiendoIds] = useState<number[] | null>(null);
 
     useEffect(() => {
         if (!usuario?.id) return
@@ -61,8 +61,8 @@ function MainLayout({ children, sidebarRightExtra, layoutRef }: Props) {
     useEffect(() => {
         if (!usuario?.id) return
         getUserById(usuario.id).then(data => {
-            const ids = (data.Siguiendo ?? []).map((u: any) => u.id)
-            setSiguiendoIds(ids)
+            const ids = (data.Siguiendo ?? []).map((u: any) => u.id);
+            setSiguiendoIds(ids);
         })
     }, [usuario])
 

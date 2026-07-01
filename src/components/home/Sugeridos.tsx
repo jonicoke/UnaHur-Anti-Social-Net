@@ -8,8 +8,8 @@ import { followUser, unfollowUser } from '../../services/api';
 const BASE_URL = 'http://localhost:3001'
 
 interface Props {
-    siguiendoIds: number[]
-    onToggleSeguir: (userId: number, nuevoEstado: boolean) => void
+    siguiendoIds: number[] | null;
+    onToggleSeguir: (userId: number, nuevoEstado: boolean) => void;
 }
 
 function Sugeridos({ siguiendoIds, onToggleSeguir }: Props) {
@@ -17,22 +17,26 @@ function Sugeridos({ siguiendoIds, onToggleSeguir }: Props) {
 
     const [usuarios, setUsuarios] = useState<User[]>([])
     const [cargandoIds, setCargandoIds] = useState<number[]>([])
-    const yaCargado = useRef(false)
-
+    const [cargado, setCargado] = useState(false);
+    
     useEffect(() => {
-        if (!usuario) return
-        if (yaCargado.current) return // ya se cargó una vez, no recargar al cambiar siguiendoIds
-        yaCargado.current = true
+        if (!usuario) return;
+        if (siguiendoIds === null) return;
+        if (cargado) return;
 
         fetch(`${BASE_URL}/users`)
             .then(r => r.json())
-            .then(data => setUsuarios(
-                data.filter((u: User) =>
-                    u.nickName !== usuario?.nickName &&
-                    !siguiendoIds.includes(u.id)
-                ).slice(0, 4)
-            ))
-    }, [usuario, siguiendoIds])
+            .then(data => {
+                setUsuarios(
+                    data.filter((u: User) =>
+                        u.nickName !== usuario.nickName &&
+                        !siguiendoIds.includes(u.id)
+                    ).slice(0, 4)
+                );
+
+                setCargado(true);
+            });
+    }, [usuario, siguiendoIds, cargado]);
 
     const handleSeguirToggle = async (id: number, yaLoSigo: boolean) => {
         if (!usuario || !usuario.id) return

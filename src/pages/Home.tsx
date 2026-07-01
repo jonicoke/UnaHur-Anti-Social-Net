@@ -12,7 +12,6 @@ import FeedCreate     from '../components/home/FeedCreate'
 import PostCard       from '../components/home/PostCard'
 import MainLayout from '../components/layout/MainLayout';
 import FiltroInstituto, { INSTITUTOS_CONFIG } from '../components/home/FiltroInstituto';
-import { getUserById } from '../services/api'
 
 const PAGE_SIZE = 2
 
@@ -20,55 +19,56 @@ function Home() {
     const [allPosts,      setAllPosts]      = useState<Post[]>([])
     const [visiblePosts,  setVisiblePosts]  = useState<Post[]>([])
     const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
-    const [siguiendoIds, setSiguiendoIds] = useState<number[]>([])
 
     const [institutoFilter, setInstitutoFilter] = useState<string | null>(null)
     const [page,    setPage]    = useState(1)
     const [hasMore, setHasMore] = useState(true)
     const [loading] = useState(false)
-    const [userStats, setUserStats] = useState({ posts: 0, comentarios: 0 })
     const loaderRef  = useRef<HTMLDivElement>(null)
     const layoutRef  = useReveal([visiblePosts])
     const { usuario } = useAuth()
     // Estado para comunicar el MobileFooter
-    const [abrirFeedCreate, setAbrirFeedCreate] = useState(false);
+    // const [abrirFeedCreate, setAbrirFeedCreate] = useState(false);
 
-    // a quién sigue
+    // Orden de los posts
+    const [orden, setOrden] = useState<'recientes' | 'destacados'>('recientes')
     useEffect(() => {
-    if (!usuario?.id) return
-    getUserById(usuario.id).then(data => {
-        const ids = (data.Siguiendo ?? []).map((u: any) => u.id)
-        setSiguiendoIds(ids)
-    })
-}, [usuario])
-    // Stats del usuario
-    useEffect(() => {
-        if (!usuario?.id) return
-        getPostsByUser(usuario.id).then(async posts => {
-            const comentariosTotales = await Promise.all(
-                posts.map((p: Post) =>
-                    fetch(`http://localhost:3001/comments/post/${p.id}`)
-                        .then(r => r.json())
-                        .then(c => c.length)
-                )
-            )
-            setUserStats({
-                posts: posts.length,
-                comentarios: comentariosTotales.reduce((a: number, b: number) => a + b, 0),
+        let result = institutoFilter
+            ? allPosts.filter(post => {
+                const inst = post.User?.instituto || (post.id % 2 === 0 ? 'Tec. e Ingenieria' : 'Biotecnologia')
+                return inst === institutoFilter
             })
-        })
-    }, [usuario])
+            : [...allPosts]
+
+        if (orden === 'destacados') {
+            result = [...result].sort((a, b) => (b.comentariosCount ?? 0) - (a.comentariosCount ?? 0))
+        }
+
+        setFilteredPosts(result)
+        setVisiblePosts(result.slice(0, PAGE_SIZE))
+        setPage(1)
+        setHasMore(result.length > PAGE_SIZE)
+    }, [allPosts, institutoFilter, orden])
+
+
 
     // Función reutilizable para cargar y actualizar los posts con imágenes
     const actualizarFeed = () => {
         getPosts().then(async data => {
-            const postsConImagenes = await Promise.all(
+            const postsConTodo = await Promise.all(
                 data.map(async post => {
-                    const images = await getPostImages(post.id)
-                    return { ...post, PostImages: images }
+                    const [images, comentarios] = await Promise.all([
+                        getPostImages(post.id),
+                        fetch(`http://localhost:3001/comments/post/${post.id}`).then(r => r.json())
+                    ])
+                    return { 
+                        ...post, 
+                        PostImages: images,
+                        comentariosCount: Array.isArray(comentarios) ? comentarios.length : 0
+                    }
                 })
             )
-            setAllPosts(postsConImagenes.reverse())
+            setAllPosts(postsConTodo.reverse())
         })
     }
 
@@ -91,14 +91,7 @@ function Home() {
         setPage(1)
         setHasMore(result.length > PAGE_SIZE)
     }, [allPosts, institutoFilter])
-    // a quien sigue
-    const handleToggleSeguir = (userId: number, nuevoEstado: boolean) => {
-        setSiguiendoIds(prev =>
-            nuevoEstado
-                ? [...prev, userId]
-                : prev.filter(id => id !== userId)
-        )
-    }
+
     // Scroll infinito
     const loadMore = useCallback(() => {
         if (loading) return;
@@ -119,18 +112,6 @@ function Home() {
         if (loaderRef.current) observer.observe(loaderRef.current)
         return () => observer.disconnect()
     }, [loadMore, hasMore, loading, filteredPosts])
-
-    // Tendencias
-    const topTrends = (() => {
-        const counts: Record<string, { name: string; count: number }> = {}
-        allPosts.forEach(post =>
-            post.Tags?.forEach(tag => {
-                if (!counts[tag.name]) counts[tag.name] = { name: tag.name, count: 0 }
-                counts[tag.name].count++
-            })
-        )
-        return Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 4)
-    })()
 
     return (
         <MainLayout
@@ -154,9 +135,23 @@ function Home() {
                     <FeedCreate
                         onPostCreated={actualizarFeed}
                         fotoPerfil={usuario?.fotoPerfil ?? null}
-                        abrir={abrirFeedCreate}
-                        setAbrir={setAbrirFeedCreate}
                     />
+                    {/* SELECTOR DE ORDEN */}
+                        <div className="feed-orden">
+                            <span>Ordenar por</span>
+                            <button
+                                className={`feed-orden-btn ${orden === 'recientes' ? 'activo' : ''}`}
+                                onClick={() => setOrden('recientes')}
+                            >
+                                <i className="bi bi-clock"></i> Recientes
+                            </button>
+                            <button
+                                className={`feed-orden-btn ${orden === 'destacados' ? 'activo' : ''}`}
+                                onClick={() => setOrden('destacados')}
+                            >
+                                <i className="bi bi-fire"></i> Destacados
+                            </button>
+                        </div>
                     {visiblePosts.map((post, index) => (
                         <PostCard
                             key={post.id}
@@ -168,9 +163,6 @@ function Home() {
                     ))}
                     <div ref={loaderRef} className="feed-loader">
                         {loading && <span className="feed-loader-dot"></span>}
-                        {!hasMore && !loading && (
-                            <p className="feed-end">Ya viste todo. Andate a hacer algo productivo.</p>
-                        )}
                     </div>
                 </>
             )}

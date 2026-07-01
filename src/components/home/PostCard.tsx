@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import type { Post } from '../../types'
+import type { Post, Comment } from '../../types'
 import '../../styles/components/home/postCards.css'
 import { useAuth } from '../../context/authContext'
 import { followUser, unfollowUser } from '../../services/api'
@@ -32,43 +32,50 @@ interface Props {
 
 function PostCard({ post, index, siguiendoIds, onToggleSeguir }: Props) {
     const { usuario } = useAuth()
-    const instKey = post.User?.instituto || (post.id % 2 === 0 ? 'Tec. e Ingenieria' : 'Biotecnologia')
-    const config  = INSTITUTOS_CONFIG[instKey] || { color: '#00843D', name: 'Salud' }
+    const instKey = post.User?.instituto ?? null
+    const config  = instKey ? INSTITUTOS_CONFIG[instKey] : null
     const delay   = Math.min(index * 80, 400)
-    const perfilUrl = post.User?.id ? `/profile/${post.User.id}` : '#';
-    const esMiPost = usuario?.id === post.User?.id;
+    const perfilUrl = post.User?.id ? `/profile/${post.User.id}` : '#'
+    const esMiPost = usuario?.id === post.User?.id
 
-    // Estado local para alternar el botón de seguir en este post específico
-    const [cargando, setCargando] = useState(false);
+    const [cargando, setCargando] = useState(false)
     const [siguiendo, setSiguiendo] = useState<boolean>(
         post.User?.Seguidores?.some((s: any) => s.id === usuario?.id) ?? false
-    );
+    )
+    const [comentarios, setComentarios] = useState<Comment[]>([])
 
     useEffect(() => {
         if (post.User?.id) {
-            setSiguiendo(siguiendoIds.includes(post.User.id));
+            setSiguiendo(siguiendoIds.includes(post.User.id))
         }
-    }, [siguiendoIds, post.User?.id]);
+    }, [siguiendoIds, post.User?.id])
 
-     const handleSeguirToggle = async () => {
-        if (!usuario || !usuario.id || !post.User?.id) return;
-        setCargando(true);
+    useEffect(() => {
+        fetch(`http://localhost:3001/comments/post/${post.id}`)
+            .then(r => r.json())
+            .then(data => setComentarios(Array.isArray(data) ? data : []))
+            .catch(() => {})
+    }, [post.id])
+
+    const handleSeguirToggle = async () => {
+        if (!usuario || !usuario.id || !post.User?.id) return
+        setCargando(true)
 
         try {
             if (siguiendo) {
-                await unfollowUser(post.User.id, usuario.id);
-                onToggleSeguir(post.User.id, false);
+                await unfollowUser(post.User.id, usuario.id)
+                onToggleSeguir(post.User.id, false)
             } else {
-                await followUser(post.User.id, usuario.id);
-                onToggleSeguir(post.User.id, true);
+                await followUser(post.User.id, usuario.id)
+                onToggleSeguir(post.User.id, true)
             }
         } catch (error) {
-            console.error("Error al cambiar seguimiento desde el feed:", error);
+            console.error("Error al cambiar seguimiento desde el feed:", error)
         } finally {
-            setCargando(false);
+            setCargando(false)
         }
-    };
-    
+    }
+
     return (
         <div className="post-card" data-reveal="up" data-reveal-delay={String(delay)}>
             <div className="post-card-header">
@@ -86,10 +93,9 @@ function PostCard({ post, index, siguiendoIds, onToggleSeguir }: Props) {
                         <Link to={perfilUrl} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <strong>{post.User?.nickName ?? 'Usuario desconocido'}</strong>
                         </Link>
-                        
-                        {/* BOTÓN SEGUIR / DEJAR DE SEGUIR EN EL FEED */}
+
                         {!esMiPost && post.User?.id && (
-                            <button 
+                            <button
                                 onClick={handleSeguirToggle}
                                 disabled={cargando}
                                 className={`feed-seguir-btn ${siguiendo ? 'siguiendo' : 'seguir'}`}
@@ -98,9 +104,11 @@ function PostCard({ post, index, siguiendoIds, onToggleSeguir }: Props) {
                             </button>
                         )}
 
-                        <span className="post-user-institute-tag" style={{ backgroundColor: config.color, marginLeft: 'auto' }}>
-                            {config.name}
-                        </span>
+                        {config && (
+                            <span className="post-user-institute-tag" style={{ backgroundColor: config.color, marginLeft: 'auto' }}>
+                                {config.name}
+                            </span>
+                        )}
                     </div>
                     <p>{timeAgo(post.createdAt)}</p>
                 </div>
@@ -124,10 +132,11 @@ function PostCard({ post, index, siguiendoIds, onToggleSeguir }: Props) {
                 </div>
             )}
 
+
             <div className="post-footer-actions">
                 <button className="action-btn">
                     <i className="bi bi-chat-left-text"></i>
-                    <span>8 comentarios</span>
+                    <span>{comentarios.length} comentario{comentarios.length !== 1 ? 's' : ''}</span>
                 </button>
                 <button className="action-btn">
                     <i className="bi bi-share"></i>
@@ -137,6 +146,22 @@ function PostCard({ post, index, siguiendoIds, onToggleSeguir }: Props) {
                     Ver más <i className="bi bi-arrow-right-short"></i>
                 </Link>
             </div>
+                        {/* PREVIEW DEL PRIMER COMENTARIO */}
+            {comentarios.length > 0 && (
+                <div className="post-comment-preview">
+                    <div className="post-comment-preview-avatar">
+                        {comentarios[0].User?.fotoPerfil ? (
+                            <img src={comentarios[0].User.fotoPerfil} alt={comentarios[0].User.nickName} className="avatar-img" />
+                        ) : (
+                            <i className="bi bi-person-circle"></i>
+                        )}
+                    </div>
+                    <div className="post-comment-preview-body">
+                        <strong>{comentarios[0].User?.nickName ?? 'Usuario'}</strong>
+                        <p>{comentarios[0].content}</p>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
