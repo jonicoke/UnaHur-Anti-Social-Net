@@ -75,7 +75,7 @@
 .auth-topbar-field input:focus {
   outline: none;
   border-color: var(--color-primary);
-  background-color: var(--color-bg);
+  background-color: var(--color-bg-cards);
   color: var(--color-text);
 }
 
@@ -85,7 +85,7 @@
 
 .auth-topbar-field input.input-error {
   border: 1px solid #e53935;
-  background-color: #fff5f5;
+  background-color: var(--color-bg-cards);
 }
 
 .auth-topbar-field input.input-error:focus {

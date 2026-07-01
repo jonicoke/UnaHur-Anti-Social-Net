@@ -40,7 +40,7 @@ function AuthTopbar({
           />
           <span className="auth-error-topbar">{errorLogin}</span>
         </div>
-        
+
         <div className="auth-topbar-field">
           <label>Contraseña</label>
           <input
@@ -54,12 +54,13 @@ function AuthTopbar({
           />
           <span className="auth-error-topbar">{errorContraseña}</span>
 
-          
-          <span className={`auth-forgot-password pc-only ${errorContraseña ? "mover-abajo" : ""}`}>
-            ¿Olvidaste tu contraseña?
-          </span>
+          {!errorContraseña && (
+            <span className="auth-forgot-password pc-only">
+              ¿Olvidaste tu contraseña?
+            </span>
+          )}
         </div>
-        
+
         <button type="submit">Iniciar sesión</button>
 
         <span className="auth-forgot-password mobile-only">

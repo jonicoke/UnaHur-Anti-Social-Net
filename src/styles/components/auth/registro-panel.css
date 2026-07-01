@@ -72,7 +72,7 @@
 /* INPUT CON ERROR */
 .auth-field input.input-error {
   border: 2px solid #e53935;
-  background-color: #fff5f5;
+  background-color: var(--color-bg-cards);
   color: #333333;
 }
 
