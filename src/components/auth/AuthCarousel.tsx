@@ -13,18 +13,34 @@ interface Props {
 function AuthCarousel({ slides, actual }: Props) {
   return (
     <div className="auth-carrusel">
-      <img
-        src={slides[actual].img}
-        alt={`foto ${actual + 1}`}
-        className="carrusel-img"
-      />
-      <div className="carrusel-overlay">
+
+      {slides.map((slide, index) => (
+        <img
+          key={index}
+          src={slide.img}
+          alt={`foto ${index + 1}`}
+          className={`carrusel-img ${
+            index === actual
+              ? "carrusel-img-activa"
+              : ""
+          }`}
+        />
+      ))}
+
+      <div
+        key={`overlay-${actual}`}
+        className="carrusel-overlay"
+      >
         <h1 className="carrusel-titulo">
           <span className="carrusel-barra"></span>
           UNAHUR AntiSocial
         </h1>
-        <p className="carrusel-eslogan">{slides[actual].eslogan}</p>
+
+        <p className="carrusel-eslogan">
+          {slides[actual].eslogan}
+        </p>
       </div>
+
     </div>
   );
 }
