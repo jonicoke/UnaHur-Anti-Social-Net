@@ -9,7 +9,7 @@ function MobileFooter() {
 
     return (
           <nav className={`mobile-footer ${visible ? '' : 'mobile-footer-hidden'}`}>
-            <button onClick={() => navigate('/')}>
+            <button onClick={() => { navigate('/inicio'); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
                 <i className="bi bi-house-fill"></i>
                 <span>Inicio</span>
             </button>

@@ -8,56 +8,56 @@ import './styles/mobileFooter.css'
 import MobileFooter from "./components/MobileFooter"
 import { FeedCreateProvider } from "./context/FeedCreateContext";
 import DetallePost from "./components/DetallePost";
+import { useAuth } from "./context/authContext";
+
+function CatchAll() {
+    const { usuario } = useAuth();
+    return <Navigate to={usuario ? "/inicio" : "/login"} replace />;
+}
+
+function LoginRoute() {
+    const { usuario } = useAuth();
+    return usuario ? <Navigate to="/inicio" replace /> : <Login />;
+}
 
 function App() {
     return (
         <BrowserRouter>
-            <FeedCreateProvider>            <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/" element={
-                    <RutaProtegida>
-                        <NavBar />
-                        <Home />
-                        <MobileFooter />
-                    </RutaProtegida>
-                } />
-                <Route path="/profile" element={
-                    <RutaProtegida>
-                        <NavBar />
-                        <Perfil />
-                        <MobileFooter />
-                    </RutaProtegida>
-                } />
-                {}
-                <Route path="/profile/:id" element={
-                    <RutaProtegida>
-                        <NavBar />
-                        <Perfil />
-                        <MobileFooter />
-                    </RutaProtegida>
-                } />
-                <Route
-                    path="/post/:id"
-                    element={
+            <FeedCreateProvider>
+                <Routes>
+                    <Route path="/login" element={<LoginRoute />} />
+                    <Route path="/inicio" element={
+                        <RutaProtegida>
+                            <NavBar />
+                            <Home />
+                            <MobileFooter />
+                        </RutaProtegida>
+                    } />
+                    <Route path="/profile" element={
+                        <RutaProtegida>
+                            <NavBar />
+                            <Perfil />
+                            <MobileFooter />
+                        </RutaProtegida>
+                    } />
+                    <Route path="/profile/:id" element={
+                        <RutaProtegida>
+                            <NavBar />
+                            <Perfil />
+                            <MobileFooter />
+                        </RutaProtegida>
+                    } />
+                    <Route path="/post/:id" element={
                         <RutaProtegida>
                             <NavBar />
                             <DetallePost />
                             <MobileFooter />
                         </RutaProtegida>
-                    }
-                />
-                <Route path="*" element={<Navigate to="/login" replace />} />
-                {/* <Route
-                    path="/post/:id"
-                    element={
-                        <RutaProtegida>
-                            <DetallePost />
-                        </RutaProtegida>
-                    }
-                /> */}
-            </Routes>
+                    } />
+                    <Route path="*" element={<CatchAll />} />
+                </Routes>
             </FeedCreateProvider>
-            </BrowserRouter>
+        </BrowserRouter>
     );
 }
 
