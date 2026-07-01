@@ -5,29 +5,34 @@
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .auth-wrapper {
   min-height: 100vh;
   height: 100vh;
   overflow: hidden;
-  color: white;
+
+  color: var(--color-text);
+
   display: flex;
   flex-direction: column;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  position: relative;
-}
 
-.auth-wrapper::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 0;
+  background-color: var(--color-bg);
+
+  position: relative;
+
+  transition:
+    background .3s ease,
+    color .3s ease;
 }
 
 .auth-topbar,
@@ -38,8 +43,12 @@
 
 .auth-body {
   flex: 1;
+
   display: flex;
   align-items: stretch;
+
   overflow: hidden;
   min-height: 0;
+
+  background: var(--color-surface);
 }

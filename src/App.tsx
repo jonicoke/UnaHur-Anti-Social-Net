@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import RutaProtegida from "./components/RutaProtegida";
 import NavBar from "./components/navbar/NavBar";
 import Perfil from "./pages/Perfil";
@@ -46,6 +46,7 @@ function App() {
                         </RutaProtegida>
                     }
                 />
+                <Route path="*" element={<Navigate to="/login" replace />} />
                 {/* <Route
                     path="/post/:id"
                     element={

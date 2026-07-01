@@ -134,3 +134,18 @@ export async function removeFollower(followerId: number, miUsuarioId: number) {
   }
   return res.json();
 }
+
+export async function updateUserProfile(userId: number, data: { nickName?: string; instituto?: string; descripcion?: string }) {
+  const res = await fetch(`${BASE_URL}/users/${userId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.error || 'Error al actualizar el perfil');
+  }
+
+  return res.json();
+}

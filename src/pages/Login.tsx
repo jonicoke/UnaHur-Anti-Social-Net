@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { getUsers, createUser } from "../services/api";
-import unahurImg from '../assets/unahur.jpg'
 import '../styles/components/auth/base.css'
 
 import AuthTopbar from "../components/auth/AuthTopbar";
@@ -20,7 +19,7 @@ import foto8 from '../assets/carrusel/foto8.jpg'
 import foto9 from '../assets/carrusel/foto9.jpg'
 
 const slides = [
-  { img: foto1, eslogan: "Donde el conocimiento se construye entre todos." },
+  { img: foto1, eslogan: "Donde el conocimiento se construye por todos." },
   { img: foto2, eslogan: "Aprender juntos, crecer sin límites." },
   { img: foto3, eslogan: "Tu futuro empieza en estos pasillos." },
   { img: foto4, eslogan: "Una comunidad que te impulsa." },
@@ -91,7 +90,7 @@ function Login() {
   };
 
   return (
-    <div className="auth-wrapper" style={{ backgroundImage: `url(${unahurImg})` }}>
+    <div className="auth-wrapper">
       <AuthTopbar
         nickName={nickName}
         setNickName={setNickName}
