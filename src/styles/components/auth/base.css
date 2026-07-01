@@ -75,6 +75,7 @@
   .auth-body {
     flex-direction: column;
     overflow: visible;
+    background: var(--color-bg);
   }
 
   /* ocultamos carrusel */
