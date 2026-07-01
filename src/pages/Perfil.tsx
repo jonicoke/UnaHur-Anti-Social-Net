@@ -4,9 +4,13 @@ import { useAuth } from '../context/authContext';
 import '../styles/pages/perfil.css'; 
 import { 
   getPostsByUser, getCommentsByPost, deletePost, getUserById, 
-  followUser, unfollowUser, removeFollower, updateUserProfile 
+  followUser, unfollowUser, removeFollower, updateUserProfile,getPosts 
 } from '../services/api'; 
 import type { Post, User } from '../types';
+import AmigoItem from '../components/perfilUser/AmigoItem';
+import AccesosRapidos from '../components/home/AccesosRapidos'; // Ajustá la ruta si es necesario
+import Tendencias from '../components/home/Tendencias';         // Ajustá la ruta si es necesario
+import Sugeridos from '../components/home/Sugeridos';
 
 interface PostConComentarios extends Post { cantidadComentarios: number; }
 
@@ -14,7 +18,7 @@ export const Perfil: React.FC = () => {
   const { usuario, logout } = useAuth(); 
   const { id } = useParams(); 
   const navigate = useNavigate();
-
+  const [tendencias, setTendencias] = useState<{ name: string; count: number }[]>([]);
   const [posts, setPosts] = useState<PostConComentarios[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [perfilActual, setPerfilActual] = useState<any>(null);
@@ -26,9 +30,8 @@ export const Perfil: React.FC = () => {
   const [loSiguo, setLoSiguo] = useState<boolean>(false);
   const [cargandoAction, setCargandoAction] = useState(false);
 
-  // NUEVOS ESTADOS PARA EDICIÓN
   const [modalEdicionAbierto, setModalEdicionAbierto] = useState(false);
-  const [formData, setFormData] = useState({ nickName: '', instituto: '', descripcion: '' });
+  const [formData, setFormData] = useState({ nickName: '', instituto: '', descripcion: '', fotoPerfil: '' });
   const [guardandoPerfil, setGuardandoPerfil] = useState(false);
 
   const perfilId = id ? Number(id) : usuario?.id;
@@ -44,7 +47,8 @@ export const Perfil: React.FC = () => {
       setFormData({
         nickName: userData.nickName || '',
         instituto: userData.instituto || '',
-        descripcion: userData.descripcion || ''
+        descripcion: userData.descripcion || '',
+        fotoPerfil: userData.fotoPerfil || '' // <-- AGREGAR ESTO
       });
 
       if (usuario?.id) {
@@ -75,9 +79,9 @@ export const Perfil: React.FC = () => {
 
   useEffect(() => {
     cargarPerfil();
+    cargarTendenciasGlobales();
   }, [perfilId, usuario?.id]);
 
-  // FUNCIÓN PARA GUARDAR LOS CAMBIOS DEL PERFIL
   const handleGuardarPerfil = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!usuario?.id) return;
@@ -87,7 +91,8 @@ export const Perfil: React.FC = () => {
       const dataAEnviar = {
         nickName: formData.nickName,
         instituto: formData.instituto === '' ? undefined : formData.instituto,
-        descripcion: formData.descripcion
+        descripcion: formData.descripcion,
+        fotoPerfil: formData.fotoPerfil === '' ? undefined : formData.fotoPerfil // <-- AGREGAR ESTO
       };
 
       const res = await updateUserProfile(usuario.id, dataAEnviar);
@@ -110,6 +115,7 @@ export const Perfil: React.FC = () => {
       setGuardandoPerfil(false);
     }
   };
+
   const handlePerfilFollowToggle = async () => {
     if (!usuario || !usuario.id || !perfilId) return;
     setCargandoAction(true);
@@ -145,6 +151,28 @@ export const Perfil: React.FC = () => {
     } catch (error) { console.error(error); }
   };
 
+  const cargarTendenciasGlobales = async () => {
+    try {
+      const todosLosPosts = await getPosts();
+      const counts: Record<string, { name: string; count: number }> = {};
+      
+      todosLosPosts.forEach((post: any) =>
+        post.Tags?.forEach((tag: any) => {
+          if (!counts[tag.name]) counts[tag.name] = { name: tag.name, count: 0 };
+          counts[tag.name].count++;
+        })
+      );
+      
+      const topTrends = Object.values(counts)
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 4);
+        
+      setTendencias(topTrends);
+    } catch (error) {
+      console.error("Error calculando tendencias:", error);
+    }
+  }
+
   const handleDelete = async (postId: number) => {
     if (!window.confirm("¿Eliminar publicación?")) return;
     try {
@@ -157,94 +185,155 @@ export const Perfil: React.FC = () => {
 
   return (
     <div className="perfil-container">
-      <header className="perfil-header" style={{ display: 'flex', alignItems: 'flex-start', gap: '20px', paddingBottom: '20px' }}>
-        <div className="perfil-avatar">
-          {perfilActual.fotoPerfil ? (
-            <img src={perfilActual.fotoPerfil} alt={perfilActual.nickName} style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} />
-          ) : (
-            <i className="bi bi-person-circle" style={{ fontSize: '100px', color: '#ccc', lineHeight: 1 }}></i>
-          )}
-        </div>
-
-        <div className="perfil-header-info" style={{ flex: 1 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <h2 style={{ margin: 0 }}>Perfil de: <span className="nickname-highlight">{perfilActual.nickName}</span></h2>
-            {!esMiPerfil && (
-              <button onClick={handlePerfilFollowToggle} disabled={cargandoAction} className={`btn-perfil-follow ${loSiguo ? 'btn-siguiendo' : 'btn-seguir'}`}>
-                {cargandoAction ? '...' : (loSiguo ? 'Siguiendo' : 'Seguir')}
-              </button>
-            )}
-          </div>
+      <div className="perfil-layout-principal">
+        <aside className="perfil-sidebar-izq">
           
-          <div className="perfil-stats" style={{ marginTop: '10px', display: 'flex', gap: '20px' }}>
-            <div className="stat-item">
-              <span className="stat-number">{posts.length}</span>
-              <span className="stat-label">Publicaciones</span>
-            </div>
-            <div className="stat-item" onClick={() => setModalAbierto('seguidores')} style={{ cursor: 'pointer' }}>
-              <span className="stat-number">{seguidoresList.length}</span>
-              <span className="stat-label">Seguidores</span>
-            </div>
-            <div className="stat-item" onClick={() => setModalAbierto('siguiendo')} style={{ cursor: 'pointer' }}>
-              <span className="stat-number">{siguiendoList.length}</span>
-              <span className="stat-label">Siguiendo</span>
-            </div>
-          </div>
-
-          {/* BIO DEL USUARIO */}
-          <div className="perfil-bio" style={{ marginTop: '15px', color: '#444' }}>
-            {perfilActual.instituto && (
-              <p style={{ margin: '0 0 5px 0', fontSize: '0.9rem', fontWeight: 'bold', color: '#0073bc' }}>
-                <i className="bi bi-building"></i> {perfilActual.instituto}
-              </p>
-            )}
-            {perfilActual.descripcion && (
-              <p style={{ margin: 0, fontSize: '0.95rem', whiteSpace: 'pre-wrap' }}>{perfilActual.descripcion}</p>
+          {/* 1. CUADRO DE AMIGOS (Con tu componente AmigoItem) */}
+          <div className="perfil-box-amigos">
+            <h4>Siguiendo ({siguiendoList.length})</h4>
+            {siguiendoList.length === 0 ? (
+              <p className="txt-no-amigos">Aún no sigue a nadie.</p>
+            ) : (
+              <div className="amigos-grid">
+                {siguiendoList.slice(0, 9).map(user => (
+                  <AmigoItem key={user.id} user={user} />
+                ))}
+              </div>
             )}
           </div>
-        </div>
 
-        {esMiPerfil && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {/* BOTÓN PARA ABRIR MODAL DE EDICIÓN */}
-            <button onClick={() => setModalEdicionAbierto(true)} className="btn-editar-perfil">
-              <i className="bi bi-pencil-square"></i> Editar Perfil
-            </button>
-            <button onClick={() => { logout(); navigate('/login'); }} className="btn-logout">
-              Cerrar Sesión
-            </button>
+          {/* 2. ACCESOS RÁPIDOS */}
+          <div style={{ marginTop: '20px' }}>
+            <AccesosRapidos />
           </div>
-        )}
-      </header>
 
-      {/* SECCIÓN DE PUBLICACIONES */}
-      <section className="perfil-posts-section">
-        <h3>{esMiPerfil ? "Mis Publicaciones" : `Publicaciones de ${perfilActual.nickName}`}</h3>
-        {loading ? <p>Cargando publicaciones...</p> : posts.length === 0 ? <p className="no-posts-msg">Aún no hay publicaciones.</p> : (
-          <div className="posts-grid">
-            {posts.map((post) => (
-              <div key={post.id} className="post-card">
-                <p className="post-description">{post.description}</p>
-                <div className="post-footer">
-                  <div className="post-footer-left">
-                    <div className="comments-count" title="Comentarios">
-                      <i className="bi bi-chat"></i><span>{post.cantidadComentarios}</span>
-                    </div>
-                    <Link to={`/post/${post.id}`} className="btn-ver-mas">Ver más</Link>
+        </aside>
+
+        {/* Columna del medio: Perfil y Posts */}
+        <main className="perfil-main-content">
+          <header className="perfil-header-card">
+            
+            {/* Foto e info */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+              
+              <div className="perfil-avatar">
+                {perfilActual.fotoPerfil ? (
+                  <img src={perfilActual.fotoPerfil} alt={perfilActual.nickName} style={{ width: '110px', height: '110px', borderRadius: '50%', objectFit: 'cover' }} />
+                ) : (
+                  <i className="bi bi-person-circle" style={{ fontSize: '110px', color: '#ccc', lineHeight: 1 }}></i>
+                )}
+              </div>
+
+              <div className="perfil-header-info">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                  <h2 style={{ margin: 0, fontSize: '1.8rem' }}>Perfil de: <span className="nickname-highlight">{perfilActual.nickName}</span></h2>
+                  {!esMiPerfil && (
+                    <button onClick={handlePerfilFollowToggle} disabled={cargandoAction} className={`btn-perfil-follow ${loSiguo ? 'btn-siguiendo' : 'btn-seguir'}`}>
+                      {cargandoAction ? '...' : (loSiguo ? 'Siguiendo' : 'Seguir')}
+                    </button>
+                  )}
+                </div>
+                
+                <div className="perfil-stats" style={{ display: 'flex', gap: '20px', marginTop: '10px' }}>
+                  <div className="stat-item">
+                    <span className="stat-number">{posts.length}</span>
+                    <span className="stat-label"> Publicaciones</span>
                   </div>
-                  {esMiPerfil && (
-                    <div className="post-footer-right">
-                      <button onClick={() => handleDelete(post.id)} className="btn-eliminar" title="Eliminar"><i className="bi bi-trash"></i></button>
-                    </div>
+                  <div className="stat-item" onClick={() => setModalAbierto('seguidores')} style={{ cursor: 'pointer' }}>
+                    <span className="stat-number">{seguidoresList.length}</span>
+                    <span className="stat-label"> Seguidores</span>
+                  </div>
+                  <div className="stat-item" onClick={() => setModalAbierto('siguiendo')} style={{ cursor: 'pointer' }}>
+                    <span className="stat-number">{siguiendoList.length}</span>
+                    <span className="stat-label"> Siguiendo</span>
+                  </div>
+                </div>
+
+                <div className="perfil-bio" style={{ marginTop: '12px', color: '#444' }}>
+                  {perfilActual.instituto && (
+                    <p style={{ margin: '0 0 4px 0', fontSize: '0.9rem', fontWeight: 'bold', color: '#0073bc' }}>
+                      <i className="bi bi-building"></i> {perfilActual.instituto}
+                    </p>
+                  )}
+                  {perfilActual.descripcion && (
+                    <p style={{ margin: 0, fontSize: '0.95rem', whiteSpace: 'pre-wrap' }}>{perfilActual.descripcion}</p>
                   )}
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-      </section>
+            </div>
 
-      {/* MODAL DE EDICIÓN DE PERFIL */}
+            {esMiPerfil && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '130px' }}>
+                <button onClick={() => setModalEdicionAbierto(true)} className="btn-editar-perfil" style={{ width: '100%' }}>
+                  <i className="bi bi-pencil-square"></i> Editar Perfil
+                </button>
+                <button onClick={() => { logout(); navigate('/login'); }} className="btn-logout" style={{ width: '100%', margin: 0, backgroundColor: '#ff4d4d', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>
+                  Cerrar Sesión
+                </button>
+              </div>
+            )}
+          </header>
+          <section className="perfil-posts-section">
+            <h3>{esMiPerfil ? "Mis Publicaciones" : `Publicaciones de ${perfilActual.nickName}`}</h3>
+            {loading ? <p>Cargando publicaciones...</p> : posts.length === 0 ? <p className="no-posts-msg">Aún no hay publicaciones.</p> : (
+              <div className="posts-grid">
+                {posts.map((post) => (
+                  <div key={post.id} className="post-card">
+                    <p className="post-description">{post.description}</p>
+                    <div className="post-footer">
+                      <div className="post-footer-left">
+                        <div className="comments-count" title="Comentarios">
+                          <i className="bi bi-chat"></i><span>{post.cantidadComentarios}</span>
+                        </div>
+                        <Link to={`/post/${post.id}`} className="btn-ver-mas">Ver más</Link>
+                      </div>
+                      {esMiPerfil && (
+                        <div className="post-footer-right">
+                          <button onClick={() => handleDelete(post.id)} className="btn-eliminar" title="Eliminar"><i className="bi bi-trash"></i></button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        </main>
+        {/*  Tendencias y Sugeridos        */}
+        <aside className="perfil-sidebar-der">
+          <div style={{ marginBottom: '20px' }}>
+            <Tendencias trends={tendencias} />
+          </div>
+
+          {/*  sugeridos */}
+          <Sugeridos 
+            siguiendoIds={esMiPerfil ? siguiendoList.map(u => u.id) : []} 
+            onToggleSeguir={async (sugeridoId) => {
+              if (!usuario?.id) return;
+              
+              try {
+                const yaSigue = esMiPerfil && siguiendoList.some(u => u.id === sugeridoId);
+                
+                if (yaSigue) {
+                  await unfollowUser(sugeridoId, usuario.id);
+                  if (esMiPerfil) {
+                    setSiguiendoList(prev => prev.filter(u => u.id !== sugeridoId));
+                  }
+                } else {
+                  await followUser(sugeridoId, usuario.id);
+                  if (esMiPerfil) {
+                    const dataUser = await getUserById(sugeridoId);
+                    setSiguiendoList(prev => [...prev, dataUser]);
+                  }
+                }
+              } catch (error) {
+                console.error("Error al interactuar con sugeridos", error);
+              }
+            }}
+          />
+        </aside>
+
+      </div>
       {modalEdicionAbierto && (
         <div className="modal-overlay" onClick={() => setModalEdicionAbierto(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -261,6 +350,15 @@ export const Perfil: React.FC = () => {
                   value={formData.nickName} 
                   onChange={(e) => setFormData({...formData, nickName: e.target.value})}
                   required
+                />
+              </div>
+              <div className="form-group">
+                <label>URL de Foto de Perfil</label>
+                <input 
+                  type="url" 
+                  value={formData.fotoPerfil} 
+                  onChange={(e) => setFormData({...formData, fotoPerfil: e.target.value})}
+                  placeholder="https://ejemplo.com/mifoto.jpg"
                 />
               </div>
 
@@ -294,12 +392,11 @@ export const Perfil: React.FC = () => {
                   {guardandoPerfil ? 'Guardando...' : 'Guardar Cambios'}
                 </button>
               </div>
-
             </form>
           </div>
         </div>
       )}
-      {/* RENDERIZADO DEL MODAL (VENTANA EMERGENTE DE SEGUIDORES/SEGUIDOS) */}
+
       {modalAbierto && (
         <div className="modal-overlay" onClick={() => setModalAbierto(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
