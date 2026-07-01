@@ -60,7 +60,7 @@ function AuthTopbar({
           </span>
         </div>
         
-        <button type="submit">Ingresar</button>
+        <button type="submit">Iniciar sesión</button>
 
         <span className="auth-forgot-password mobile-only">
           ¿Olvidaste tu contraseña?
