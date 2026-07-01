@@ -13,7 +13,7 @@
     --color-bg: #f7f8f8;
     --color-bg-cards: #ffffff;
     --color-surface: #ffffff;
-
+    --color-bg-comments: #e9e9e9;
     --color-border: #e5e7eb;
 
     --color-text: #28302b;
@@ -28,7 +28,7 @@ body.tema-oscuro {
     --color-bg: #070707;
     --color-bg-cards: #111111;
     --color-surface: #181818;
-
+    --color-bg-comments: #1e1e1e;
     --color-border: #282828;
 
     --color-text: #ffffff;

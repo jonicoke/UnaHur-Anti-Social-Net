@@ -78,6 +78,7 @@
     width: 88px;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
     justify-content: center;
     gap: 4px;
 }
@@ -121,10 +122,22 @@
     text-decoration: none;
     color: inherit;
     flex: 1;
-    min-width: 0; /* evita que el texto largo empuje el botón fuera */
+    min-width: 0;
 }
 .suggestion-item:hover {
     background-color: var(--color-shadow);
     border-radius: 5px;
     transform: scale(1.02);
+}
+
+.suggestion-item-link > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.suggestion-item strong,
+.suggestion-item p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
