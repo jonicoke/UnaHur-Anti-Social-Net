@@ -54,7 +54,7 @@ function AuthTopbar({
           />
           <span className="auth-error-topbar">{errorContraseña}</span>
 
-          {/* 1. SE QUEDA ACÁ PARA PC: Si hay error, se mueve un toque abajo */}
+          
           <span className={`auth-forgot-password pc-only ${errorContraseña ? "mover-abajo" : ""}`}>
             ¿Olvidaste tu contraseña?
           </span>
@@ -62,7 +62,6 @@ function AuthTopbar({
         
         <button type="submit">Ingresar</button>
 
-        {/* 2. NUEVO PARA MOBILE: Se posiciona de forma natural ABAJO del botón ingresar */}
         <span className="auth-forgot-password mobile-only">
           ¿Olvidaste tu contraseña?
         </span>

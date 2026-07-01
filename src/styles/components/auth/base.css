@@ -76,9 +76,9 @@
   display: none;
 }
 
-/* ===================== */
+
 /* MOBILE */
-/* ===================== */
+
 
 @media (max-width: 768px) {
 
@@ -109,14 +109,14 @@
     width: 100%;
   }
 
-  /* ESTE QUEDA IGUAL PARA EL LOGOUT/LOGIN MOBILE BUTTON */
+ 
   .mobile-login-btn {
     display: block;
     width: calc(100% - 48px);
     margin: 24px auto 40px;
     height: 56px;
     border: none;
-    border-radius: 999px;
+    border-radius: 12px;
     background-color: var(--color-primary);
     color: white;
     font-size: 1rem;
@@ -124,13 +124,13 @@
     cursor: pointer;
   }
 
-  /* NUEVO SEPARADO: El botón de crear cuenta se va absoluto abajo de todo */
+ 
   .mobile-register-btn {
     display: block;
     width: calc(100% - 48px);
     height: 56px;
     border: none;
-    border-radius: 999px;
+    border-radius: 12px;
     background-color: var(--color-primary);
     color: white;
     font-size: 1rem;
@@ -138,10 +138,9 @@
     cursor: pointer;
 
     position: absolute;
-    bottom: 24px;   /* Pegado al piso del celu */
-    left: 24px;     /* Centrado */
-    margin: 0;      /* Limpiamos el margen anterior */
-  }
+    bottom: 24px;   
+    left: 24px;     
+    margin: 0;      
 
   .mobile-only-topbar .auth-topbar-form {
     display: none !important;

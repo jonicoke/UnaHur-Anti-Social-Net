@@ -53,7 +53,7 @@ function Login() {
 
   const [actual, setActual] = useState(0);
 
-  // Intervalo del carrusel de imágenes
+
   useEffect(() => {
     const intervalo = setInterval(() => {
       setActual((prev) => (prev + 1) % slides.length);
@@ -62,7 +62,7 @@ function Login() {
     return () => clearInterval(intervalo);
   }, []);
 
-  // Escucha el tamaño de pantalla para resetear el estado mobile al volver a PC (F12)
+  
   useEffect(() => {
     const controlarResize = () => {
       if (window.innerWidth > 768) {
@@ -201,7 +201,7 @@ function Login() {
         </>
       )}
 
-      {/* REGISTRO EN MOBILE */}
+      {/* REGISTRO */}
       {mostrarRegistro && (
         <>
           <div className="mobile-only-topbar">
@@ -221,7 +221,7 @@ function Login() {
           <main className="auth-body">
             <div className="registro-mobile-visible">
               
-              {/* Botón Flecha de Volver Atrás */}
+              
               <button 
                 className="mobile-back-arrow" 
                 onClick={() => setMostrarRegistro(false)}
