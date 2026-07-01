@@ -1,5 +1,5 @@
 .auth-panel {
-  /* Ocupa el 100% del contenedor padre (.registro-panel-wrapper en desktop) */
+  
   width: 100%; 
   background-color: var(--color-bg-cards);
 
@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 40px 48px; /* Un poco más de aire a los costados */
+  padding: 40px 48px; 
   transition: background .3s ease;
 }
 
@@ -184,11 +184,11 @@ body.tema-oscuro .auth-error {
   color: #ff6b6b;
 }
 
-/* ========================= */
-/* MOBILE REGISTRO */
-/* ========================= */
 
-@media (max-width: 768px) {
+/* MOBILE REGISTRO */
+
+
+@media (max-width: 768px) or (max-width: 1205px) {
 
   .auth-panel {
     flex: none;
@@ -205,7 +205,7 @@ body.tema-oscuro .auth-error {
     position: relative;
   }
 
-  /* Ajustamos el h2 para que sirva de contenedor exacto de la flecha */
+ 
   .auth-card h2 {
     text-align: center;
     font-size: 2.2rem;
@@ -213,7 +213,7 @@ body.tema-oscuro .auth-error {
     display: block !important;
     width: fit-content !important;
     margin: 0 0 10px 40px !important;
-    padding-left: 45px !important; /* Espacio justo para que entre la flecha a su izquierda */
+    padding-left: 45px !important; 
   }
 
   .auth-subtitle {
@@ -222,22 +222,22 @@ body.tema-oscuro .auth-error {
     margin-bottom: 15px;
   }
 
-  /* Ubicación milimétrica de la flecha pegada al texto */
+  
   .mobile-back-arrow {
     position: absolute !important;
     top: 50% !important;
-    left: 0 !important; /* Se pega al inicio del padding del h2 */
+    left: 0 !important; 
     bottom: auto !important;
     background: transparent;
     border: none;
-    font-size: 2.2rem; /* Un toque más grande para que sea fácil de tocar */
+    font-size: 2.2rem;
     color: var(--color-primary);
     cursor: pointer;
     font-weight: bold;
     z-index: 99;
     padding: 0 0 0 25px;
     line-height: 1;
-    transform: translateY(-20.5rem) !important; /* Centrado perfecto vertical con el texto */
+    transform: translateY(-20.5rem) !important; 
   }
 
   .auth-field input {

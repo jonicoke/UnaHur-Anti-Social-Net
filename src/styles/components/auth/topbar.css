@@ -169,7 +169,7 @@ body.tema-oscuro .auth-topbar-field input:focus {
 }
 
 
-@media (min-width: 769px) {
+@media (min-width: 769px) or (max-width: 1000px){
   .mobile-only { display: none !important; }
   
   .pc-only {
@@ -187,7 +187,7 @@ body.tema-oscuro .auth-topbar-field input:focus {
 
 /* MOBILE  */
 
-@media (max-width: 768px) {
+@media (max-width: 768px) or (max-width: 1205px) {
   .pc-only { display: none !important; }
   .mobile-only { display: block !important; }
 

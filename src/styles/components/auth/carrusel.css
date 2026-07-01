@@ -134,7 +134,7 @@
 /* MOBILE */
 
 
-@media (max-width: 768px) {
+@media (max-width: 768px) or (max-width: 1205px) {
 
   .auth-carrusel {
     display: none;
