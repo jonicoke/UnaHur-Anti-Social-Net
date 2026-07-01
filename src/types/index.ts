@@ -32,6 +32,7 @@ export interface Post {
 export interface Comment {
     id: number
     content: string
+    createdAt: string  
     User?: {
         id: number
         nickName: string

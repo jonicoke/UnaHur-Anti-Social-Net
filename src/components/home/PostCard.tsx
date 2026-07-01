@@ -38,6 +38,36 @@ function PostCard({ post, index, siguiendoIds, onToggleSeguir }: Props) {
     const perfilUrl = post.User?.id ? `/profile/${post.User.id}` : '#'
     const esMiPost = usuario?.id === post.User?.id
 
+    // para comentar post
+    const [mostrarFormComentario, setMostrarFormComentario] = useState(false)
+    const [nuevoComentario, setNuevoComentario] = useState('')
+    const [enviando, setEnviando] = useState(false)
+
+    const handleEnviarComentario = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!nuevoComentario.trim() || !usuario?.id) return
+        setEnviando(true)
+        try {
+            const res = await fetch(`http://localhost:3001/comments`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content: nuevoComentario,
+                    postId: post.id,
+                    userId: usuario.id
+                })
+            })
+            const creado = await res.json()
+            setComentarios(prev => [...prev, { ...creado, User: usuario }])
+            setNuevoComentario('')
+            setMostrarFormComentario(false)
+        } catch {
+            console.error('Error al comentar')
+        } finally {
+            setEnviando(false)
+        }
+    }
+
     const [cargando, setCargando] = useState(false)
     const [siguiendo, setSiguiendo] = useState<boolean>(
         post.User?.Seguidores?.some((s: any) => s.id === usuario?.id) ?? false
@@ -134,7 +164,10 @@ function PostCard({ post, index, siguiendoIds, onToggleSeguir }: Props) {
 
 
             <div className="post-footer-actions">
-                <button className="action-btn">
+                <button
+                    className={`action-btn ${mostrarFormComentario ? 'activo' : ''}`}
+                    onClick={() => setMostrarFormComentario(!mostrarFormComentario)}
+                >
                     <i className="bi bi-chat-left-text"></i>
                     <span>{comentarios.length} comentario{comentarios.length !== 1 ? 's' : ''}</span>
                 </button>
@@ -146,19 +179,54 @@ function PostCard({ post, index, siguiendoIds, onToggleSeguir }: Props) {
                     Ver más <i className="bi bi-arrow-right-short"></i>
                 </Link>
             </div>
-                        {/* PREVIEW DEL PRIMER COMENTARIO */}
+
+            {/* FORMULARIO INLINE */}
+            {mostrarFormComentario && (
+                <form className="post-comment-form" onSubmit={handleEnviarComentario}>
+                    <div className="post-comment-form-row">
+                        {usuario?.fotoPerfil ? (
+                            <img src={usuario.fotoPerfil} alt={usuario.nickName} className="avatar-img" />
+                        ) : (
+                            <i className="bi bi-person-circle"></i>
+                        )}
+                        <input
+                            type="text"
+                            className="post-comment-input"
+                            placeholder="Escribí un comentario..."
+                            value={nuevoComentario}
+                            onChange={e => setNuevoComentario(e.target.value)}
+                            autoFocus
+                        />
+                        <button
+                            type="submit"
+                            className="post-comment-send"
+                            disabled={!nuevoComentario.trim() || enviando}
+                        >
+                            {enviando ? <span className="feed-seguir-spinner" /> : <i className="bi bi-send-fill"></i>}
+                        </button>
+                    </div>
+                </form>
+            )}
+
+            {/* PREVIEW DEL ÚLTIMO COMENTARIO */}
             {comentarios.length > 0 && (
                 <div className="post-comment-preview">
                     <div className="post-comment-preview-avatar">
-                        {comentarios[0].User?.fotoPerfil ? (
-                            <img src={comentarios[0].User.fotoPerfil} alt={comentarios[0].User.nickName} className="avatar-img" />
-                        ) : (
+                        {comentarios[comentarios.length - 1].User?.fotoPerfil ? (
+                            <img 
+                                src={comentarios[comentarios.length - 1].User?.fotoPerfil ?? ''} 
+                                alt={comentarios[comentarios.length - 1].User?.nickName ?? ''} 
+                                className="avatar-img" 
+                            />) : (
                             <i className="bi bi-person-circle"></i>
                         )}
                     </div>
                     <div className="post-comment-preview-body">
-                        <strong>{comentarios[0].User?.nickName ?? 'Usuario'}</strong>
-                        <p>{comentarios[0].content}</p>
+                        <div className="post-comment-preview-header">
+                            <strong>{comentarios[comentarios.length - 1].User?.nickName ?? 'Usuario'}</strong>
+                            <span className="post-comment-time">{timeAgo(comentarios[comentarios.length - 1].createdAt)}</span>
+                        </div>
+                        <p>{comentarios[comentarios.length - 1].content}</p>
                     </div>
                 </div>
             )}

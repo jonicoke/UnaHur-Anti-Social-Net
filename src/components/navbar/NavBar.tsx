@@ -1,18 +1,36 @@
 import "../../styles/components/navbar/navbar.css";
 import logo from "../../assets/logo.png";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import MenuDesplegable from "./MenuDesplegable";
 import { useAuth } from "../../context/authContext";
 import { useScrollDirection } from '../../hooks/useScrollDirection'
-import { NavLink } from "react-router-dom";
 
 function NavBar() {
     const [menuAbierto, setMenuAbierto] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation()
     const [busqueda, setBusqueda] = useState("");
     const { usuario } = useAuth();
     const visible = useScrollDirection()
+    const menuRef = useRef<HTMLDivElement>(null)
+
+    // Cierra al cambiar de página
+    useEffect(() => {
+        setMenuAbierto(false)
+    }, [location.pathname])
+
+    // Cierra al clickear afuera
+    useEffect(() => {
+        if (!menuAbierto) return
+        const handleClick = (e: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+                setMenuAbierto(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClick)
+        return () => document.removeEventListener('mousedown', handleClick)
+    }, [menuAbierto])
 
     const buscar = () => {
         const texto = busqueda.trim();
@@ -23,8 +41,8 @@ function NavBar() {
     return (
         <nav className={`navbar ${visible ? '' : 'navbar-hidden'}`}>
             <div className="navbar-left">
-                <NavLink to="/">
-                <img className="navbar-logo" src={logo} alt="logo unahur antisocial net" />
+                <NavLink to="/inicio" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    <img className="navbar-logo" src={logo} alt="logo unahur antisocial net" />
                 </NavLink>
                 
                 <p className="titulo-logo">UNAHUR Anti-Social Net</p>
@@ -44,29 +62,27 @@ function NavBar() {
 
             <div className="navbar-center">
                 <NavLink
-                    to="/"
+                    to="/inicio"
                     className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
                 >
                     <i className="bi bi-house-fill"></i>
                     <span>Inicio</span>
                 </NavLink>
-
                 <div className="nav-item nav-item-disabled">
                     <i className="bi bi-people-fill"></i>
-                    <span>Amigos</span>
+                    <span>Seguidos</span>
                 </div>
-
                 <div className="nav-item nav-item-disabled">
                     <i className="bi bi-chat-fill"></i>
                     <span>Mensajes</span>
                 </div>
-
                 <div className="nav-item nav-item-disabled">
                     <i className="bi bi-bell-fill"></i>
-                    <span>Notificaciones</span>
+                    <span>Alertas</span>
                 </div>
             </div>
-            <div className="navbar-right">
+
+            <div className="navbar-right" ref={menuRef}>
                 <button className="navbar-avatar" onClick={() => setMenuAbierto(!menuAbierto)}>
                     {usuario?.fotoPerfil ? (
                         <img src={usuario.fotoPerfil} alt={usuario.nickName} className="navbar-avatar-img" />
