@@ -32,19 +32,23 @@ const slides = [
 
 function Login() {
   const { login } = useAuth();
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
-  const [nickName, setNickName] = useState("");
-  const [contraseña, setContraseña] = useState("");
-  const [errorLogin, setErrorLogin] = useState("");
-  const [errorContraseña, setErrorContraseña] = useState("");
+const [nickName, setNickName] = useState("");
+const [contraseña, setContraseña] = useState("");
 
-  const [regNickName, setRegNickName] = useState("");
-  const [regEmail, setRegEmail] = useState("");
-  const [regContraseña, setRegContraseña] = useState("");
-  const [errorRegistro, setErrorRegistro] = useState("");
+const [errorLogin, setErrorLogin] = useState("");
+const [errorContraseña, setErrorContraseña] = useState("");
 
-  const [actual, setActual] = useState(0);
+const [regNickName, setRegNickName] = useState("");
+const [regEmail, setRegEmail] = useState("");
+const [regContraseña, setRegContraseña] = useState("");
+
+const [errorNickName, setErrorNickName] = useState("");
+const [errorEmail, setErrorEmail] = useState("");
+const [errorRegContraseña, setErrorRegContraseña] = useState("");
+
+const [actual, setActual] = useState(0);
 
   useEffect(() => {
     const intervalo = setInterval(() => {
@@ -53,41 +57,101 @@ function Login() {
     return () => clearInterval(intervalo);
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorLogin("");
-    setErrorContraseña("");
-    try {
-      const users = await getUsers();
-      const usuarioEncontrado = users.find(u => u.nickName === nickName || u.email === nickName);
-      if (!usuarioEncontrado) {
-        setErrorLogin("El correo o NickName que ingresaste no está conectado a ninguna cuenta.");
-        return;
-      }
-      if (contraseña !== "123456") {
-        setErrorContraseña("La contraseña es incorrecta. Revisá e intentá de nuevo.");
-        return;
-      }
-      login(usuarioEncontrado);
-      navigate("/");
-    } catch {
-      setErrorLogin("Error al conectar con el servidor.");
+const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  setErrorLogin("");
+  setErrorContraseña("");
+
+  try {
+    const users = await getUsers();
+
+    const usuarioEncontrado = users.find(
+      u => u.nickName === nickName || u.email === nickName
+    );
+
+    if (!usuarioEncontrado) {
+      setErrorLogin(
+        "El correo o NickName que ingresaste no está conectado a ninguna cuenta."
+      );
+      return;
     }
-  };
+
+    // NUEVO
+    if (!contraseña.trim()) {
+      setErrorContraseña("Ingresá tu contraseña.");
+      return;
+    }
+
+    if (contraseña !== "123456") {
+      setErrorContraseña(
+        "La contraseña es incorrecta. Revisá e intentá de nuevo."
+      );
+      return;
+    }
+
+    login(usuarioEncontrado);
+    navigate("/");
+
+  } catch {
+    setErrorLogin("Error al conectar con el servidor.");
+  }
+};
 
   const handleRegistro = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorRegistro("");
-    if (!regNickName || !regEmail || !regContraseña) { setErrorRegistro("Todos los campos son obligatorios."); return; }
-    if (regContraseña !== "123456") { setErrorRegistro("La contraseña debe ser 123456."); return; }
-    try {
-      const nuevoUsuario = await createUser({ nickName: regNickName, email: regEmail, password: "123456" });
-      login(nuevoUsuario);
-      navigate("/");
-    } catch (err) {
-      setErrorRegistro(err instanceof Error ? err.message : "Error al registrar el usuario.");
-    }
-  };
+  e.preventDefault();
+
+  setErrorNickName("");
+  setErrorEmail("");
+  setErrorRegContraseña("");
+
+  let hayError = false;
+
+  if (!regNickName.trim()) {
+    setErrorNickName("Ingresá un NickName.");
+    hayError = true;
+  }
+
+  if (!regEmail.trim()) {
+    setErrorEmail("Ingresá un email.");
+    hayError = true;
+  }
+
+  if (!regContraseña.trim()) {
+    setErrorRegContraseña("Ingresá una contraseña.");
+    hayError = true;
+  }
+
+  if (hayError) return;
+
+  if (regContraseña !== "123456") {
+    setErrorRegContraseña(
+      "La contraseña debe ser 123456."
+    );
+    return;
+  }
+
+  try {
+    const nuevoUsuario = await createUser({
+      nickName: regNickName,
+      email: regEmail,
+      password: "123456"
+    });
+
+    login(nuevoUsuario);
+
+    navigate("/");
+
+  } catch (err) {
+
+    const mensaje =
+      err instanceof Error
+        ? err.message
+        : "Error al registrar el usuario.";
+
+    setErrorNickName(mensaje);
+  }
+};
 
   return (
     <div className="auth-wrapper">
@@ -108,11 +172,21 @@ function Login() {
         <RegisterPanel
           regNickName={regNickName}
           setRegNickName={setRegNickName}
+
           regEmail={regEmail}
           setRegEmail={setRegEmail}
+
           regContraseña={regContraseña}
           setRegContraseña={setRegContraseña}
-          errorRegistro={errorRegistro}
+
+          errorNickName={errorNickName}
+          errorEmail={errorEmail}
+          errorContraseña={errorRegContraseña}
+
+          setErrorNickName={setErrorNickName}
+          setErrorEmail={setErrorEmail}
+          setErrorContraseña={setErrorRegContraseña}
+
           onSubmit={handleRegistro}
         />
       </main>

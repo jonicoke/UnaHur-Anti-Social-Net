@@ -96,6 +96,20 @@
   color: #888888;
 }
 
+/* INPUT CON ERROR */
+
+.auth-field input.input-error {
+  border: 2px solid #e53935;
+
+  background-color: #fff5f5;
+}
+
+.auth-field input.input-error:focus {
+  border-color: #e53935;
+}
+
+/* DARK MODE */
+
 body.tema-oscuro .auth-field input {
   background-color: #181818;
 
@@ -111,6 +125,16 @@ body.tema-oscuro .auth-field input:focus {
 
   color: #ffffff;
 }
+
+body.tema-oscuro .auth-field input.input-error {
+  background-color: #221616;
+
+  border-color: #e53935;
+
+  color: #ffffff;
+}
+
+/* BOTON */
 
 .btn-registro {
   padding: 16px;
@@ -141,8 +165,24 @@ body.tema-oscuro .auth-field input:focus {
   background-color: var(--color-primary-dark);
 }
 
-.auth-error {
-  color: var(--color-accent);
+/* MENSAJES DE ERROR */
 
-  font-size: .85rem;
+.auth-error {
+  color: #e53935;
+
+  font-size: .82rem;
+
+  line-height: 1.4;
+
+  min-height: 18px;
+
+  margin-top: 2px;
+}
+
+.auth-error:empty {
+  display: none;
+}
+
+body.tema-oscuro .auth-error {
+  color: #ff6b6b;
 }
