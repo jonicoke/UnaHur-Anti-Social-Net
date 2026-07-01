@@ -4,6 +4,8 @@ import { BASE_URL } from "../services/api";
 import "../styles/components/detallePost.css";
 import "../styles/components/home/postCards.css"
 import MainLayout from "./layout/MainLayout";
+// Añadido para que el comentario del usuario sea del que lo hace y no de userId: 1.
+import { useAuth } from '../context/authContext'  // ← agregá este import
 
 type Tag = {
   id: number;
@@ -28,7 +30,7 @@ type PostImage = {
 
 function DetallePost() {
   const { id } = useParams();
-
+  const { usuario } = useAuth()
   const [post, setPost] = useState<Post | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [images, setImages] = useState<PostImage[]>([]);
@@ -92,7 +94,7 @@ function DetallePost() {
         body: JSON.stringify({
         content: newComment,
         postId: Number(id),
-        userId: 1,
+        userId: usuario?.id,
 }),
       });
 

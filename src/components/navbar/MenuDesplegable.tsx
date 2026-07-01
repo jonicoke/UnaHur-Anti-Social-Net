@@ -32,9 +32,6 @@ function MenuDesplegable() {
                     <span className="menu-username">{usuario?.nickName}</span>
                     <span className="menu-institute">{usuario?.instituto ?? 'Estudiante · UNAHUR'}</span>
                 </div>
-                <Link className="perfil-btn" to="/profile">
-                    Ver perfil
-                </Link>
             </div>
 
             <div className="menu-divider" />
