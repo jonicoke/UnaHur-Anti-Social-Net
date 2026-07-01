@@ -48,9 +48,6 @@ function RegisterPanel({
 
         <h2>Crear cuenta</h2>
 
-        {/* <p className="auth-subtitle">
-          Es gratis (y lo seguirá siendo).
-        </p> */}
 
         <form onSubmit={onSubmit}>
 

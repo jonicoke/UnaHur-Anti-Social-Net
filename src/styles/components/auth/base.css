@@ -9,7 +9,6 @@
     opacity: 0;
     transform: translateY(40px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -18,21 +17,13 @@
 
 .auth-wrapper {
   min-height: 100vh;
-
   height: 100vh;
-
   overflow: hidden;
-
   color: var(--color-text);
-
   display: flex;
-
   flex-direction: column;
-
   background-color: var(--color-bg);
-
   position: relative;
-
   transition:
     background .3s ease,
     color .3s ease;
@@ -41,29 +32,21 @@
 .auth-topbar,
 .auth-body {
   position: relative;
-
   z-index: 1;
 }
 
 .auth-body {
   flex: 1;
-
   display: flex;
-
   align-items: stretch;
-
   overflow: hidden;
-
   min-height: 0;
-
   background: var(--color-surface);
 }
 
 /* wrapper del registro para escritorio */
-
 .registro-panel-wrapper {
   flex: 0 0 35%;
-
   display: flex;
 }
 
@@ -76,11 +59,12 @@
   display: none;
 }
 
-/* ===================== */
-/* MOBILE */
-/* ===================== */
 
-@media (max-width: 768px) {
+
+/* MOBILE         */
+
+
+@media (max-width: 768px) or (max-width: 1205px){
 
   .auth-wrapper {
     overflow-y: auto;
@@ -109,7 +93,6 @@
     width: 100%;
   }
 
-  /* ESTE QUEDA IGUAL PARA EL LOGOUT/LOGIN MOBILE BUTTON */
   .mobile-login-btn {
     display: block;
     width: calc(100% - 48px);
@@ -124,24 +107,22 @@
     cursor: pointer;
   }
 
-  /* NUEVO SEPARADO: El botón de crear cuenta se va absoluto abajo de todo */
   .mobile-register-btn {
     display: block;
     width: calc(100% - 48px);
     height: 56px;
     border: none;
-    border-radius: 999px;
+    border-radius: 12px;
     background-color: var(--color-primary);
     color: white;
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-
     position: absolute;
-    bottom: 24px;   /* Pegado al piso del celu */
-    left: 24px;     /* Centrado */
-    margin: 0;      /* Limpiamos el margen anterior */
-  }
+    bottom: 24px;   
+    left: 24px;     
+    margin: 0;      
+  } 
 
   .mobile-only-topbar .auth-topbar-form {
     display: none !important;
@@ -151,6 +132,4 @@
     min-height: auto !important;
     padding-bottom: 10px !important;
   }
-
 }
-

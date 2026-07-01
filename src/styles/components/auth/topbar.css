@@ -152,9 +152,9 @@ body.tema-oscuro .auth-topbar-field input:focus {
   border-color: var(--color-primary-dark);
 }
 
-/* ======================================= */
-/* MANEJO DE VISIBILIDAD DE LA PREGUNTA    */
-/* ======================================= */
+
+/* VISIBILIDAD DE  PREGUNTA    */
+
 .auth-forgot-password {
   color: var(--color-primary);
   font-size: 0.8rem;   
@@ -168,8 +168,8 @@ body.tema-oscuro .auth-topbar-field input:focus {
   text-decoration: underline;
 }
 
-/* En escritorio dejamos la pregunta absoluta abajo del input */
-@media (min-width: 769px) {
+
+@media (min-width: 769px) or (max-width: 1000px){
   .mobile-only { display: none !important; }
   
   .pc-only {
@@ -180,14 +180,14 @@ body.tema-oscuro .auth-topbar-field input:focus {
     margin-top: 2px;
   }
   .pc-only.mover-abajo {
-    margin-top: 18px; /* Se desplaza si hay error en PC */
+    margin-top: 18px; 
   }
 }
 
-/* ======================================= */
-/* CONFIGURACIÓN PARA CELULARES (MOBILE)  */
-/* ======================================= */
-@media (max-width: 768px) {
+
+/* MOBILE  */
+
+@media (max-width: 768px) or (max-width: 1205px) {
   .pc-only { display: none !important; }
   .mobile-only { display: block !important; }
 
@@ -224,7 +224,6 @@ body.tema-oscuro .auth-topbar-field input:focus {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    /* Un gap vertical uniforme para separar los bloques de inputs */
     gap: 20px; 
     margin-top: 90px; 
   }
@@ -232,9 +231,6 @@ body.tema-oscuro .auth-topbar-field input:focus {
   .auth-topbar-field {
     width: 100%;
     position: relative;
-    /* IMPORTANTE: Dejamos un margen abajo fijo de 20px. Esto reserva el espacio 
-       exacto para que flote el error sin pisar el label del input de abajo, 
-       y al estar fijo, el login NO se estira ni se mueve cuando el error aparece */
     margin-bottom: 20px; 
   }
 
@@ -252,7 +248,7 @@ body.tema-oscuro .auth-topbar-field input:focus {
     font-size: 1rem;
   }
 
-  /* El error en mobile ahora flota libre en el espacio de margen que le reservamos */
+  
   .auth-error-topbar {
     position: absolute;
     top: 100%;
@@ -263,21 +259,20 @@ body.tema-oscuro .auth-topbar-field input:focus {
     font-size: .78rem;
   }
 
-  /* Botón de ingresar en mobile */
+  
   .auth-topbar-form button {
     width: 100%;
     height: 56px;
-    border-radius: 999px;
+    border-radius: 12px;
     font-size: 1rem;
     margin: 0; 
   }
 
-  /* La pregunta en mobile ahora se renderiza limpia abajo del botón ingresar */
+ 
   .mobile-only {
     text-align: center;
     font-size: 0.95rem;
     width: 100%;
-    /* Mantiene los 100px abajo de la pregunta para cuidar el espacio del footer absoluto */
     margin: 14px 0 100px !important; 
   }
 }
