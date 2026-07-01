@@ -1,6 +1,8 @@
 .auth-topbar {
   display: flex;
+
   align-items: flex-start;
+
   justify-content: flex-end;
 
   gap: 16px;
@@ -22,6 +24,7 @@
 
 .auth-topbar-brand {
   display: flex;
+
   align-items: center;
 
   gap: 18px;
@@ -35,6 +38,7 @@
 
 .auth-topbar-logo-img {
   height: 58px;
+
   width: auto;
 
   object-fit: contain;
@@ -52,6 +56,7 @@
   line-height: 1;
 
   display: flex;
+
   align-items: center;
 
   height: 58px;
@@ -110,9 +115,9 @@
 
   transition:
     border-color .2s,
-    background-color .2s;
+    background-color .2s,
+    color .2s;
 }
-
 
 .auth-topbar-field input:focus {
   outline: none;
@@ -128,6 +133,22 @@
   color: #888888;
 }
 
+body.tema-oscuro .auth-topbar-field input {
+  background-color: #181818;
+
+  border-color: #2d2d2d;
+
+  color: #ffffff;
+}
+
+body.tema-oscuro .auth-topbar-field input:focus {
+  background-color: #181818;
+
+  border-color: var(--color-primary);
+
+  color: #ffffff;
+}
+
 .auth-topbar-field input.input-error {
   border: 1px solid #e53935;
 
@@ -135,8 +156,6 @@
 }
 
 .auth-topbar-field input.input-error:focus {
-  outline: none;
-
   border-color: #e53935;
 }
 
@@ -159,11 +178,7 @@
 
   min-height: 20px;
 
-  visibility: visible;
-
   display: flex;
-
-  align-items: flex-start;
 
   white-space: normal;
 }
@@ -192,8 +207,6 @@
   height: 42px;
 
   margin-top: 16px;
-
-  align-self: flex-end;
 
   margin-bottom: 24px;
 
