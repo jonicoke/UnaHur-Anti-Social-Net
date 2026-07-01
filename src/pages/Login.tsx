@@ -2,21 +2,22 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { getUsers, createUser } from "../services/api";
-import '../styles/components/auth/base.css'
+
+import "../styles/components/auth/base.css";
 
 import AuthTopbar from "../components/auth/AuthTopbar";
 import AuthCarousel from "../components/auth/AuthCarousel";
 import RegisterPanel from "../components/auth/RegisterPanel";
 
-import foto1 from '../assets/carrusel/foto1.jpg'
-import foto2 from '../assets/carrusel/foto2.jpg'
-import foto3 from '../assets/carrusel/foto3.jpeg'
-import foto4 from '../assets/carrusel/foto4.jpg'
-import foto5 from '../assets/carrusel/foto5.jpg'
-import foto6 from '../assets/carrusel/foto6.jpg'
-import foto7 from '../assets/carrusel/foto7.jpg'
-import foto8 from '../assets/carrusel/foto8.jpg'
-import foto9 from '../assets/carrusel/foto9.jpg'
+import foto1 from "../assets/carrusel/foto1.jpg";
+import foto2 from "../assets/carrusel/foto2.jpg";
+import foto3 from "../assets/carrusel/foto3.jpeg";
+import foto4 from "../assets/carrusel/foto4.jpg";
+import foto5 from "../assets/carrusel/foto5.jpg";
+import foto6 from "../assets/carrusel/foto6.jpg";
+import foto7 from "../assets/carrusel/foto7.jpg";
+import foto8 from "../assets/carrusel/foto8.jpg";
+import foto9 from "../assets/carrusel/foto9.jpg";
 
 const slides = [
   { img: foto1, eslogan: "Donde el conocimiento se construye por todos." },
@@ -27,169 +28,228 @@ const slides = [
   { img: foto6, eslogan: "Orgullosos de ser UNAHUR." },
   { img: foto7, eslogan: "Cada día es una nueva oportunidad." },
   { img: foto8, eslogan: "La universidad que te pertenece." },
-  { img: foto9, eslogan: "Formando los profesionales del mañana." },
-]
+  { img: foto9, eslogan: "Formando los profesionales del mañana." }
+];
 
 function Login() {
   const { login } = useAuth();
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const [nickName, setNickName] = useState("");
-const [contraseña, setContraseña] = useState("");
+  const [mostrarRegistro, setMostrarRegistro] = useState(false);
 
-const [errorLogin, setErrorLogin] = useState("");
-const [errorContraseña, setErrorContraseña] = useState("");
+  const [nickName, setNickName] = useState("");
+  const [contraseña, setContraseña] = useState("");
 
-const [regNickName, setRegNickName] = useState("");
-const [regEmail, setRegEmail] = useState("");
-const [regContraseña, setRegContraseña] = useState("");
+  const [errorLogin, setErrorLogin] = useState("");
+  const [errorContraseña, setErrorContraseña] = useState("");
 
-const [errorNickName, setErrorNickName] = useState("");
-const [errorEmail, setErrorEmail] = useState("");
-const [errorRegContraseña, setErrorRegContraseña] = useState("");
+  const [regNickName, setRegNickName] = useState("");
+  const [regEmail, setRegEmail] = useState("");
+  const [regContraseña, setRegContraseña] = useState("");
 
-const [actual, setActual] = useState(0);
+  const [errorNickName, setErrorNickName] = useState("");
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorRegContraseña, setErrorRegContraseña] = useState("");
 
+  const [actual, setActual] = useState(0);
+
+  // Intervalo del carrusel de imágenes
   useEffect(() => {
     const intervalo = setInterval(() => {
-      setActual(prev => (prev + 1) % slides.length);
+      setActual((prev) => (prev + 1) % slides.length);
     }, 4000);
+
     return () => clearInterval(intervalo);
   }, []);
 
-const handleLogin = async (e: React.FormEvent) => {
-  e.preventDefault();
+  // Escucha el tamaño de pantalla para resetear el estado mobile al volver a PC (F12)
+  useEffect(() => {
+    const controlarResize = () => {
+      if (window.innerWidth > 768) {
+        setMostrarRegistro(false);
+      }
+    };
 
-  setErrorLogin("");
-  setErrorContraseña("");
+    window.addEventListener("resize", controlarResize);
+    return () => window.removeEventListener("resize", controlarResize);
+  }, []);
 
-  try {
-    const users = await getUsers();
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorLogin("");
+    setErrorContraseña("");
 
-    const usuarioEncontrado = users.find(
-      u => u.nickName === nickName || u.email === nickName
-    );
-
-    if (!usuarioEncontrado) {
-      setErrorLogin(
-        "El correo o NickName que ingresaste no está conectado a ninguna cuenta."
+    try {
+      const users = await getUsers();
+      const usuarioEncontrado = users.find(
+        (u) => u.nickName === nickName || u.email === nickName
       );
-      return;
+
+      if (!usuarioEncontrado) {
+        setErrorLogin("El correo o NickName que ingresaste no está conectado a ninguna cuenta.");
+        return;
+      }
+
+      if (!contraseña.trim()) {
+        setErrorContraseña("Ingresá tu contraseña.");
+        return;
+      }
+
+      if (contraseña !== "123456") {
+        setErrorContraseña("La contraseña es incorrecta. Revisá e intentá de nuevo.");
+        return;
+      }
+
+      login(usuarioEncontrado);
+      navigate("/");
+    } catch {
+      setErrorLogin("Error al conectar con el servidor.");
     }
-
-    // NUEVO
-    if (!contraseña.trim()) {
-      setErrorContraseña("Ingresá tu contraseña.");
-      return;
-    }
-
-    if (contraseña !== "123456") {
-      setErrorContraseña(
-        "La contraseña es incorrecta. Revisá e intentá de nuevo."
-      );
-      return;
-    }
-
-    login(usuarioEncontrado);
-    navigate("/");
-
-  } catch {
-    setErrorLogin("Error al conectar con el servidor.");
-  }
-};
+  };
 
   const handleRegistro = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
+    setErrorNickName("");
+    setErrorEmail("");
+    setErrorRegContraseña("");
 
-  setErrorNickName("");
-  setErrorEmail("");
-  setErrorRegContraseña("");
+    let hayError = false;
 
-  let hayError = false;
+    if (!regNickName.trim()) {
+      setErrorNickName("Ingresá un NickName.");
+      hayError = true;
+    }
 
-  if (!regNickName.trim()) {
-    setErrorNickName("Ingresá un NickName.");
-    hayError = true;
-  }
+    if (!regEmail.trim()) {
+      setErrorEmail("Ingresá un email.");
+      hayError = true;
+    }
 
-  if (!regEmail.trim()) {
-    setErrorEmail("Ingresá un email.");
-    hayError = true;
-  }
+    if (!regContraseña.trim()) {
+      setErrorRegContraseña("Ingresá una contraseña.");
+      hayError = true;
+    }
 
-  if (!regContraseña.trim()) {
-    setErrorRegContraseña("Ingresá una contraseña.");
-    hayError = true;
-  }
+    if (hayError) return;
 
-  if (hayError) return;
+    if (regContraseña !== "123456") {
+      setErrorRegContraseña("La contraseña debe ser 123456.");
+      return;
+    }
 
-  if (regContraseña !== "123456") {
-    setErrorRegContraseña(
-      "La contraseña debe ser 123456."
-    );
-    return;
-  }
+    try {
+      const nuevoUsuario = await createUser({
+        nickName: regNickName,
+        email: regEmail,
+        password: "123456"
+      });
 
-  try {
-    const nuevoUsuario = await createUser({
-      nickName: regNickName,
-      email: regEmail,
-      password: "123456"
-    });
-
-    login(nuevoUsuario);
-
-    navigate("/");
-
-  } catch (err) {
-
-    const mensaje =
-      err instanceof Error
-        ? err.message
-        : "Error al registrar el usuario.";
-
-    setErrorNickName(mensaje);
-  }
-};
+      login(nuevoUsuario);
+      navigate("/");
+    } catch (err) {
+      const mensaje = err instanceof Error ? err.message : "Error al registrar el usuario.";
+      setErrorNickName(mensaje);
+    }
+  };
 
   return (
     <div className="auth-wrapper">
-      <AuthTopbar
-        nickName={nickName}
-        setNickName={setNickName}
-        contraseña={contraseña}
-        setContraseña={setContraseña}
-        errorLogin={errorLogin}
-        setErrorLogin={setErrorLogin}
-        errorContraseña={errorContraseña}
-        setErrorContraseña={setErrorContraseña}
-        onSubmit={handleLogin}
-      />
+      
+      {/* LOGIN */}
+      {!mostrarRegistro && (
+        <>
+          <AuthTopbar
+            nickName={nickName}
+            setNickName={setNickName}
+            contraseña={contraseña}
+            setContraseña={setContraseña}
+            errorLogin={errorLogin}
+            setErrorLogin={setErrorLogin}
+            errorContraseña={errorContraseña}
+            setErrorContraseña={setErrorContraseña}
+            onSubmit={handleLogin}
+          />
 
-      <main className="auth-body">
-        <AuthCarousel slides={slides} actual={actual} />
-        <RegisterPanel
-          regNickName={regNickName}
-          setRegNickName={setRegNickName}
+          <main className="auth-body">
+            <AuthCarousel slides={slides} actual={actual} />
 
-          regEmail={regEmail}
-          setRegEmail={setRegEmail}
+            <div className="registro-panel-wrapper">
+              <RegisterPanel
+                regNickName={regNickName}
+                setRegNickName={setRegNickName}
+                regEmail={regEmail}
+                setRegEmail={setRegEmail}
+                regContraseña={regContraseña}
+                setRegContraseña={setRegContraseña}
+                errorNickName={errorNickName}
+                errorEmail={errorEmail}
+                errorContraseña={errorRegContraseña}
+                setErrorNickName={setErrorNickName}
+                setErrorEmail={setErrorEmail}
+                setErrorContraseña={setErrorRegContraseña}
+                onSubmit={handleRegistro}
+              />
+            </div>
 
-          regContraseña={regContraseña}
-          setRegContraseña={setRegContraseña}
+            <button
+              className="mobile-register-btn"
+              onClick={() => setMostrarRegistro(true)}
+            >
+              Crear cuenta nueva
+            </button>
+          </main>
+        </>
+      )}
 
-          errorNickName={errorNickName}
-          errorEmail={errorEmail}
-          errorContraseña={errorRegContraseña}
+      {/* REGISTRO EN MOBILE */}
+      {mostrarRegistro && (
+        <>
+          <div className="mobile-only-topbar">
+            <AuthTopbar
+              nickName={nickName}
+              setNickName={setNickName}
+              contraseña={contraseña}
+              setContraseña={setContraseña}
+              errorLogin={errorLogin}
+              setErrorLogin={setErrorLogin}
+              errorContraseña={errorContraseña}
+              setErrorContraseña={setErrorContraseña}
+              onSubmit={handleLogin}
+            />
+          </div>
 
-          setErrorNickName={setErrorNickName}
-          setErrorEmail={setErrorEmail}
-          setErrorContraseña={setErrorRegContraseña}
+          <main className="auth-body">
+            <div className="registro-mobile-visible">
+              
+              {/* Botón Flecha de Volver Atrás */}
+              <button 
+                className="mobile-back-arrow" 
+                onClick={() => setMostrarRegistro(false)}
+                aria-label="Volver atrás"
+              >
+                ←
+              </button>
 
-          onSubmit={handleRegistro}
-        />
-      </main>
+              <RegisterPanel
+                regNickName={regNickName}
+                setRegNickName={setRegNickName}
+                regEmail={regEmail}
+                setRegEmail={setRegEmail}
+                regContraseña={regContraseña}
+                setRegContraseña={setRegContraseña}
+                errorNickName={errorNickName}
+                errorEmail={errorEmail}
+                errorContraseña={errorRegContraseña}
+                setErrorNickName={setErrorNickName}
+                setErrorEmail={setErrorEmail}
+                setErrorContraseña={setErrorRegContraseña}
+                onSubmit={handleRegistro}
+              />
+            </div>
+          </main>
+        </>
+      )}
+
     </div>
   );
 }
